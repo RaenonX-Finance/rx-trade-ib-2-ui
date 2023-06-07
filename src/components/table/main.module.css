@@ -1,0 +1,7 @@
+@tailwind components;
+
+@layer components {
+  tr.table-row > td {
+    @apply py-0.5 px-2;
+  }
+}

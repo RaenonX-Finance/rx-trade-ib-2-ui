@@ -1,0 +1,112 @@
+env:
+  browser: true
+  es6: true
+  node: true
+  jest: true
+
+extends:
+  - google
+  - next/core-web-vitals
+  - plugin:tailwindcss/recommended
+
+globals:
+  Atomics: readonly
+  SharedArrayBuffer: readonly
+
+parser: "@typescript-eslint/parser"
+
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: latest
+  sourceType: module
+
+plugins:
+  - "@typescript-eslint"
+  - react
+
+ignorePatterns:
+  - '*.d.ts'
+
+rules:
+  "@typescript-eslint/no-unused-vars":
+    - error
+    - varsIgnorePattern: "^[_]+$"
+      argsIgnorePattern: "^[_]+$"
+      ignoreRestSiblings: true
+
+  # Needs to disable local no-unused-vars for this rule to work properly
+  no-unused-vars:
+    - off
+
+  "@typescript-eslint/indent":
+    - error
+    - 2
+    - ignoredNodes:
+        - TSTypeParameterInstantiation
+      MemberExpression: 1
+
+  # Needs to disable local indent for this rule to work properly
+  indent:
+    - off
+
+  linebreak-style:
+    - error
+    - unix
+
+  max-len:
+    - error
+    - code: 119
+
+  import/order:
+    - error
+    - groups:
+        - builtin
+        - external
+        - internal
+      pathGroups:
+        - pattern: react
+          group: external
+          position: before
+      pathGroupsExcludedImportTypes:
+        - react
+      newlines-between: always
+      alphabetize:
+        order: asc
+        caseInsensitive: true
+
+  import/newline-after-import:
+    - error
+    - count: 2
+
+  object-curly-spacing: off
+
+  "@typescript-eslint/object-curly-spacing":
+    - error
+    - never
+
+  semi:
+    - off
+
+  "@typescript-eslint/semi":
+    - error
+
+  space-in-parens:
+    - error
+    - never
+
+  # Typescript will perform this check, no need for React to check it
+  react/prop-types:
+    - off
+
+  react/jsx-tag-spacing:
+    - error
+    - beforeSelfClosing: never
+
+  # Most of the dependencies are fine getting the initial value only
+  react-hooks/exhaustive-deps:
+    - off
+
+settings:
+  react:
+    version: detect

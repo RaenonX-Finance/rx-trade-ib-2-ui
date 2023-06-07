@@ -1,0 +1,24 @@
+@tailwind components;
+
+@layer components {
+  @keyframes update-light {
+    from {
+      box-shadow: inset 0 0 1.7rem var(--update-theme);
+    }
+    
+    to {
+      background: var(--update-regular-bg);
+    }
+  }
+  
+  span.update-animation {
+    --update-theme: #325bc2;
+    --update-regular-bg: rgba(5 5 5 / 77%);
+  
+    background-color: var(--update-regular-bg);
+    border: 1px solid var(--update-theme);
+    color: #b7c6e8;
+    border-radius: 0.5rem;
+    animation: 1s ease-in update-light;
+  }
+}
