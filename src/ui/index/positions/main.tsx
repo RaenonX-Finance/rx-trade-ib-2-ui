@@ -59,12 +59,14 @@ export const Positions = () => {
         <ToggleButton
           active={holding}
           onChange={() => setFilter({...filter, holding: !holding})}
+          id="Holding"
           title="Holding"
           className="hover:text-purple-300 peer-checked:text-purple-300 peer-checked:hover:bg-purple-700"
         />
         <ToggleButton
           active={exited}
           onChange={() => setFilter({...filter, exited: !exited})}
+          id="Exited"
           title="Exited"
           className="hover:text-red-300 peer-checked:text-red-300 peer-checked:hover:bg-red-700"
         />

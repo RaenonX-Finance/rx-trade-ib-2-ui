@@ -76,18 +76,21 @@ export const Orders = () => {
         <ToggleButton
           active={open}
           onChange={() => setFilter({...filter, open: !open})}
+          id="Open"
           title="Open"
           className="hover:text-yellow-300 peer-checked:text-yellow-300 peer-checked:hover:bg-yellow-700"
         />
         <ToggleButton
           active={filled}
           onChange={() => setFilter({...filter, filled: !filled})}
+          id="Filled"
           title="Filled"
           className="hover:text-green-300 peer-checked:text-green-300 peer-checked:hover:bg-green-700"
         />
         <ToggleButton
           active={cancelled}
           onChange={() => setFilter({...filter, cancelled: !cancelled})}
+          id="Cancelled"
           title="Cancelled"
           className="hover:text-red-300 peer-checked:text-red-300 peer-checked:hover:bg-red-700"
         />

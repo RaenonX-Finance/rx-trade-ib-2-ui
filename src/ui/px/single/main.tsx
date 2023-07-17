@@ -111,6 +111,7 @@ export const SinglePriceQuote = ({index, className}: Props) => {
         />
         <ToggleButton
           active={request.rthOnly}
+          id={`rthOnly-${index}-${request.symbol}`}
           title={request.rthOnly ? 'RTH' : 'ETH'}
           onChange={() => setRequest((original) => ({...original, rthOnly: !request.rthOnly}))}
           className="hover:text-amber-300 peer-checked:text-amber-300 peer-checked:hover:bg-amber-700"

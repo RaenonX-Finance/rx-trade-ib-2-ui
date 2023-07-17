@@ -38,6 +38,7 @@ export const ChartConfigEntries = ({config, updateConfig, configCheckOptions}: P
               return (
                 <ToggleButton
                   key={key}
+                  id={`chart-config-${configKey}`}
                   active={value}
                   title={title}
                   onChange={() => updateConfig(configKey, !value)}
