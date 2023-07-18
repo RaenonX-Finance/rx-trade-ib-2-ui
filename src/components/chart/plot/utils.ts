@@ -3,7 +3,7 @@ import {BarsInfo, DeepPartial, PriceFormat, SeriesType} from 'lightweight-charts
 import {ChartConfigSingle} from '@/components/chart/config/ui/type';
 import {ExtremaPx, GetCurrentExtremaPxOptions} from '@/components/chart/plot/type';
 import {getChartConfig} from '@/state/chartConfig/utils';
-import {ChartDataBar} from '@/types/api/chart';
+import {ChartDataBarWithData, isChartDataBarWithData} from '@/types/api/chart';
 import {ContractInState} from '@/types/data/contract';
 
 
@@ -26,7 +26,7 @@ export const getCurrentChartExtremaPx = ({chart, series, bars}: GetCurrentExtrem
   return getExtremaPxOfRange(barsInfo, bars);
 };
 
-export const getExtremaPxOfRange = (barsInfo: BarsInfo, data: ChartDataBar[]): ExtremaPx => {
+export const getExtremaPxOfRange = (barsInfo: BarsInfo, data: ChartDataBarWithData[]): ExtremaPx => {
   const {from, to} = barsInfo;
 
   if (!from || !to) {
@@ -34,7 +34,9 @@ export const getExtremaPxOfRange = (barsInfo: BarsInfo, data: ChartDataBar[]): E
     return {minPx: null, maxPx: null};
   }
 
-  const bars = data.filter(({epochSec}) => epochSec >= (from as number) && epochSec <= (to as number));
+  const bars = data
+    .filter(isChartDataBarWithData)
+    .filter(({epochSec}) => epochSec >= (from as number) && epochSec <= (to as number));
 
   const maxPx = Math.max(...bars.map(({high}) => high));
   const minPx = Math.min(...bars.map(({low}) => low));

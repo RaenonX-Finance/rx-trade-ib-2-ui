@@ -32,7 +32,7 @@ export const ChartConfigPanel = ({
 }: ChartConfigPanelProps) => {
   return (
     <Popup show={show} setShow={setShow} className="flex flex-col gap-2 text-start">
-      <Dialog.Title className="flex flex-row gap-1 text-xl text-cyan-300">
+      <Dialog.Title className="flex flex-row items-end gap-1 text-xl text-cyan-300">
         <div>{contract.localSymbol}</div>
         <small className="text-sm text-slate-400">{identifier}</small>
       </Dialog.Title>

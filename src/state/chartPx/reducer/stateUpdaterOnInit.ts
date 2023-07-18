@@ -1,4 +1,5 @@
 import {StateUpdateFuncOpts} from '@/state/chartPx/reducer/stateUpdater';
+import {isChartDataBarWithData} from '@/types/api/chart';
 import {PxHistoryMessage} from '@/types/api/px';
 
 
@@ -14,7 +15,7 @@ export const chartStateUpdaterOnInit = <T extends PxHistoryMessage>({
   }
 
   state.data[identifier] = {
-    bars: data.bars,
+    bars: data.bars.filter(isChartDataBarWithData),
     contractId: data.meta.contractId,
     dataType: data.meta.dataType,
   };

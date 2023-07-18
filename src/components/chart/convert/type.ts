@@ -1,10 +1,10 @@
 import {ChartBarInUse} from '@/components/chart/type';
-import {ChartDataBar} from '@/types/api/chart';
+import {ChartDataBarWithData} from '@/types/api/chart';
 import {KeysOfType} from '@/utils/type';
 
 
-export type GetPxFromBar = (bar: ChartDataBar) => number | undefined;
+export type GetPxFromBar = (bar: ChartDataBarWithData) => number | undefined;
 
-export type ValidKeyForLineData = KeysOfType<ChartDataBar, number | null>;
+export type ValidKeyForLineData = KeysOfType<ChartDataBarWithData, number>;
 
-export type BarConverter = (bar: ChartDataBar) => ChartBarInUse;
+export type BarConverter = (bar: ChartDataBarWithData) => ChartBarInUse;

@@ -1,5 +1,5 @@
 import {HistoryDataType} from '@/enums/historyDataType';
-import {ChartDataBar} from '@/types/api/chart';
+import {ChartDataBarWithData} from '@/types/api/chart';
 import {ContractId} from '@/types/data/px';
 
 
@@ -24,7 +24,7 @@ export type ChartDataInterval = typeof chartDataInterval[number];
 export type ChartDataIdentifier = `${ContractId}@${ChartDataInterval}`;
 
 export type ChartData = {
-  bars: ChartDataBar[],
+  bars: ChartDataBarWithData[],
   dataType: HistoryDataType,
   contractId: ContractId,
 };

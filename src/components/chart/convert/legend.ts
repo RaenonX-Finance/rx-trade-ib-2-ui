@@ -2,7 +2,7 @@ import {SeriesType} from 'lightweight-charts';
 
 import {toSeriesData} from '@/components/chart/convert/data';
 import {ChartLegendData} from '@/components/chart/type';
-import {ChartDataBar} from '@/types/api/chart';
+import {ChartDataBarWithData} from '@/types/api/chart';
 import {ChartData} from '@/types/data/chart';
 
 
@@ -22,7 +22,7 @@ export const toLegendDataFromChartData = ({
 
 type ToLegendDataFromBarOpts = Pick<ToLegendDataFromChartDataOpts, 'seriesType' | 'digits'> & {
   original?: Partial<ChartLegendData>,
-  bar: ChartDataBar | undefined,
+  bar: ChartDataBarWithData | undefined,
   hovered: boolean,
 };
 

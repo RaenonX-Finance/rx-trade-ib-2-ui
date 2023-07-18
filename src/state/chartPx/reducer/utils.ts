@@ -1,7 +1,7 @@
-import {ChartDataBar} from '@/types/api/chart';
+import {ChartDataBarWithData} from '@/types/api/chart';
 
 
-export const updateChartDataBar = (bar: ChartDataBar, latestPx: number): ChartDataBar => {
+export const updateChartDataBar = (bar: ChartDataBarWithData, latestPx: number): ChartDataBarWithData => {
   return {
     ...bar,
     high: Math.max(bar.high, latestPx),

@@ -5,7 +5,7 @@ import {toPositionAvgPxColor} from '@/components/chart/convert/color';
 import {toLastBarPx} from '@/components/chart/convert/data';
 import {getTypeOfActiveSeries} from '@/components/chart/plot/utils';
 import {getChartConfig} from '@/state/chartConfig/utils';
-import {ChartDataBar} from '@/types/api/chart';
+import {ChartDataBarWithData} from '@/types/api/chart';
 import {PositionData} from '@/types/data/positions';
 
 
@@ -18,7 +18,7 @@ export const getAnimationMode = (enabled: boolean): LastPriceAnimationMode => (
 type GetPositionAvgPxOptionsOpts = {
   chartConfig: ChartConfigSingle,
   position: PositionData | undefined,
-  bars: ChartDataBar[],
+  bars: ChartDataBarWithData[],
   simplified: boolean,
 };
 

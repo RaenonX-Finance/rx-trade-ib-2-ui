@@ -23,7 +23,7 @@ export const makeExtrema = (e: ChartChangedCommonPayload, series: ChartSeries): 
     series,
   });
   if (!minPx) {
-    throw new Error('Failed to initialize extrema Px lines');
+    throw new Error(`Failed to initialize extrema Px lines (min: ${minPx} / max: ${maxPx})`);
   }
 
   setAddon.legend((legend) => ({

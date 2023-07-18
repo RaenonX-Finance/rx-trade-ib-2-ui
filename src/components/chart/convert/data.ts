@@ -3,7 +3,7 @@ import {SeriesDataItemTypeMap, SeriesType, UTCTimestamp} from 'lightweight-chart
 import {toSessionColor} from '@/components/chart/convert/color';
 import {BarConverter, GetPxFromBar} from '@/components/chart/convert/type';
 import {isBarInUseCandlestick, isBarInUseLine, isBarInUseWhitespace} from '@/components/chart/legend/utils';
-import {ChartDataBar} from '@/types/api/chart';
+import {ChartDataBarWithData} from '@/types/api/chart';
 import {updateEpochSecToUtc} from '@/utils/time';
 
 
@@ -13,7 +13,7 @@ export const toCandlestick = ({
   high,
   low,
   close,
-}: ChartDataBar): SeriesDataItemTypeMap['Candlestick'] => ({
+}: ChartDataBarWithData): SeriesDataItemTypeMap['Candlestick'] => ({
   time: epochSec as UTCTimestamp,
   open,
   high,
@@ -24,7 +24,7 @@ export const toCandlestick = ({
 export const toLineData = (
   getValue: GetPxFromBar,
 ) => (
-  bar: ChartDataBar,
+  bar: ChartDataBarWithData,
 ): SeriesDataItemTypeMap['Line'] => {
   const value = getValue(bar);
   const {epochSec} = bar;
@@ -56,7 +56,7 @@ export const toSeriesData = (seriesType: SeriesType): BarConverter => {
   throw new Error(`BarOnChart: Unhandled series data conversion of type: ${seriesType}`);
 };
 
-export const toLastBarPx = (seriesType: SeriesType, bar: ChartDataBar | undefined): number | null => {
+export const toLastBarPx = (seriesType: SeriesType, bar: ChartDataBarWithData | undefined): number | null => {
   if (!bar) {
     return null;
   }

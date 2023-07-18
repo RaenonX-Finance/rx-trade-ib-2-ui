@@ -1,13 +1,13 @@
 import {BarConverter} from '@/components/chart/convert/type';
 import {ChartBarInUse, ChartSeries} from '@/components/chart/type';
-import {ChartDataBar} from '@/types/api/chart';
+import {ChartDataBarWithData} from '@/types/api/chart';
 
 
 type UpdateSeriesDataOpts = {
   series: ChartSeries,
   partial: boolean,
-  last: ChartDataBar,
-  bars: ChartDataBar[],
+  last: ChartDataBarWithData,
+  bars: ChartDataBarWithData[],
   convertToBar: BarConverter,
 };
 

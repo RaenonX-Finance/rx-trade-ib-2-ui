@@ -1,7 +1,7 @@
 import {IChartApi, PriceLineOptions} from 'lightweight-charts';
 
 import {ChartSeries} from '@/components/chart/type';
-import {ChartDataBar} from '@/types/api/chart';
+import {ChartDataBarWithData} from '@/types/api/chart';
 
 
 export type ExtremaCommonOptions = Omit<PriceLineOptions, 'price' | 'title' | 'lineVisible' | 'axisLabelVisible'>;
@@ -16,6 +16,6 @@ export type ExtremaPx = {
 
 export type GetCurrentExtremaPxOptions = {
   chart: IChartApi,
-  bars: ChartDataBar[],
+  bars: ChartDataBarWithData[],
   series: ChartSeries
 };
