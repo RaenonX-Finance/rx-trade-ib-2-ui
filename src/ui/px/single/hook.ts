@@ -85,7 +85,7 @@ export const useQuoteData = ({account, request, setRequest, onSetLocked}: UseQuo
         requested: undefined,
         failed: false,
       });
-
+      onSetLocked(request);
       return;
     }
 
@@ -100,6 +100,7 @@ export const useQuoteData = ({account, request, setRequest, onSetLocked}: UseQuo
         requested: undefined,
         failed: true,
       });
+      onSetLocked(request);
       dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
         message: `Contract of symbol "${request.symbol}" not found`,
       }));
