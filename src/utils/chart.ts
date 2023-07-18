@@ -11,5 +11,6 @@ export const getContractIdFromIdentifier = (identifier: ChartDataIdentifier): Co
 export const getDigitsFromMinTick = (minTick: number): number => {
   const [_, decimals] = minTick.toString().split('.', 2);
 
-  return decimals.length;
+  // `decimals` could be undefined if there's no decimal in `minTick`
+  return decimals?.length ?? 0;
 };
