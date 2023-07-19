@@ -1,4 +1,4 @@
-import {ChartDataRequest, ChartInputBoxStyling, LockedContractState} from '@/ui/px/type';
+import {ChartDataRequest, LockedContractState} from '@/ui/px/type';
 
 
 type GetChartInputBoxStylingOpts = {
@@ -6,7 +6,7 @@ type GetChartInputBoxStylingOpts = {
   locked: LockedContractState,
 };
 
-export const getChartInputBoxStyling = ({request, locked}: GetChartInputBoxStylingOpts): ChartInputBoxStyling => {
+export const getChartInputBoxStyling = ({request, locked}: GetChartInputBoxStylingOpts) => {
   const requestedSymbol = locked.requested?.symbol;
 
   if (locked.failed) {
@@ -17,16 +17,21 @@ export const getChartInputBoxStyling = ({request, locked}: GetChartInputBoxStyli
     // Got data streaming
     if (requestedSymbol === request.symbol) {
       // Showing the data of input
-      return 'from-green-800 to-green-700';
+      return 'from-neutral-200 to-neutral-400 text-black';
     }
 
     if (request.symbol === '') {
       // Pending clear
-      return 'from-fuchsia-800 to-fuchsia-700';
+      return 'from-orange-900 to-orange-700';
     }
 
     // To update data source
-    return 'from-amber-800 to-amber-700';
+    return 'from-yellow-900 to-yellow-700';
+  }
+
+  // No data streaming but got some input
+  if (request.symbol !== '') {
+    return 'from-green-900 to-green-700';
   }
 
   return 'from-zinc-800 to-gray-600';
