@@ -44,7 +44,7 @@ export const QuoteCurrentPx = ({contract, px, lastPxFallback}: Props) => {
     return (
       <div className={styles['current-px']}>
         <span className="text-xs">L</span>
-        <span>{px?.Last?.toFixed(digits) ?? lastPxFallback ?? '-'}</span>
+        <span>{px?.Last?.toFixed(digits) ?? lastPxFallback?.toFixed(digits) ?? '-'}</span>
         <span className={`${bidClassName} text-xs`}>B</span>
         <span className={`${bidClassName}`}>{px?.Bid?.toFixed(digits) ?? '-'}</span>
         <span className={`${askClassName} text-xs`}>A</span>
