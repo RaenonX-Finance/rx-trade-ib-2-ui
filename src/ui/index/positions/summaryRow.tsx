@@ -14,8 +14,8 @@ import {getPnlTextClassName} from '@/ui/index/positions/utils';
 
 export const SummaryRow = () => {
   const currentAccount = useCurrentAccountSelector();
-  const dailyPnl = useAccountTotalPnlSelector(currentAccount);
-  const totalPnl = useAccountDailyPnlSelector(currentAccount);
+  const dailyPnl = useAccountDailyPnlSelector(currentAccount);
+  const totalPnl = useAccountTotalPnlSelector(currentAccount);
 
   return (
     <TableRow className="bg-amber-900/75 text-right">
