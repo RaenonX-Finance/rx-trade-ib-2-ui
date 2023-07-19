@@ -10,9 +10,18 @@ export type ToggleButtonProps = {
   onChange: () => void,
   className: string,
   defaultTextClassName?: string,
+  disabled?: boolean,
 };
 
-export const ToggleButton = ({active, id, title, onChange, className, defaultTextClassName}: ToggleButtonProps) => {
+export const ToggleButton = ({
+  active,
+  id,
+  title,
+  onChange,
+  className,
+  defaultTextClassName,
+  disabled,
+}: ToggleButtonProps) => {
   return (
     <div className="flex">
       <input
@@ -21,6 +30,7 @@ export const ToggleButton = ({active, id, title, onChange, className, defaultTex
         className="peer hidden"
         checked={active}
         onChange={onChange}
+        disabled={disabled}
       />
       <label
         htmlFor={id}

@@ -53,6 +53,12 @@ export const SinglePriceQuote = ({index, className}: Props) => {
     })),
   });
 
+  // Disable inputs if it's loading OR there's a locked identifier but the chart data or its contract is not available
+  const disabled = React.useMemo(
+    () => lockedIdentifier && (!chartData || !contract),
+    [lockedIdentifier, !!chartData, !!contract],
+  );
+
   // Account not loaded on start, but `requestChartData` needs to have `account`,
   // therefore `account` is a dependency here
   React.useEffect(() => {
@@ -79,8 +85,10 @@ export const SinglePriceQuote = ({index, className}: Props) => {
           onKeyDown={onKeyDown}
           className={classNames(
             'rounded-md px-1.5 py-0.5 text-sm w-full focus-visible:outline-0 bg-gradient-to-br',
+            'disabled:text-gray-500',
             getChartInputBoxStyling({request, locked}),
           )}
+          disabled={disabled}
         />
         <Dropdown
           title="Chart Data Interval"
@@ -108,14 +116,19 @@ export const SinglePriceQuote = ({index, className}: Props) => {
           )}
           itemsClassName="!w-24"
           itemClassName="text-xs"
+          disabled={disabled}
         />
         <ToggleButton
           active={request.rthOnly}
           id={`rthOnly-${index}-${request.symbol}`}
           title={request.rthOnly ? 'RTH' : 'ETH'}
           onChange={() => setRequest((original) => ({...original, rthOnly: !request.rthOnly}))}
-          className="hover:text-amber-300 peer-checked:text-amber-300 peer-checked:hover:bg-amber-700"
+          className={classNames(
+            'hover:text-amber-300 peer-checked:text-amber-300 peer-checked:hover:bg-amber-700',
+            'peer-disabled:text-gray-500 peer-disabled:hover:bg-transparent',
+          )}
           defaultTextClassName="text-gray-200"
+          disabled={disabled}
         />
         <input type="submit" className="hidden"/>
       </form>
