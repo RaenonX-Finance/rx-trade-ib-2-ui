@@ -1,9 +1,8 @@
 import {useSelector} from 'react-redux';
 import {createSelector} from 'reselect';
 
+import {ReduxState} from '@/state/types';
 import {PositionData} from '@/types/data/positions';
-
-import {ReduxState} from '../types';
 
 
 export const usePositionSelector = (

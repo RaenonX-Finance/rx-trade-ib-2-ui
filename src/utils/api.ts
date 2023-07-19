@@ -7,10 +7,10 @@ export const historyMetaToIdentifier = ({contractId, interval}: PxHistoryMeta): 
   `${contractId}@${interval}`
 );
 
-export const isSecurityTypeFutures = (securityType: SecurityType): boolean => {
+export const isSecurityTypeFutures = (securityType: SecurityType | undefined): boolean => {
   return securityType === 'Futures' || securityType === 'ContinuousFutures';
 };
 
-export const isSecurityTypeOptions = (securityType: SecurityType): boolean => {
+export const isSecurityTypeOptions = (securityType: SecurityType | undefined): boolean => {
   return securityType === 'Options' || securityType === 'OptionsCombo';
 };

@@ -1,18 +1,14 @@
 import React from 'react';
 
 import {askClassName, bidClassName} from '@/components/colors/const';
-import {ContractInState} from '@/types/data/contract';
-import {PxOfContract} from '@/types/data/px';
+import styles from '@/ui/px/main.module.css';
+import {QuotePxProps} from '@/ui/px/single/quote/type';
 import {getDeltaTextClass} from '@/ui/px/single/quote/utils';
 import {isSecurityTypeFutures} from '@/utils/api';
 import {getDigitsFromMinTick} from '@/utils/chart';
 
-import styles from '../../main.module.css';
 
-
-type Props = {
-  contract: ContractInState | undefined,
-  px: PxOfContract | undefined,
+type Props = QuotePxProps & {
   lastPxFallback: number | undefined,
 };
 

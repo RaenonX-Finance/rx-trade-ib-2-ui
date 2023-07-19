@@ -1,8 +1,7 @@
 import {useSelector} from 'react-redux';
 
+import {ReduxState} from '@/state/types';
 import {OrderOfAccount} from '@/types/data/order';
-
-import {ReduxState} from '../types';
 
 
 export const useOpenOrderSelector = (accountNumber: string | undefined): OrderOfAccount | undefined => (

@@ -1,9 +1,8 @@
 import {useSelector} from 'react-redux';
 
+import {ReduxState} from '@/state/types';
 import {ContractInState} from '@/types/data/contract';
 import {ContractId} from '@/types/data/px';
-
-import {ReduxState} from '../types';
 
 
 export const useContractSelector = (contractId: ContractId | undefined): ContractInState | undefined => (

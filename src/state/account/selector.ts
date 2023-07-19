@@ -1,9 +1,8 @@
 import {useSelector} from 'react-redux';
 
 import {AccountDataKey} from '@/enums/accountData';
+import {ReduxState} from '@/state/types';
 import {AccountData} from '@/types/data/account';
-
-import {ReduxState} from '../types';
 
 
 export const useAccountDataSelector = (accountNumber: string | undefined): AccountData | undefined => (

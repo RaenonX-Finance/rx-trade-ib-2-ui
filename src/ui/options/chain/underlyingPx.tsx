@@ -7,8 +7,7 @@ import {usePxSelector} from '@/state/px/selector';
 import {OptionDefinitionMessage, OptionPxResponse} from '@/types/api/option';
 import {OptionPxSubscribeRequestState} from '@/ui/options/chain/type';
 import {useSendOptionPxRequest} from '@/ui/options/chain/utils';
-import {getDailyChange} from '@/utils/calc/px';
-import {changeInfoToString} from '@/utils/math';
+import {changeInfoToString, getChange} from '@/utils/math';
 import {classNames} from '@/utils/react';
 
 
@@ -32,7 +31,7 @@ export const CurrentUnderlyingPx = ({underlyingContractId, pxRequestState, onReq
   });
 
   const commonClasses = 'w-12 self-center rounded-md text-right text-sm';
-  const change = getDailyChange(px);
+  const change = getChange({original: px?.Close, after: px?.Last});
 
   React.useEffect(() => {
     sendOptionPxInitRequest();

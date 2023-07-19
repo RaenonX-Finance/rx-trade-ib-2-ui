@@ -22,7 +22,7 @@ export const Quote = ({contract, lastPxFallback}: Props) => {
           <QuoteCurrentPx contract={contract} px={px} lastPxFallback={lastPxFallback}/>
         </div>
         <div className="ml-auto">
-          <QuoteDailyChange px={px}/>
+          <QuoteDailyChange contract={contract} px={px}/>
         </div>
       </div>
       <div className="text-end text-xs leading-none">
