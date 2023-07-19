@@ -2,6 +2,7 @@ import React from 'react';
 
 import {askClassName, bidClassName} from '@/components/colors/const';
 import {SignalRContext} from '@/contexts/signalR/main';
+import {useContractSelector} from '@/state/contract/selector';
 import {useOptionDefinitionSelector} from '@/state/option/selector';
 import {usePxSelector} from '@/state/px/selector';
 import {OptionDefinitionMessage, OptionPxResponse} from '@/types/api/option';
@@ -20,6 +21,7 @@ type Props = {
 export const CurrentUnderlyingPx = ({underlyingContractId, pxRequestState, onRequestedPx}: Props) => {
   const connection = React.useContext(SignalRContext);
   const px = usePxSelector(underlyingContractId);
+  const contract = useContractSelector(underlyingContractId);
   const definition = useOptionDefinitionSelector();
 
   const sendOptionPxInitRequest = useSendOptionPxRequest({
@@ -43,7 +45,7 @@ export const CurrentUnderlyingPx = ({underlyingContractId, pxRequestState, onReq
       <div className={classNames(commonClasses, askClassName)}>{px?.Ask?.toFixed(2) ?? '-'}</div>
       <div className={classNames(commonClasses)}>{px?.Last?.toFixed(2) ?? '-'}</div>
       <div className={classNames(commonClasses, 'w-28', change?.textClass)}>
-        {changeInfoToString(change)}
+        {changeInfoToString(change, contract?.digits)}
       </div>
     </>
   );

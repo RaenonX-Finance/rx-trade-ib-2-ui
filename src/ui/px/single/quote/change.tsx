@@ -13,8 +13,12 @@ export const QuoteDailyChange = ({contract, px}: QuotePxProps) => {
 
   const change = getChange({
     original: px.Close,
-    after: isSecurityTypeOptions(contract?.securityType) && px.Bid && px.Ask ? (px.Bid + px.Ask) / 2 : px.Last,
+    after: (isSecurityTypeOptions(contract?.securityType) && px.Bid && px.Ask) ? (px.Bid + px.Ask) / 2 : px.Last,
   });
 
-  return <span className={classNames(change?.textClass, 'whitespace-nowrap')}>{changeInfoToString(change)}</span>;
+  return (
+    <span className={classNames(change?.textClass, 'whitespace-nowrap')}>
+      {changeInfoToString(change, contract?.digits)}
+    </span>
+  );
 };

@@ -5,7 +5,6 @@ import styles from '@/ui/px/main.module.css';
 import {QuotePxProps} from '@/ui/px/single/quote/type';
 import {getDeltaTextClass} from '@/ui/px/single/quote/utils';
 import {isSecurityTypeFutures} from '@/utils/api';
-import {getDigitsFromMinTick} from '@/utils/chart';
 
 
 type Props = QuotePxProps & {
@@ -17,8 +16,7 @@ export const QuoteCurrentPx = ({contract, px, lastPxFallback}: Props) => {
     return <>-</>;
   }
 
-  const {securityType, details} = contract;
-  const digits = getDigitsFromMinTick(details?.minTick ?? 0.01);
+  const {securityType, digits} = contract;
 
   // Futures
   if (isSecurityTypeFutures(securityType)) {

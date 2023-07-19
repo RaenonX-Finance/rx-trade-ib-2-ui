@@ -4,7 +4,6 @@ import {useCurrentAccountSelector} from '@/state/account/selector';
 import {usePositionSelector} from '@/state/position/selector';
 import {ContractInState} from '@/types/data/contract';
 import {getPnlTextClassName} from '@/ui/index/positions/utils';
-import {getDigitsFromMinTick} from '@/utils/chart';
 import {changeInfoToString, getChange} from '@/utils/math';
 import {formatNumber} from '@/utils/string';
 
@@ -25,7 +24,7 @@ export const QuotePositionStats = ({contract}: Props) => {
     return <span className="text-gray-400">No Position</span>;
   }
 
-  const digits = getDigitsFromMinTick(contract.details?.minTick ?? 0.01);
+  const digits = contract.digits;
   const {quantity, avgPx, costBasis, marketValue, realizedPnl} = position;
 
   if (quantity === 0) {
@@ -45,7 +44,8 @@ export const QuotePositionStats = ({contract}: Props) => {
   });
   return (
     <>
-      {quantity} x {avgPx.toFixed(digits)} / <span className={change?.textClass}>{changeInfoToString(change)}</span>
+      {quantity} x {avgPx.toFixed(digits)} /&nbsp;
+      <span className={change?.textClass}>{changeInfoToString(change, digits)}</span>
     </>
   );
 };

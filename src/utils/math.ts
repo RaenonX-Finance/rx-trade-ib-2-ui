@@ -34,13 +34,13 @@ export const getChange = ({original, after}: GetChangeOpts): ChangeInfo | undefi
   };
 };
 
-export const changeInfoToString = (changeInfo: ChangeInfo | undefined): string => {
+export const changeInfoToString = (changeInfo: ChangeInfo | undefined, digits: number | undefined = 2): string => {
   if (!changeInfo) {
     return '-';
   }
 
   const {changePct, changeAmt} = changeInfo;
-  const changeAmtString = formatNumber({num: changeAmt, digits: 2, sign: true});
+  const changeAmtString = formatNumber({num: changeAmt, digits, sign: true});
   const changePctString = formatNumber({num: changePct, digits: 2, sign: true});
 
   return `${changeAmtString} (${changePctString}%)`;

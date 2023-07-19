@@ -18,4 +18,5 @@ export type ContractModel = {
 export type ContractInState = ContractModel & {
   initialMargin: number | null,
   maintenanceMargin: number | null,
+  digits: number,
 };

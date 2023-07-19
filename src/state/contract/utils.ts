@@ -1,5 +1,6 @@
 import {ContractState} from '@/state/contract/types';
 import {ContractModel} from '@/types/data/contract';
+import {getDigitsFromMinTick} from '@/utils/chart';
 
 
 export const insertContract = (originalState: ContractState, contractModel: ContractModel): ContractState => ({
@@ -8,6 +9,7 @@ export const insertContract = (originalState: ContractState, contractModel: Cont
     ...contractModel,
     initialMargin: null,
     maintenanceMargin: null,
+    digits: getDigitsFromMinTick(contractModel?.details?.minTick ?? 0.01),
   },
 });
 
@@ -24,6 +26,7 @@ export const mergeContract = (originalState: ContractState, contractModel: Contr
     [contractModel.id]: {
       ...contractInState,
       ...contractModel,
+      digits: getDigitsFromMinTick(contractModel?.details?.minTick ?? 0.01),
     },
   };
 };
