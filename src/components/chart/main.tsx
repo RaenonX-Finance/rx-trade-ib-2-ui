@@ -31,6 +31,7 @@ type Props = Omit<
   'getIdentifier' |
   'getCompleteUpdateDeps' |
   'getPartialUpdateDeps' |
+  'getAutoFixRangeDeps' |
   'position'
 > & {
   identifier: ChartDataIdentifier,
@@ -76,6 +77,7 @@ export const PxChart = (props: Props) => {
       )}
       getIdentifier={() => identifier}
       getCompleteUpdateDeps={() => [completeUpdate]}
+      getAutoFixRangeDeps={(chartData) => [chartData.bars.length]}
       position={position}
       {...props}
     />

@@ -9,6 +9,8 @@ export type ChartConfigSingle = {
   lineOfCurrentPx: boolean,
   lineOfPositionAvgPx: boolean,
   lineOfExtrema: boolean,
+  // Actions
+  isAutoFixRange: boolean,
 };
 
 export type ChartConfigKeys = keyof ChartConfigSingle;

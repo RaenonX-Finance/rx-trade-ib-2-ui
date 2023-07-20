@@ -19,4 +19,8 @@ export const ConfigEntries: ChartConfigUiEntries = {
     title: 'Extrema',
     isHidden: ({simplified}) => simplified,
   },
+  isAutoFixRange: {
+    group: 'Actions',
+    title: 'Auto-fix visible range',
+  },
 };

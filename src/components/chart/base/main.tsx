@@ -12,12 +12,14 @@ import {
 } from '@/components/chart/base/type';
 import {ChartConfigSingle} from '@/components/chart/config/ui/type';
 import {getTypeOfActiveSeries} from '@/components/chart/plot/utils';
+import {chartShowFromOpen} from '@/components/chart/positioning';
 import {ChartToolbarComplete} from '@/components/chart/toolbar/complete';
 import {ChartToolbarSimplified} from '@/components/chart/toolbar/simplified';
 import {ChartToolbarProps} from '@/components/chart/toolbar/type';
 import {chartConfigDispatchers} from '@/state/chartConfig/dispatchers';
 import {useSingleChartConfigSelector} from '@/state/chartConfig/selector';
 import {ChartConfigDispatcherName, ChartConfigUpdatePayload} from '@/state/chartConfig/type';
+import {getChartConfig} from '@/state/chartConfig/utils';
 import {useLastPxUpdateSelector} from '@/state/chartMeta/selector';
 import {useDispatch} from '@/state/store';
 import {ChartData, ChartDataIdentifier} from '@/types/data/chart';
@@ -34,6 +36,7 @@ export type TradingViewChartProps<T, P, R, L, A extends ChartConfigSingle> =
     renderChartConfig: ChartToolbarProps<T, A>['renderChartConfig'],
     getIdentifier: (data: T) => ChartDataIdentifier,
     getCompleteUpdateDeps: (data: T) => React.DependencyList,
+    getAutoFixRangeDeps: (data: T) => React.DependencyList,
   };
 
 export const TradingViewChart = <T extends ChartData, P, R, L>({
@@ -48,6 +51,7 @@ export const TradingViewChart = <T extends ChartData, P, R, L>({
   renderChartConfig,
   getIdentifier,
   getCompleteUpdateDeps,
+  getAutoFixRangeDeps,
   ...underlyingData
 }: TradingViewChartProps<T, P, R, L, ChartConfigSingle>) => {
   const {simplified, contract} = underlyingData;
@@ -133,6 +137,11 @@ export const TradingViewChart = <T extends ChartData, P, R, L>({
     // > For example, candlestick color
     [chartConfig, ...getCompleteUpdateDeps(chartData)],
   );
+  React.useEffect(() => {
+    if (getChartConfig({config: chartConfig, key: 'isAutoFixRange', simplified})) {
+      chartShowFromOpen({chartRef, chartDataRef, contract});
+    }
+  }, getAutoFixRangeDeps(chartData));
 
   return (
     <div className="relative h-full w-full" ref={chartContainerRef}>

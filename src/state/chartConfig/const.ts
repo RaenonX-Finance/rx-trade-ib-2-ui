@@ -7,6 +7,7 @@ const defaultChartConfigSimplified: ChartConfigSingle = {
   lineOfCurrentPx: false,
   lineOfPositionAvgPx: true,
   lineOfExtrema: false,
+  isAutoFixRange: true,
 };
 
 const defaultChartConfigComplete: ChartConfigSingle = {
@@ -14,6 +15,7 @@ const defaultChartConfigComplete: ChartConfigSingle = {
   lineOfCurrentPx: true,
   lineOfPositionAvgPx: true,
   lineOfExtrema: true,
+  isAutoFixRange: true,
 };
 
 export const getDefaultConfig = (simplified: boolean): ChartConfigSingle => {
