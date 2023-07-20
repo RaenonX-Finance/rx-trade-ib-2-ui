@@ -48,5 +48,8 @@ export const handlePxSeries = (e: ChartUpdatedPayload) => {
     return;
   }
 
-  setAddon.legend((legend) => ({...legend, lastBarOnChart}));
+  setAddon.legend((legend) => ({
+    ...legend,
+    ...(legend.hovered ? {} : lastBarOnChart),
+  }));
 };
