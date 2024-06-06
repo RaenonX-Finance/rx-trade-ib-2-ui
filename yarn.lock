@@ -741,6 +741,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-beforeunload@npm:^2":
+  version: 2.1.5
+  resolution: "@types/react-beforeunload@npm:2.1.5"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 10c0/0e6abbc95b2e2343e99f3206e431aa1285bfebee0b6db27c0242389b32a596cdee09cf5ffafc17503ad5798a09a0d81cc06604515d114d53fa63f41cd912fe53
+  languageName: node
+  linkType: hard
+
 "@types/react-dom@npm:^18.3.0":
   version: 18.3.0
   resolution: "@types/react-dom@npm:18.3.0"
@@ -5006,6 +5015,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-beforeunload@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "react-beforeunload@npm:2.6.0"
+  peerDependencies:
+    react: ^16.8.0 || 17 || 18
+  checksum: 10c0/53929df385322828c38ff045ef0071efa4c1e0d34209a475d6681bb017986a9fbabfee950d8cf30bc0180d0e2523d1cc4dc63508ccbe70dec330d8620eea29a8
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:^18.3.1":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
@@ -5339,6 +5357,7 @@ __metadata:
     "@types/lodash": "npm:^4.17.4"
     "@types/node": "npm:^20.14.2"
     "@types/react": "npm:^18.3.3"
+    "@types/react-beforeunload": "npm:^2"
     "@types/react-dom": "npm:^18.3.0"
     "@typescript-eslint/eslint-plugin": "npm:^7.12.0"
     "@typescript-eslint/parser": "npm:^7.12.0"
@@ -5356,6 +5375,7 @@ __metadata:
     next: "npm:^14.2.3"
     postcss: "npm:^8.4.38"
     react: "npm:^18.3.1"
+    react-beforeunload: "npm:^2.6.0"
     react-dom: "npm:^18.3.1"
     react-redux: "npm:^9.1.2"
     react-time-ago: "npm:^7.3.3"

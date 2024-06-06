@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {SignalRContext} from '@/contexts/signalR/main';
+import {useSignalR} from '@/contexts/signalR/hook';
 import {SignalRRequests} from '@/enums/signalRRequests';
 import {useIsSymbolLockedSelected} from '@/state/chartConfig/selector';
 import {useChartDataSelector} from '@/state/chartPx/selector';
@@ -27,7 +27,7 @@ type UseQuoteDataOpts = {
 };
 
 export const useQuoteData = ({account, request, setRequest, onSetLocked}: UseQuoteDataOpts) => {
-  const connection = React.useContext(SignalRContext);
+  const connection = useSignalR();
   const dispatch = useDispatch();
 
   const [locked, setLocked] = React.useState<LockedContractState>({
@@ -48,7 +48,7 @@ export const useQuoteData = ({account, request, setRequest, onSetLocked}: UseQuo
   const isSymbolLocked = useIsSymbolLockedSelected(locked.requested?.symbol);
 
   const requestChartData = React.useCallback(async (request: ChartDataRequest) => {
-    if (!connection || !account) {
+    if (!account) {
       return;
     }
 

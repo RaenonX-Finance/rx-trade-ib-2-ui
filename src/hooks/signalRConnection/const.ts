@@ -1,5 +1,5 @@
 import {SignalREvents} from '@/enums/signalREvents';
-import {ActionsGenerator, SignalRHandlerMap} from '@/hooks/signalRConnection/type';
+import {SignalRActionGenerator, SignalRHandlerMap} from '@/hooks/signalRConnection/type';
 import {accountDispatchers} from '@/state/account/dispatchers';
 import {AccountDispatcherName} from '@/state/account/types';
 import {chartDispatchers} from '@/state/chartPx/dispatchers';
@@ -83,7 +83,7 @@ export const SignalRHandlers: SignalRHandlerMap = {
   // ---- Price Quoting
   [SignalREvents.PX_UPDATE]: (message: PxUpdateMessage) => {
     const {Last, Bid, Ask} = message.update;
-    const actions: ReturnType<ActionsGenerator> = [pxDispatchers[PxDispatcherName.PX_UPDATE](message)];
+    const actions: ReturnType<SignalRActionGenerator> = [pxDispatchers[PxDispatcherName.PX_UPDATE](message)];
 
     // `ChartDispatcherName.UPDATE_MARKET` only care about Bid/Ask/Last
     if (!!Last || !!Bid || !!Ask) {

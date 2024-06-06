@@ -5,8 +5,8 @@ import {Action} from 'redux';
 import {SignalREvents} from '@/enums/signalREvents';
 
 
-export type ActionsGenerator = (
+export type SignalRActionGenerator = (
   message: any, signalRConnection: HubConnection
 ) => (Action | AsyncThunkAction<any, any, any>)[];
 
-export type SignalRHandlerMap = {[event in SignalREvents]: ActionsGenerator};
+export type SignalRHandlerMap = {[event in SignalREvents]: SignalRActionGenerator};

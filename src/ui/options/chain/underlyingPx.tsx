@@ -3,7 +3,7 @@ import React from 'react';
 import {clsx} from 'clsx';
 
 import {askClassName, bidClassName} from '@/components/colors/const';
-import {SignalRContext} from '@/contexts/signalR/main';
+import {useSignalR} from '@/contexts/signalR/hook';
 import {useContractSelector} from '@/state/contract/selector';
 import {useOptionDefinitionSelector} from '@/state/option/selector';
 import {usePxSelector} from '@/state/px/selector';
@@ -20,7 +20,7 @@ type Props = {
 };
 
 export const CurrentUnderlyingPx = ({underlyingContractId, pxRequestState, onRequestedPx}: Props) => {
-  const connection = React.useContext(SignalRContext);
+  const connection = useSignalR();
   const px = usePxSelector(underlyingContractId);
   const contract = useContractSelector(underlyingContractId);
   const definition = useOptionDefinitionSelector();

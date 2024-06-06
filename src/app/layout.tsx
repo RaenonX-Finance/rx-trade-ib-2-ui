@@ -1,12 +1,15 @@
 import React from 'react';
 
+import {clsx} from 'clsx';
 import {Metadata} from 'next';
 // eslint-disable-next-line camelcase
 import {Nunito_Sans} from 'next/font/google';
 
+import {SignalRProvider} from '@/contexts/signalR/provider';
+import {ReduxProvider} from '@/state/provider';
+
 // eslint-disable-next-line @typescript-eslint/no-restricted-imports
 import './globals.css';
-import {ReduxProvider} from '@/state/provider';
 
 
 // eslint-disable-next-line new-cap
@@ -22,9 +25,11 @@ export const metadata: Metadata = {
 const RootLayout = ({children}: React.PropsWithChildren) => {
   return (
     <html lang="en" className="h-full">
-      <body className={`${font.className} size-full`}>
+      <body className={clsx('size-full', font.className)}>
         <ReduxProvider>
-          {children}
+          <SignalRProvider>
+            {children}
+          </SignalRProvider>
         </ReduxProvider>
       </body>
     </html>

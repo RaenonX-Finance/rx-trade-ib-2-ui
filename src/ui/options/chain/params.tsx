@@ -3,7 +3,7 @@ import React from 'react';
 import {clsx} from 'clsx';
 
 import {Dropdown} from '@/components/dropdown/main';
-import {SignalRContext} from '@/contexts/signalR/main';
+import {useSignalR} from '@/contexts/signalR/hook';
 import {SignalRRequests} from '@/enums/signalRRequests';
 import {useCurrentAccountSelector} from '@/state/account/selector';
 import {errorDispatchers} from '@/state/error/dispatchers';
@@ -19,7 +19,7 @@ import {getErrorMessage} from '@/utils/error';
 
 
 export const OptionChainParams = () => {
-  const connection = React.useContext(SignalRContext);
+  const connection = useSignalR();
   const currentAccount = useCurrentAccountSelector();
   const dispatch = useDispatch();
   const [paramRequest, setParamRequest] = React.useState<InitOptionChainRequest>({
@@ -38,10 +38,6 @@ export const OptionChainParams = () => {
   const definition = useOptionDefinitionSelector();
 
   const submitOptionChainRequest = React.useCallback(() => {
-    if (!connection) {
-      throw new Error('SignalR connection not initialized');
-    }
-
     dispatch(optionDispatchers[OptionDispatcherName.CLEAR]());
     connection
       .send(SignalRRequests.INIT_OPTION_CHAIN, paramRequest)
@@ -56,7 +52,7 @@ export const OptionChainParams = () => {
     e.preventDefault();
 
     submitOptionChainRequest();
-  }, [connection, paramRequest]);
+  }, [paramRequest]);
 
   // on account changed
   React.useEffect(() => {

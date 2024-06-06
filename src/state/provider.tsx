@@ -8,10 +8,12 @@ import {LoadingPane} from '@/components/icons/loading/pane';
 import {persistedStore, store} from '@/state/store';
 
 
-export const ReduxProvider = ({children}: React.PropsWithChildren) => (
-  <Provider store={store}>
-    <PersistGate loading={<LoadingPane text="Loading Redux..."/>} persistor={persistedStore}>
-      {children}
-    </PersistGate>
-  </Provider>
-);
+export const ReduxProvider = ({children}: React.PropsWithChildren) => {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={<LoadingPane text="Loading Redux..."/>} persistor={persistedStore}>
+        {children}
+      </PersistGate>
+    </Provider>
+  );
+};

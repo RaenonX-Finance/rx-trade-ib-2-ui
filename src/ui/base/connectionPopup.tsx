@@ -4,13 +4,12 @@ import {HubConnectionState} from '@microsoft/signalr';
 
 import {LoadingPane} from '@/components/icons/loading/pane';
 import {Popup} from '@/components/popup';
+import {useSignalR} from '@/contexts/signalR/hook';
 
 
-type Props = {
-  state: HubConnectionState,
-};
+export const ConnectionPopup = () => {
+  const {state} = useSignalR();
 
-export const ConnectionPopup = ({state}: Props) => {
   if (state === HubConnectionState.Connected) {
     return <></>;
   }
