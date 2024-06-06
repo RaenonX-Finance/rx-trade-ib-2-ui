@@ -1,5 +1,6 @@
 {
   "name": "rx-trade-ib-2-ui",
+  "packageManager": "yarn@4.2.2",
   "version": "0.1.0",
   "private": true,
   "engines": {
