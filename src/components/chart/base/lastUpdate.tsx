@@ -6,6 +6,7 @@ import {SecondsAgo} from '@/components/timeAgo/seconds';
 import {useAnimation} from '@/hooks/animation';
 import {formatTotalSecs} from '@/utils/time';
 
+// eslint-disable-next-line @typescript-eslint/no-restricted-imports
 import styles from './main.module.css';
 
 

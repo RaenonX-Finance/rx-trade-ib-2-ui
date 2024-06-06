@@ -26,23 +26,22 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+@layer base {
+  table.info-table tr > td {
+    @apply py-0.5 px-2;
+  }
+}
+
 @layer utilities {
-  .width-with-gap {
-    --items-count: 1;
-    --gap: 0.5rem;
-    --gaps-count: calc(var(--items-count) - 1);
-    width: calc(100% / var(--items-count) - (var(--gap) * var(--gaps-count) / var(--items-count)));
-  }
-  
-  .width-with-gap-2-items {
-    --items-count: 2;
-  }
-  
-  .width-with-gap-3-items {
-    --items-count: 3;
-  }
-  
-  .width-with-gap-4-items {
-    --items-count: 4;
+  button.button-chart-toolbar {
+    @apply rounded-full p-0.5 focus-visible:outline-0;
+    
+    &:hover {
+      @apply bg-zinc-200;
+    }
+    
+    &:hover path {
+      @apply stroke-gray-700;
+    }
   }
 }

@@ -25,10 +25,9 @@ import {classNames} from '@/utils/react';
 
 type Props = {
   index: number,
-  className?: string,
 };
 
-export const SinglePriceQuote = ({index, className}: Props) => {
+export const SinglePriceQuote = ({index}: Props) => {
   const dispatch = useDispatch();
 
   const defaultRequest = useChartLockedRequestSelector(index);
@@ -70,7 +69,7 @@ export const SinglePriceQuote = ({index, className}: Props) => {
   }, [account]);
 
   return (
-    <WindowLayout className={`flex-col gap-2 ${className ?? ''}`} fullHeight={false}>
+    <WindowLayout className="flex-col gap-2" fullHeight={false}>
       <form className="flex flex-row gap-1.5" onSubmit={async (e) => {
         e.preventDefault();
         await requestChartData(request);

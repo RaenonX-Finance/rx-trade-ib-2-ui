@@ -6,8 +6,6 @@ import {chartShowFromOpen} from '@/components/chart/positioning';
 import {ChartToolbarProps} from '@/components/chart/toolbar/type';
 import {ChartData} from '@/types/data/chart';
 
-import styles from './main.module.css';
-
 
 export const ChartToolbarSimplified = <T extends ChartData, A>({
   chartConfig,
@@ -22,10 +20,10 @@ export const ChartToolbarSimplified = <T extends ChartData, A>({
   return (
     <div className="flex flex-row">
       {chartConfig && renderChartConfig({contract, chartConfig, setChartConfig, show, setShow})}
-      <button title="Settings" className={styles['toolbar-button']} onClick={() => setShow(true)}>
+      <button title="Settings" className="button-chart-toolbar" onClick={() => setShow(true)}>
         <Cog6ToothIcon className="size-3 text-gray-200"/>
       </button>
-      <button title="To Current Range" disabled={!contract} className={styles['toolbar-button']} onClick={() => {
+      <button title="To Current Range" disabled={!contract} className="button-chart-toolbar" onClick={() => {
         if (!contract) {
           return;
         }
@@ -38,7 +36,7 @@ export const ChartToolbarSimplified = <T extends ChartData, A>({
       }}>
         <MagnifyingGlassMinusIcon className="size-3 text-gray-200"/>
       </button>
-      <button title="To Realtime" className={styles['toolbar-button']} onClick={() => {
+      <button title="To Realtime" className="button-chart-toolbar" onClick={() => {
         chartRef.current?.timeScale().scrollToRealTime();
       }}>
         <ChevronRightIcon className="size-3 text-gray-200"/>

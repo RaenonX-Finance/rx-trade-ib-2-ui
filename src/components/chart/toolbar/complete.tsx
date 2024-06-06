@@ -4,8 +4,6 @@ import {ChevronRightIcon, Cog6ToothIcon} from '@heroicons/react/24/outline';
 
 import {ChartToolbarProps} from '@/components/chart/toolbar/type';
 
-import styles from './main.module.css';
-
 
 export const ChartToolbarComplete = <T, A>({
   chartConfig,
@@ -19,10 +17,10 @@ export const ChartToolbarComplete = <T, A>({
   return (
     <>
       {chartConfig && renderChartConfig({contract, chartConfig, setChartConfig, show, setShow})}
-      <button title="Settings" className={styles['toolbar-button']} onClick={() => setShow(true)}>
+      <button title="Settings" className="button-chart-toolbar" onClick={() => setShow(true)}>
         <Cog6ToothIcon className="size-3 text-gray-200"/>
       </button>
-      <button title="To Realtime" className={styles['toolbar-button']} onClick={() => {
+      <button title="To Realtime" className="button-chart-toolbar" onClick={() => {
         chartRef.current?.timeScale().scrollToRealTime();
       }}>
         <ChevronRightIcon className="size-3 text-gray-200"/>

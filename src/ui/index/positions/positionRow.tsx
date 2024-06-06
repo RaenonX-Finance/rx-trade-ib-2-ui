@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {clsx} from 'clsx';
+
 import {askClassName, bidClassName, markPxClassName} from '@/components/colors/const';
 import {TableRow} from '@/components/table/row';
 import {useCurrentAccountSelector} from '@/state/account/selector';
@@ -50,12 +52,12 @@ export const PositionRow = ({contractId, filter}: Props) => {
     return <></>;
   }
 
-  let rowBgClassName = 'odd:bg-neutral-800/25 even:bg-neutral-900/50';
+  let classOfRowBg = 'odd:bg-neutral-800/25 even:bg-neutral-900/50';
   if (unrealizedPnl) {
     if (unrealizedPnl > 0) {
-      rowBgClassName = 'odd:bg-green-900/50 even:bg-green-950/50';
+      classOfRowBg = 'odd:bg-green-900/50 even:bg-green-950/50';
     } else if (unrealizedPnl < 0) {
-      rowBgClassName = 'odd:bg-rose-900/50 even:bg-rose-950/50';
+      classOfRowBg = 'odd:bg-rose-900/50 even:bg-rose-950/50';
     }
   }
 
@@ -74,7 +76,7 @@ export const PositionRow = ({contractId, filter}: Props) => {
   }
 
   return (
-    <TableRow className={`text-right ${rowBgClassName}`}>
+    <TableRow className={clsx('text-right', classOfRowBg)}>
       <td className="whitespace-nowrap text-left">
         <code>{contract?.localSymbol || contractId}</code>
       </td>

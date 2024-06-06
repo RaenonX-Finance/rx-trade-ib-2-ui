@@ -14,11 +14,12 @@
   span.update-animation {
     --update-theme: #325bc2;
     --update-regular-bg: rgba(5 5 5 / 77%);
-  
+    
+    @apply rounded-lg;
+    
     background-color: var(--update-regular-bg);
     border: 1px solid var(--update-theme);
     color: #b7c6e8;
-    border-radius: 0.5rem;
     animation: 1s ease-in update-light;
   }
 }
