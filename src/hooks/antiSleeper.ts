@@ -16,7 +16,7 @@ export const useAntiSleeper = () => {
 
       navigator.locks.request('antiSleeper', {mode: 'shared'}, () => {
         return promise;
-      }) .catch((err) => dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
+      }).catch((err) => dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
         message: `Anti-sleeper: ${getErrorMessage({err})}`,
       })));
     }

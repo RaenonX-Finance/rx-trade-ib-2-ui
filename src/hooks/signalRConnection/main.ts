@@ -2,6 +2,7 @@ import React from 'react';
 
 import {HubConnection, HubConnectionBuilder, HubConnectionState} from '@microsoft/signalr';
 
+import {useAntiSleeper} from '@/hooks/antiSleeper';
 import {SignalRHandlers} from '@/hooks/signalRConnection/const';
 import {errorDispatchers} from '@/state/error/dispatchers';
 import {ErrorDispatcherName} from '@/state/error/types';
