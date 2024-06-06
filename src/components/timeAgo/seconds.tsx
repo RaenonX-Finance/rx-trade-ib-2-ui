@@ -1,12 +1,21 @@
 import React from 'react';
 
-import {TimeAgoProps} from '@/components/timeAgo/type';
 
+type Props = {
+  epochMs: number | undefined | null,
+  format: (secDiffMs: number) => React.ReactNode,
+  updateMs: number,
+  className?: string,
+  onClick?: () => void,
+};
 
-export const TimeAgo = React.forwardRef<HTMLSpanElement, TimeAgoProps>((
-  {epochMs, format, updateMs, className, onClick},
-  ref,
-) => {
+export const SecondsAgo = React.forwardRef<HTMLSpanElement, Props>(({
+  epochMs,
+  format,
+  updateMs,
+  className,
+  onClick,
+}, ref) => {
   const [secAgo, setSecAgo] = React.useState(epochMs ? (Date.now() - epochMs) / 1000 : undefined);
 
   React.useEffect(() => {
@@ -28,4 +37,4 @@ export const TimeAgo = React.forwardRef<HTMLSpanElement, TimeAgoProps>((
     </span>
   );
 });
-TimeAgo.displayName = 'TimeAgo';
+SecondsAgo.displayName = 'TimeAgo';
