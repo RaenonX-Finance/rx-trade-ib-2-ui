@@ -50,7 +50,12 @@ export const makeLinePxSeries = (e: ChartChangedCommonPayload): ISeriesApi<'Line
 export const makePxSeries = (e: ChartChangedCommonPayload): ChartSeries => {
   const seriesInUse = e.chartApiRef.current?.initData.series;
   if (seriesInUse) {
-    e.chartRef.current?.removeSeries(seriesInUse);
+    try {
+      e.chartRef.current?.removeSeries(seriesInUse);
+    } catch (e) {
+      // `seriesInUse` might not be in a private series map due to UI reloading
+      // Therefore an error will be thrown, but it's fine to ignore
+    }
   }
 
   return getTypeOfActiveSeries(e) === 'Line' ? makeLinePxSeries(e) : makeCandlestickPxSeries(e);
