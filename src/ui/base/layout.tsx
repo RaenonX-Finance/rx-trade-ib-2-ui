@@ -17,7 +17,7 @@ import {Notification} from '@/ui/base/notification';
 import {getErrorMessage} from '@/utils/error';
 
 
-export const PageLayout = ({children}: React.PropsWithChildren<{}>) => {
+export const PageLayout = ({children}: React.PropsWithChildren) => {
   const dispatch = useDispatch();
   const currentAccount = useCurrentAccountSelector();
 
