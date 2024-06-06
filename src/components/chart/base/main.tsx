@@ -74,7 +74,7 @@ export const TradingViewChart = <T extends ChartData, P, R, L>({
   };
 
   const setChartConfig = async (payload: ChartConfigUpdatePayload) => {
-    await dispatch(chartConfigDispatchers[ChartConfigDispatcherName.UPDATE_CHART_CONFIG](payload));
+    dispatch(chartConfigDispatchers[ChartConfigDispatcherName.UPDATE_CHART_CONFIG](payload));
   };
 
   const onDataUpdatedInternal = React.useCallback((partial: boolean) => () => {
@@ -144,7 +144,7 @@ export const TradingViewChart = <T extends ChartData, P, R, L>({
   }, getAutoFixRangeDeps(chartData));
 
   return (
-    <div className="relative h-full w-full" ref={chartContainerRef}>
+    <div className="relative size-full" ref={chartContainerRef}>
       <div className="absolute z-10">
         {renderAddons.legend(legend)}
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {IChartApi, ITimeScaleApi, UTCTimestamp} from 'lightweight-charts';
+import {IChartApi, ITimeScaleApi, Time, UTCTimestamp} from 'lightweight-charts';
 
 import {ChartData} from '@/types/data/chart';
 import {ContractInState} from '@/types/data/contract';
@@ -14,7 +14,7 @@ type ChartShowFromOpenOpts<T extends ChartData> = {
   contract: ContractInState,
 };
 
-const timeToLogical = (scale: ITimeScaleApi, timestamp: UTCTimestamp): number | null => {
+const timeToLogical = (scale: ITimeScaleApi<Time>, timestamp: UTCTimestamp): number | null => {
   const coordinate = scale.timeToCoordinate(timestamp);
 
   if (!coordinate) {

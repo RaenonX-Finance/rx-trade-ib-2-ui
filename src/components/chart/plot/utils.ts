@@ -1,4 +1,4 @@
-import {BarsInfo, DeepPartial, PriceFormat, SeriesType} from 'lightweight-charts';
+import {BarsInfo, DeepPartial, PriceFormat, SeriesType, Time} from 'lightweight-charts';
 
 import {ChartConfigSingle} from '@/components/chart/config/ui/type';
 import {ExtremaPx, GetCurrentExtremaPxOptions} from '@/components/chart/plot/type';
@@ -26,7 +26,7 @@ export const getCurrentChartExtremaPx = ({chart, series, bars}: GetCurrentExtrem
   return getExtremaPxOfRange(barsInfo, bars);
 };
 
-export const getExtremaPxOfRange = (barsInfo: BarsInfo, data: ChartDataBarWithData[]): ExtremaPx => {
+export const getExtremaPxOfRange = (barsInfo: BarsInfo<Time>, data: ChartDataBarWithData[]): ExtremaPx => {
   const {from, to} = barsInfo;
 
   if (!from || !to) {

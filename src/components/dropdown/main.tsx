@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Menu, Transition} from '@headlessui/react';
+import {Menu, MenuButton, MenuItem, MenuItems, Transition} from '@headlessui/react';
 import {ChevronDownIcon} from '@heroicons/react/20/solid';
 
 import {SelectItem} from '@/components/dropdown/type';
@@ -31,7 +31,7 @@ export const Dropdown = ({
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button
+        <MenuButton
           className={classNames(
             'inline-flex w-full justify-center items-center gap-x-1.5 rounded-md px-2 py-1',
             'text-sm text-gray-200 disabled:bg-gray-700 hover:bg-indigo-700',
@@ -41,8 +41,8 @@ export const Dropdown = ({
           disabled={disabled}
         >
           {buttonText}
-          {showIcon && <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-200"/>}
-        </Menu.Button>
+          {showIcon && <ChevronDownIcon className="-mr-1 size-5 text-gray-200"/>}
+        </MenuButton>
       </div>
 
       <Transition
@@ -54,7 +54,7 @@ export const Dropdown = ({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className={classNames(
+        <MenuItems className={classNames(
           'absolute right-0 z-30 mt-2 w-40 origin-top-right divide-y divide-gray-100 rounded-md max-h-48',
           'bg-gradient-to-br from-indigo-950 to-indigo-900 focus:outline-none ring-1 ring-inset ring-indigo-500',
           'overflow-auto',
@@ -64,13 +64,13 @@ export const Dropdown = ({
             <div className="p-1" key={sectionIdx}>
               {itemsOfSection.map(({text, disabled: itemDisabled, onSelected}, idx) => {
                 return (
-                  <Menu.Item key={idx} disabled={itemDisabled}>
-                    {({active, disabled}) => (
+                  <MenuItem key={idx} disabled={itemDisabled}>
+                    {({focus, disabled}) => (
                       <a
                         className={classNames(
                           disabled ?
                             'text-slate-500' :
-                            (active ? 'bg-indigo-600 text-gray-200' : 'text-slate-200'),
+                            (focus ? 'bg-indigo-600 text-gray-200' : 'text-slate-200'),
                           'block px-1.5 py-1 rounded-md text-sm',
                           itemClassName,
                         )}
@@ -79,12 +79,12 @@ export const Dropdown = ({
                         {text}
                       </a>
                     )}
-                  </Menu.Item>
+                  </MenuItem>
                 );
               })}
             </div>
           ))}
-        </Menu.Items>
+        </MenuItems>
       </Transition>
     </Menu>
   );

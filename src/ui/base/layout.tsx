@@ -72,7 +72,7 @@ export const PageLayout = ({children}: React.PropsWithChildren<{}>) => {
 
   return (
     <SignalRContext.Provider value={connection}>
-      <main className="flex h-full w-full flex-col gap-1.5 bg-gradient-radial from-slate-800 to-slate-950 p-2">
+      <main className="flex size-full flex-col gap-1.5 bg-gradient-radial from-slate-800 to-slate-950 p-2">
         <NavBar/>
         {children}
         <ConnectionPopup state={connection.state}/>

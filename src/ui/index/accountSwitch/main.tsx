@@ -16,7 +16,7 @@ export const AccountSwitch = () => {
   return (
     <Dropdown
       title="Account"
-      buttonText={currentAccount || <Loading className="h-4 w-4"/>}
+      buttonText={currentAccount || <Loading className="size-4"/>}
       items={[
         accountList.map((account, idx) => ({
           text: account,

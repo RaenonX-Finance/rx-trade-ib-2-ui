@@ -20,12 +20,12 @@ export const ChartToolbarComplete = <T, A>({
     <>
       {chartConfig && renderChartConfig({contract, chartConfig, setChartConfig, show, setShow})}
       <button title="Settings" className={styles['toolbar-button']} onClick={() => setShow(true)}>
-        <Cog6ToothIcon className="h-3 w-3 text-gray-200"/>
+        <Cog6ToothIcon className="size-3 text-gray-200"/>
       </button>
       <button title="To Realtime" className={styles['toolbar-button']} onClick={() => {
         chartRef.current?.timeScale().scrollToRealTime();
       }}>
-        <ChevronRightIcon className="h-3 w-3 text-gray-200"/>
+        <ChevronRightIcon className="size-3 text-gray-200"/>
       </button>
     </>
   );

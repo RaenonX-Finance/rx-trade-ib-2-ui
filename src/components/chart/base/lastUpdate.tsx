@@ -22,7 +22,7 @@ export const ChartLastUpdateComplete = ({lastUpdate}: Props) => {
       epochMs={lastUpdate}
       format={(secDiffMs) => (
         <>
-          <RssIcon className="mr-1 inline h-2.5 w-2.5 text-gray-200"/>{formatTotalSecs(secDiffMs)}
+          <RssIcon className="mr-1 inline size-2.5 text-gray-200"/>{formatTotalSecs(secDiffMs)}
         </>
       )}
       updateMs={100}

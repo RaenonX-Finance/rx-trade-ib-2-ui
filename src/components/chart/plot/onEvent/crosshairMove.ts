@@ -1,11 +1,11 @@
-import {MouseEventHandler} from 'lightweight-charts';
+import {MouseEventHandler, Time} from 'lightweight-charts';
 
 import {toLegendDataFromBar} from '@/components/chart/convert/legend';
 import {getTypeOfActiveSeries} from '@/components/chart/plot/utils';
 import {ChartInitPayload} from '@/components/chart/type';
 
 
-export const handleCrosshairMove = (e: ChartInitPayload): MouseEventHandler => ({time}) => {
+export const handleCrosshairMove = (e: ChartInitPayload): MouseEventHandler<Time> => ({time}) => {
   const {chartDataRef, setAddon} = e;
 
   const data = chartDataRef.current.bars;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import format from 'date-fns/format';
+import {format} from 'date-fns/format';
 import {WhitespaceData} from 'lightweight-charts';
 
 import {ChartLegendOfDataProps} from '@/components/chart/legend/type';

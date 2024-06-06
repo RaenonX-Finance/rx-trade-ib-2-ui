@@ -15,13 +15,12 @@ const font = Nunito_Sans({
 
 export const metadata: Metadata = {
   title: 'Positions & Orders',
-  colorScheme: 'dark',
 };
 
 const RootLayout = ({children}: React.PropsWithChildren) => {
   return (
     <html lang="en" className="h-full">
-      <body className={`${font.className} h-full w-full`}>
+      <body className={`${font.className} size-full`}>
         <ReduxProvider>
           {children}
         </ReduxProvider>
