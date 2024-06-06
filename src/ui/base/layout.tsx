@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 
-import {ConnectionPopup} from '@/ui/base/connectionPopup';
+import {SignalRConnectionPopup} from '@/components/popup/signalR/main';
 import {NavBar} from '@/ui/base/navbar/main';
 import {Notification} from '@/ui/base/notification';
 
@@ -11,7 +11,7 @@ export const PageLayout = ({children}: React.PropsWithChildren) => {
     <main className="flex size-full flex-col gap-1.5 bg-gradient-radial from-slate-800 to-slate-950 p-2">
       <NavBar/>
       {children}
-      <ConnectionPopup/>
+      <SignalRConnectionPopup/>
       <Notification/>
     </main>
   );
