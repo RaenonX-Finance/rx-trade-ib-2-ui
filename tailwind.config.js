@@ -13,7 +13,7 @@ module.exports = {
         '3xs': '0.65rem',
       },
       lineHeight: {
-        'unset': 'unset',
+        unset: 'unset',
       },
     },
   },
