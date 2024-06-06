@@ -1,9 +1,9 @@
 import React from 'react';
 
 import {XMarkIcon} from '@heroicons/react/20/solid';
-import format from 'date-fns/format';
-import TimeAgo from 'react-timeago';
+import {format} from 'date-fns/format';
 
+import {GlobalTimeAgo} from '@/components/timeAgo/global';
 import {errorDispatchers} from '@/state/error/dispatchers';
 import {useErrorSelector} from '@/state/error/selector';
 import {ErrorDispatcherName} from '@/state/error/types';
@@ -29,7 +29,7 @@ export const Notification = () => {
         <div className="text-xs">
           {
             timestamp &&
-            <>{format(new Date(timestamp), 'yyyy-MM-dd HH:mm:ss')}&nbsp;-&nbsp;<TimeAgo date={timestamp}/></>
+            <>{format(new Date(timestamp), 'yyyy-MM-dd HH:mm:ss')}&nbsp;-&nbsp;<GlobalTimeAgo date={timestamp}/></>
           }
         </div>
         <div className="text-sm">
@@ -45,7 +45,7 @@ export const Notification = () => {
           )}
           onClick={() => dispatch(errorDispatchers[ErrorDispatcherName.HIDE_ERROR]())}
         >
-          <XMarkIcon className="h-6 w-6"/>
+          <XMarkIcon className="size-6"/>
         </button>
       </div>
     </div>

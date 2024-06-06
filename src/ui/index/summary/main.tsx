@@ -1,7 +1,6 @@
 import React from 'react';
 
-import TimeAgo from 'react-timeago';
-
+import {GlobalTimeAgo} from '@/components/timeAgo/global';
 import {useAccountDataSelector, useCurrentAccountSelector} from '@/state/account/selector';
 import {WindowLayout} from '@/ui/index/common/layout';
 import {ExposurePercent} from '@/ui/index/summary/dataCell/exposure';
@@ -31,10 +30,7 @@ export const AccountSummary = () => {
         <div className="text-right text-xs">
           {
             accountData ?
-              <TimeAgo
-                date={accountData.lastUpdatedEpochMs}
-                formatter={(value, unit) => `${value} ${unit}`}
-              /> :
+              <GlobalTimeAgo date={accountData.lastUpdatedEpochMs}/> :
               <>Not Updated</>
           }
         </div>

@@ -7,6 +7,7 @@ import {Nunito_Sans} from 'next/font/google';
 import './globals.css';
 import {ReduxProvider} from '@/state/provider';
 
+
 // eslint-disable-next-line new-cap
 const font = Nunito_Sans({
   subsets: ['latin'],
