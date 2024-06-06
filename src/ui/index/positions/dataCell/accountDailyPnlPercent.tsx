@@ -9,7 +9,7 @@ export const AccountDailyPnlPercent = () => {
   const dailyPnl = useAccountDailyPnlSelector(currentAccount);
 
   if (!dailyPnl) {
-    return <></>;
+    return null;
   }
 
   return <PnlPercent pnl={dailyPnl}/>;

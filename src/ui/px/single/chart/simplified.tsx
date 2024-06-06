@@ -17,7 +17,7 @@ type Props = {
 
 export const SimplifiedChart = ({chartData, account, contract, identifier, width, height}: Props) => {
   if (!width || !height || !identifier) {
-    return <></>;
+    return null;
   }
 
   if (!contract) {

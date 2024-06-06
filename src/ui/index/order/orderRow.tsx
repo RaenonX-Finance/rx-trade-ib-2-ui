@@ -24,7 +24,7 @@ export const OrderRow = ({order, isCompleted = false, className}: Props) => {
   const px = usePxSelector(order?.contract.id);
 
   if (!order) {
-    return <></>;
+    return null;
   }
 
   const {

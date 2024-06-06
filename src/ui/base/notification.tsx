@@ -17,7 +17,7 @@ export const Notification = () => {
   const dispatch = useDispatch();
 
   if (!show) {
-    return <></>;
+    return null;
   }
 
   return (

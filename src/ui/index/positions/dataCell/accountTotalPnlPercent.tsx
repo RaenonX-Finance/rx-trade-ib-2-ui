@@ -9,7 +9,7 @@ export const AccountTotalPnlPercent = () => {
   const accountData = useAccountDataSelector(currentAccount);
 
   if (!accountData || !accountData.pnl) {
-    return <></>;
+    return null;
   }
 
   const {unrealized, realized} = accountData.pnl;

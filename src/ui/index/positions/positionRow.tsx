@@ -33,7 +33,7 @@ export const PositionRow = ({contractId, filter}: Props) => {
   const positionData = usePositionSelector(currentAccount, contract?.id);
 
   if (!positionData) {
-    return <></>;
+    return null;
   }
 
   let {
@@ -49,7 +49,7 @@ export const PositionRow = ({contractId, filter}: Props) => {
   const showAll = isAllValueFalse(filter);
 
   if (!showAll && ((holding && quantity === 0) || (exited && quantity !== 0))) {
-    return <></>;
+    return null;
   }
 
   let classOfRowBg = 'odd:bg-neutral-800/25 even:bg-neutral-900/50';

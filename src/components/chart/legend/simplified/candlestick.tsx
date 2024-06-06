@@ -12,7 +12,7 @@ export const ChartSimplifiedLegendOfCandlestick = ({legend, data}: ChartLegendOf
   const {close} = data;
 
   if (!hovered) {
-    return <></>;
+    return null;
   }
 
   // `epochSec` here already has timezone offset,

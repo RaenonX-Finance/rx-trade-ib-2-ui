@@ -12,7 +12,7 @@ export const ChartSimplifiedLegendOfLine = ({legend, data}: ChartLegendOfDataPro
   const {value} = data;
 
   if (!hovered) {
-    return <></>;
+    return null;
   }
 
   // `epochSec` here already has timezone offset,

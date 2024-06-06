@@ -11,7 +11,7 @@ export const ChartSimplifiedLegendOfWhitespace = ({legend}: ChartLegendOfDataPro
   const {epochSec, hovered} = legend;
 
   if (!hovered) {
-    return <></>;
+    return null;
   }
 
   return (

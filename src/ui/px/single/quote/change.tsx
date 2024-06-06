@@ -9,7 +9,7 @@ import {changeInfoToString, getChange} from '@/utils/math';
 
 export const QuoteDailyChange = ({contract, px}: QuotePxProps) => {
   if (!px) {
-    return <></>;
+    return null;
   }
 
   const change = getChange({

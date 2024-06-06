@@ -11,7 +11,7 @@ export const ConnectionPopup = () => {
   const {state} = useSignalR();
 
   if (state === HubConnectionState.Connected) {
-    return <></>;
+    return null;
   }
 
   if (state === HubConnectionState.Connecting) {

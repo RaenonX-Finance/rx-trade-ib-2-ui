@@ -6,7 +6,7 @@ import {ChartLegendProps} from '@/components/chart/legend/type';
 export const ChartLegendForExtrema = ({legend}: ChartLegendProps) => {
   const {extrema, digits} = legend;
   if (!extrema) {
-    return <></>;
+    return null;
   }
 
   const {min, max} = extrema;
