@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {classNames} from '@/utils/react';
+import {clsx} from 'clsx';
 
 
 export type ToggleButtonProps = {
@@ -34,7 +34,7 @@ export const ToggleButton = ({
       />
       <label
         htmlFor={id}
-        className={classNames(
+        className={clsx(
           'cursor-pointer select-none rounded-lg px-2 py-1 text-sm transition-colors duration-200 ease-in-out',
           'hover:bg-gray-700 hover:text-gray-200 peer-checked:hover:text-gray-100',
           defaultTextClassName ?? 'text-gray-500',

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {clsx} from 'clsx';
+
 import {askClassName, bidClassName, orderPxClassName} from '@/components/colors/const';
 import {TableRow} from '@/components/table/row';
 import {useContractSelector} from '@/state/contract/selector';
@@ -8,7 +10,6 @@ import {Order} from '@/types/data/order';
 import {OrderExpectedPnL} from '@/ui/index/order/dataCell/expectedPnl';
 import {OrderNetLiqPercent} from '@/ui/index/order/dataCell/netLiquidityPercent';
 import {getOrderValue, getPxMoveToHit, getSideClassName} from '@/ui/index/order/utils';
-import {classNames} from '@/utils/react';
 import {formatPercent} from '@/utils/string';
 
 
@@ -46,7 +47,7 @@ export const OrderRow = ({order, isCompleted = false, className}: Props) => {
   const isOrderValueNaN = isNaN(orderValue);
 
   return (
-    <TableRow className={classNames(
+    <TableRow className={clsx(
       'text-right',
       isCancelled ? 'text-gray-500' : (isFilled ? 'text-green-500' : ''),
       'odd:bg-gray-900 even:bg-gray-800',
@@ -54,7 +55,7 @@ export const OrderRow = ({order, isCompleted = false, className}: Props) => {
     )}>
       <td className="whitespace-nowrap text-left"><code>{contract?.localSymbol || contractOfOrder.id}</code></td>
       <td>{isFilled ? filledQtyText : `${filledQtyText} / ${targetQuantity}`}</td>
-      <td className={classNames('text-center', getSideClassName(side))}>{side}</td>
+      <td className={clsx('text-center', getSideClassName(side))}>{side}</td>
       <td className="text-center">{tif}</td>
       <td className="text-center">{isCancelled ? 'CXL' : type}</td>
       <td className={orderPxClassName}>{price > 0 ? price.toFixed(2) : '-'}</td>

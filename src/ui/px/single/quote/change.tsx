@@ -1,9 +1,10 @@
 import React from 'react';
 
+import {clsx} from 'clsx';
+
 import {QuotePxProps} from '@/ui/px/single/quote/type';
 import {isSecurityTypeOptions} from '@/utils/api';
 import {changeInfoToString, getChange} from '@/utils/math';
-import {classNames} from '@/utils/react';
 
 
 export const QuoteDailyChange = ({contract, px}: QuotePxProps) => {
@@ -17,7 +18,7 @@ export const QuoteDailyChange = ({contract, px}: QuotePxProps) => {
   });
 
   return (
-    <span className={classNames(change?.textClass, 'whitespace-nowrap')}>
+    <span className={clsx(change?.textClass, 'whitespace-nowrap')}>
       {changeInfoToString(change, contract?.digits)}
     </span>
   );

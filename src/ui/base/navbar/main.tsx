@@ -1,13 +1,13 @@
 'use client';
 import React from 'react';
 
+import {clsx} from 'clsx';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 
 import {FullWidthRow} from '@/components/row/fullWidthRow';
 import {NavEntries} from '@/ui/base/navbar/const';
 import {AccountSwitch} from '@/ui/index/accountSwitch/main';
-import {classNames} from '@/utils/react';
 
 
 export const NavBar = () => {
@@ -20,7 +20,7 @@ export const NavBar = () => {
           <li key={href}>
             <Link
               href={href}
-              className={classNames(
+              className={clsx(
                 'inline-block rounded-t-lg px-2 py-1',
                 href === pathname ? `bg-gray-800 ${activeTextClassName}` : 'hover:bg-gray-800 hover:text-gray-300',
               )}>

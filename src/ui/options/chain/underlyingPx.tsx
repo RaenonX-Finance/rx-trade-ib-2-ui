@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {clsx} from 'clsx';
+
 import {askClassName, bidClassName} from '@/components/colors/const';
 import {SignalRContext} from '@/contexts/signalR/main';
 import {useContractSelector} from '@/state/contract/selector';
@@ -9,7 +11,6 @@ import {OptionDefinitionMessage, OptionPxResponse} from '@/types/api/option';
 import {OptionPxSubscribeRequestState} from '@/ui/options/chain/type';
 import {useSendOptionPxRequest} from '@/ui/options/chain/utils';
 import {changeInfoToString, getChange} from '@/utils/math';
-import {classNames} from '@/utils/react';
 
 
 type Props = {
@@ -41,10 +42,10 @@ export const CurrentUnderlyingPx = ({underlyingContractId, pxRequestState, onReq
 
   return (
     <>
-      <div className={classNames(commonClasses, bidClassName)}>{px?.Bid?.toFixed(2) ?? '-'}</div>
-      <div className={classNames(commonClasses, askClassName)}>{px?.Ask?.toFixed(2) ?? '-'}</div>
-      <div className={classNames(commonClasses)}>{px?.Last?.toFixed(2) ?? '-'}</div>
-      <div className={classNames(commonClasses, 'w-28', change?.textClass)}>
+      <div className={clsx(commonClasses, bidClassName)}>{px?.Bid?.toFixed(2) ?? '-'}</div>
+      <div className={clsx(commonClasses, askClassName)}>{px?.Ask?.toFixed(2) ?? '-'}</div>
+      <div className={clsx(commonClasses)}>{px?.Last?.toFixed(2) ?? '-'}</div>
+      <div className={clsx(commonClasses, 'w-28', change?.textClass)}>
         {changeInfoToString(change, contract?.digits)}
       </div>
     </>

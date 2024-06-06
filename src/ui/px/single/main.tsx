@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 
+import {clsx} from 'clsx';
 import useResizeObserver from 'use-resize-observer';
 
 import {Dropdown} from '@/components/dropdown/main';
@@ -20,7 +21,6 @@ import {Quote} from '@/ui/px/single/quote/main';
 import {getChartInputBoxStyling} from '@/ui/px/single/utils';
 import {ChartDataRequest} from '@/ui/px/type';
 import {getErrorMessage} from '@/utils/error';
-import {classNames} from '@/utils/react';
 
 
 type Props = {
@@ -36,6 +36,8 @@ export const SinglePriceQuote = ({index}: Props) => {
   const {ref, width, height} = useResizeObserver<HTMLDivElement>();
   const [request, setRequest] = React.useState<ChartDataRequest>(defaultRequest);
 
+  // FIXME: Switching tab shows "server disconnected"
+  // FIXME: data update overwrites value when hovering on simplified legend (blink)
   const {
     chartData,
     contract,
@@ -68,6 +70,7 @@ export const SinglePriceQuote = ({index}: Props) => {
     }
   }, [account]);
 
+  // FIXME: Adjust period to show based on interval
   return (
     <WindowLayout className="flex-col gap-2" fullHeight={false}>
       <form className="flex flex-row gap-1.5" onSubmit={async (e) => {
@@ -82,8 +85,8 @@ export const SinglePriceQuote = ({index}: Props) => {
             symbol: target.value.toUpperCase(),
           }))}
           onKeyDown={onKeyDown}
-          className={classNames(
-            'rounded-md px-1.5 py-0.5 text-sm w-full focus-visible:outline-0 bg-gradient-to-br',
+          className={clsx(
+            'w-full rounded-md bg-gradient-to-br px-1.5 py-0.5 text-sm focus-visible:outline-0',
             'disabled:text-gray-500',
             getChartInputBoxStyling({request, locked}),
           )}
@@ -108,8 +111,8 @@ export const SinglePriceQuote = ({index}: Props) => {
               },
             })),
           ]}
-          buttonClassName={classNames(
-            'px-1.5 py-0.5 bg-gradient-to-br from-gray-800 to-gray-600 text-xs',
+          buttonClassName={clsx(
+            'bg-gradient-to-br from-gray-800 to-gray-600 px-1.5 py-0.5 text-xs',
             'hover:from-indigo-700 hover:to-indigo-700',
             'disabled:from-gray-700 disabled:to-gray-700 disabled:text-gray-500',
           )}
@@ -122,7 +125,7 @@ export const SinglePriceQuote = ({index}: Props) => {
           id={`rthOnly-${index}-${request.symbol}`}
           title={request.rthOnly ? 'RTH' : 'ETH'}
           onChange={() => setRequest((original) => ({...original, rthOnly: !request.rthOnly}))}
-          className={classNames(
+          className={clsx(
             'hover:text-amber-300 peer-checked:text-amber-300 peer-checked:hover:bg-amber-700',
             'peer-disabled:text-gray-500 peer-disabled:hover:bg-transparent',
           )}

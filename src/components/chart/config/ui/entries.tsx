@@ -1,11 +1,12 @@
 import React from 'react';
 
+import {clsx} from 'clsx';
+
 import {useGroupedChartConfigEntries} from '@/components/chart/config/hook';
 import {ChartConfigPanelProps} from '@/components/chart/config/ui/main';
 import {ChartConfigKeys, ChartConfigSingle} from '@/components/chart/config/ui/type';
 import {ToggleButton} from '@/components/inputs/toggleButton';
 import {getChartConfig} from '@/state/chartConfig/utils';
-import {classNames} from '@/utils/react';
 
 
 type Props = Pick<ChartConfigPanelProps, 'config' | 'configCheckOptions'> & {
@@ -42,7 +43,7 @@ export const ChartConfigEntries = ({config, updateConfig, configCheckOptions}: P
                   active={value}
                   title={title}
                   onChange={() => updateConfig(configKey, !value)}
-                  className={classNames(
+                  className={clsx(
                     'ring-1 ring-inset ring-gray-700',
                     'peer-checked:text-neutral-300 peer-checked:ring-neutral-300',
                     'peer-checked:hover:bg-neutral-300 peer-checked:hover:text-slate-800',

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {classNames} from '@/utils/react';
+import {clsx} from 'clsx';
 
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 export const WindowLayout = ({children, className, fullHeight = true}: React.PropsWithChildren<Props>) => {
   return (
     <div
-      className={classNames(
+      className={clsx(
         'flex rounded-lg bg-gradient-to-br from-violet-950 to-indigo-800 p-2',
         fullHeight ? 'h-full' : '',
         className,

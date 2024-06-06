@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {clsx} from 'clsx';
+
 import {Dropdown} from '@/components/dropdown/main';
 import {SignalRContext} from '@/contexts/signalR/main';
 import {SignalRRequests} from '@/enums/signalRRequests';
@@ -14,7 +16,6 @@ import {InitOptionChainRequest} from '@/types/api/option';
 import {OptionPxSubscribeRequestState} from '@/ui/options/chain/type';
 import {CurrentUnderlyingPx} from '@/ui/options/chain/underlyingPx';
 import {getErrorMessage} from '@/utils/error';
-import {classNames} from '@/utils/react';
 
 
 export const OptionChainParams = () => {
@@ -104,8 +105,8 @@ export const OptionChainParams = () => {
             symbol: target.value.toUpperCase(),
           }))}
           required
-          className={classNames(
-            'rounded-md px-1.5 py-0.5 text-xs w-20 focus-visible:outline-0',
+          className={clsx(
+            'w-20 rounded-md px-1.5 py-0.5 text-xs focus-visible:outline-0',
             'bg-gradient-to-br from-amber-800 to-amber-700 invalid:from-red-800 invalid:to-red-700',
           )}
         />
@@ -135,8 +136,8 @@ export const OptionChainParams = () => {
           required
           id="strike-range"
           min={1}
-          className={classNames(
-            'rounded-md px-1.5 py-0.5 text-xs w-12 focus-visible:outline-0',
+          className={clsx(
+            'w-12 rounded-md px-1.5 py-0.5 text-xs focus-visible:outline-0',
             'bg-gradient-to-br from-gray-800 to-gray-700 invalid:from-red-800 invalid:to-red-700',
           )}
         />

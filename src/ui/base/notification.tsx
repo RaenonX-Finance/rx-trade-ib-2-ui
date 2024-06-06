@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {XMarkIcon} from '@heroicons/react/20/solid';
+import {clsx} from 'clsx';
 import {format} from 'date-fns/format';
 
 import {GlobalTimeAgo} from '@/components/timeAgo/global';
@@ -8,7 +9,6 @@ import {errorDispatchers} from '@/state/error/dispatchers';
 import {useErrorSelector} from '@/state/error/selector';
 import {ErrorDispatcherName} from '@/state/error/types';
 import {useDispatch} from '@/state/store';
-import {classNames} from '@/utils/react';
 
 
 export const Notification = () => {
@@ -21,8 +21,8 @@ export const Notification = () => {
   }
 
   return (
-    <div className={classNames(
-      'absolute bottom-2 right-2 flex flex-row items-center rounded-lg z-30',
+    <div className={clsx(
+      'absolute bottom-2 right-2 z-30 flex flex-row items-center rounded-lg',
       'bg-gradient-to-br from-red-900 to-red-800 text-red-50',
     )}>
       <div className="flex flex-col gap-0.5 p-1.5">
@@ -39,9 +39,9 @@ export const Notification = () => {
       <div>
         <button
           title="Close"
-          className={classNames(
-            'inline-flex h-10 w-10 items-center justify-center rounded-lg',
-            'hover:ring-red-400 hover:ring-2 hover:ring-inset',
+          className={clsx(
+            'inline-flex size-10 items-center justify-center rounded-lg',
+            'hover:ring-2 hover:ring-inset hover:ring-red-400',
           )}
           onClick={() => dispatch(errorDispatchers[ErrorDispatcherName.HIDE_ERROR]())}
         >
