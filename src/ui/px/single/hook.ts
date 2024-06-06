@@ -27,7 +27,7 @@ type UseQuoteDataOpts = {
 };
 
 export const useQuoteData = ({account, request, setRequest, onSetLocked}: UseQuoteDataOpts) => {
-  const connection = useSignalR();
+  const {connection} = useSignalR();
   const dispatch = useDispatch();
 
   const [locked, setLocked] = React.useState<LockedContractState>({

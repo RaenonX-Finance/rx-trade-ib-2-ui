@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
 
+import {useSignalRConnection} from '@/contexts/signalR/connection/main';
 import {SignalRContext} from '@/contexts/signalR/context';
 import {SignalRRequests} from '@/enums/signalRRequests';
-import {useSignalRConnection} from '@/hooks/signalRConnection/main';
 import {errorDispatchers} from '@/state/error/dispatchers';
 import {ErrorDispatcherName} from '@/state/error/types';
 import {useDispatch} from '@/state/store';
@@ -26,7 +26,7 @@ export const SignalRProvider = ({children}: React.PropsWithChildren) => {
   });
 
   return (
-    <SignalRContext.Provider value={connection}>
+    <SignalRContext.Provider value={{connection, state: connection.state}}>
       {children}
     </SignalRContext.Provider>
   );

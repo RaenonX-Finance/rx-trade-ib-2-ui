@@ -1,5 +1,5 @@
+import {SignalRActionGenerator, SignalRHandlerMap} from '@/contexts/signalR/connection/type';
 import {SignalREvents} from '@/enums/signalREvents';
-import {SignalRActionGenerator, SignalRHandlerMap} from '@/hooks/signalRConnection/type';
 import {accountDispatchers} from '@/state/account/dispatchers';
 import {AccountDispatcherName} from '@/state/account/types';
 import {chartDispatchers} from '@/state/chartPx/dispatchers';

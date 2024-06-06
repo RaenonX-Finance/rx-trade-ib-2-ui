@@ -20,7 +20,7 @@ type Props = {
 };
 
 export const CurrentUnderlyingPx = ({underlyingContractId, pxRequestState, onRequestedPx}: Props) => {
-  const connection = useSignalR();
+  const {connection} = useSignalR();
   const px = usePxSelector(underlyingContractId);
   const contract = useContractSelector(underlyingContractId);
   const definition = useOptionDefinitionSelector();

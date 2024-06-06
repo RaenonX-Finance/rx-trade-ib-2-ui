@@ -19,7 +19,7 @@ import {getErrorMessage} from '@/utils/error';
 
 
 export const OptionChainParams = () => {
-  const connection = useSignalR();
+  const {connection} = useSignalR();
   const currentAccount = useCurrentAccountSelector();
   const dispatch = useDispatch();
   const [paramRequest, setParamRequest] = React.useState<InitOptionChainRequest>({

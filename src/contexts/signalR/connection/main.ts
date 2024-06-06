@@ -3,9 +3,9 @@ import React from 'react';
 import {HubConnection, HubConnectionBuilder, HubConnectionState} from '@microsoft/signalr';
 import {useBeforeunload} from 'react-beforeunload';
 
+import {SignalRHandlers} from '@/contexts/signalR/connection/const';
 import {SignalRRequests} from '@/enums/signalRRequests';
 import {useAntiSleeper} from '@/hooks/antiSleeper';
-import {SignalRHandlers} from '@/hooks/signalRConnection/const';
 import {useCurrentAccountSelector} from '@/state/account/selector';
 import {errorDispatchers} from '@/state/error/dispatchers';
 import {ErrorDispatcherName} from '@/state/error/types';

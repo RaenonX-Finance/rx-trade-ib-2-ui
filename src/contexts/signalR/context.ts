@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {HubConnection} from '@microsoft/signalr';
+import {SignalRConnection} from '@/contexts/signalR/type';
 
 
-export const SignalRContext = React.createContext<HubConnection | null>(null);
+export const SignalRContext = React.createContext<SignalRConnection | null>(null);

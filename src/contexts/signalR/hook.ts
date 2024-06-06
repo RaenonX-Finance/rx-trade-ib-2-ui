@@ -1,11 +1,11 @@
 import React from 'react';
 
-import {HubConnection} from '@microsoft/signalr';
 
 import {SignalRContext} from '@/contexts/signalR/context';
+import {SignalRConnection} from '@/contexts/signalR/type';
 
 
-export const useSignalR = (): HubConnection => {
+export const useSignalR = (): SignalRConnection => {
   const data = React.useContext(SignalRContext);
 
   if (!data) {
