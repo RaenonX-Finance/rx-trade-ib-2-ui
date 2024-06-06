@@ -4,7 +4,7 @@ import {PnlPercent} from '@/ui/index/positions/dataCell/pnlPercent';
 
 
 type Props = {
-  dailyPnl: number | null
+  dailyPnl: number | null,
 };
 
 export const PositionDailyPnlPercent = ({dailyPnl}: Props) => {

@@ -4,6 +4,7 @@ import {Metadata} from 'next';
 // eslint-disable-next-line camelcase
 import {Nunito_Sans} from 'next/font/google';
 
+// eslint-disable-next-line @typescript-eslint/no-restricted-imports
 import './globals.css';
 import {ReduxProvider} from '@/state/provider';
 

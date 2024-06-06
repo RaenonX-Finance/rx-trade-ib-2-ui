@@ -14,5 +14,5 @@ export enum SignalREvents {
   POSITION_PNL_UPDATE = 'PositionPnlUpdate',
   PX_UPDATE = 'PxUpdate',
   PX_HISTORY_INIT = 'PxHistoryInit',
-  PX_HISTORY_UPDATE = 'PxHistoryUpdate'
+  PX_HISTORY_UPDATE = 'PxHistoryUpdate',
 }

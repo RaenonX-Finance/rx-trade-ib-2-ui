@@ -5,7 +5,7 @@ import {formatPercent} from '@/utils/string';
 
 
 type Props = {
-  orderValue: number
+  orderValue: number,
 };
 
 export const OrderNetLiqPercent = ({orderValue}: Props) => {

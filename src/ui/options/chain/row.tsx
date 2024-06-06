@@ -7,7 +7,7 @@ import {formatPercent} from '@/utils/string';
 
 
 type Props = {
-  contractId: ContractId
+  contractId: ContractId,
 };
 
 export const OptionChainDataCells = ({contractId}: Props) => {

@@ -22,33 +22,40 @@ parserOptions:
   sourceType: module
 
 plugins:
+  - "@stylistic"
+  - "@stylistic/ts"
   - "@typescript-eslint"
   - react
-
-ignorePatterns:
-  - '*.d.ts'
+  - unused-imports
 
 rules:
-  "@typescript-eslint/no-unused-vars":
+  # Need to disable this for `unused-imports/no-unused-vars` to work properly
+  no-unused-vars:
+    - off
+
+  # Need to disable this for `unused-imports/no-unused-vars` to work properly
+  "@stylistic/no-unused-vars":
+    - off
+
+  unused-imports/no-unused-vars:
     - error
     - varsIgnorePattern: "^[_]+$"
       argsIgnorePattern: "^[_]+$"
       ignoreRestSiblings: true
 
-  # Needs to disable local no-unused-vars for this rule to work properly
-  no-unused-vars:
+  unused-imports/no-unused-imports:
+    - error
+
+  indent:
     - off
 
+  # Not using `@stylistic/indent` as it has different behavior than the one in `@typescript-eslint/indent`
   "@typescript-eslint/indent":
     - error
     - 2
     - ignoredNodes:
         - TSTypeParameterInstantiation
       MemberExpression: 1
-
-  # Needs to disable local indent for this rule to work properly
-  indent:
-    - off
 
   linebreak-style:
     - error
@@ -57,6 +64,24 @@ rules:
   max-len:
     - error
     - code: 119
+
+  no-console:
+    - error
+    - allow:
+        - info
+        - warn
+        - error
+
+  # Need to disable this for `@typescript-eslint/no-restricted-imports` to work properly
+  no-restricted-imports:
+    - off
+
+  "@typescript-eslint/no-restricted-imports":
+    - error
+    - patterns:
+        - group:
+            - .*
+          message: Only absolute import, such as `@/const/auth` is allowed.
 
   import/order:
     - error
@@ -79,17 +104,30 @@ rules:
     - error
     - count: 2
 
-  object-curly-spacing: off
-
-  "@typescript-eslint/object-curly-spacing":
+  "@stylistic/object-curly-spacing":
     - error
     - never
 
-  semi:
-    - off
-
-  "@typescript-eslint/semi":
+  "@stylistic/semi":
     - error
+
+  "@stylistic/member-delimiter-style":
+    - error
+    - singleline:
+        delimiter: comma
+        requireLast: false
+      multiline:
+        delimiter: comma
+        requireLast: true
+
+  "@stylistic/ts/type-annotation-spacing":
+    - error
+    - before: false
+      after: true
+      overrides:
+        arrow:
+          before: true
+          after: true
 
   space-in-parens:
     - error
@@ -107,6 +145,73 @@ rules:
   react-hooks/exhaustive-deps:
     - off
 
+  tailwindcss/classnames-order:
+    - error
+
+  tailwindcss/no-custom-classname:
+    - error
+
+  quote-props:
+    - error
+    - consistent-as-needed
+    - keywords: false
+      unnecessary: true
+
+  "@stylistic/arrow-spacing":
+    - error
+    - before: true
+      after: true
+
+  "@stylistic/comma-dangle":
+    - error
+    - arrays: always-multiline
+      objects: always-multiline
+      imports: always-multiline
+      exports: always-multiline
+      functions: always-multiline
+      tuples: always-multiline
+      enums: always-multiline
+      generics: ignore
+
+  "@stylistic/space-unary-ops":
+    - error
+    - words: true
+      nonwords: false
+
+  "@stylistic/space-infix-ops":
+    - error
+
+  no-trailing-spaces: error
+
+  padding-line-between-statements:
+    - error
+    - blankLine: always
+      prev: "*"
+      next: cjs-export
+    - blankLine: always
+      prev: "*"
+      next: export
+    - blankLine: always
+      prev: const
+      next: cjs-export
+    - blankLine: always
+      prev: "*"
+      next: export
+
+  implicit-arrow-linebreak:
+    - error
+    - beside
+
+  function-call-argument-newline:
+    - error
+    - consistent
+
+  operator-linebreak:
+    - error
+    - after
+
 settings:
   react:
     version: detect
+  tailwindcss:
+    classRegex: "^class(.*)?$"

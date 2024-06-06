@@ -53,7 +53,7 @@ type GetKeyOfActiveSeriesOpts = {
   simplified: boolean,
 };
 
-export const getTypeOfActiveSeries = ({chartConfig, simplified} : GetKeyOfActiveSeriesOpts): SeriesType => {
+export const getTypeOfActiveSeries = ({chartConfig, simplified}: GetKeyOfActiveSeriesOpts): SeriesType => {
   const showAsLine = getChartConfig({config: chartConfig, key: 'showAsLine', simplified});
 
   if (showAsLine) {

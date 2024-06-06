@@ -28,7 +28,7 @@ const slice = createSlice({
     );
     builder.addCase(
       orderDispatchers[OrderDispatcherName.MARK_FILLED],
-      (state, {payload}) =>moveOrderFromOpenToCompleted({
+      (state, {payload}) => moveOrderFromOpenToCompleted({
         state,
         account: payload.account,
         orderId: payload.orderId,

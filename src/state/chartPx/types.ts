@@ -6,7 +6,7 @@ export const CHART_STATE_NAME = 'Chart';
 export enum ChartDispatcherName {
   HISTORY_INIT = 'Chart/HistoryInit',
   HISTORY_UPDATE = 'Chart/HistoryUpdate',
-  UPDATE_MARKET = 'Chart/UpdateMarket'
+  UPDATE_MARKET = 'Chart/UpdateMarket',
 }
 
 export type ChartDataState = {

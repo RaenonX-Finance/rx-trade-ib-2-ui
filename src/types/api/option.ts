@@ -13,7 +13,7 @@ export type OptionDefinitionMessage = {
   underlyingContractId: ContractId,
   exchange: string[],
   expiry: string[],
-  strike: number[]
+  strike: number[],
 };
 
 export type OptionContractIdPair = {

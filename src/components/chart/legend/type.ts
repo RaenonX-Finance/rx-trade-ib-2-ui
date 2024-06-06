@@ -8,5 +8,5 @@ export type ChartLegendProps = {
 };
 
 export type ChartLegendOfDataProps<T> = ChartLegendProps & {
-  data: T
+  data: T,
 };

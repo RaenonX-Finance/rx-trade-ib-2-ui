@@ -6,7 +6,7 @@ import {formatPercent} from '@/utils/string';
 
 
 type Props = {
-  pnl: number | null
+  pnl: number | null,
 };
 
 export const PnlPercent = ({pnl}: Props) => {

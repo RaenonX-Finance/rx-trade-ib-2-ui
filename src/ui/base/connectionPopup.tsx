@@ -7,7 +7,7 @@ import {Popup} from '@/components/popup';
 
 
 type Props = {
-  state: HubConnectionState
+  state: HubConnectionState,
 };
 
 export const ConnectionPopup = ({state}: Props) => {

@@ -5,10 +5,10 @@ import {ErrorDispatcherName} from '@/state/error/types';
 
 
 type OnAsyncThunkErrorOpts<T, R> = {
-  message: string;
-  data: T;
-  rejectWithValue: (value: string) => R;
-  dispatch: Dispatch;
+  message: string,
+  data: T,
+  rejectWithValue: (value: string) => R,
+  dispatch: Dispatch,
 };
 
 export const onAsyncThunkError = <T, R>({

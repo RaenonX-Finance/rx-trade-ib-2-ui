@@ -17,5 +17,5 @@ export type ExtremaPx = {
 export type GetCurrentExtremaPxOptions = {
   chart: IChartApi,
   bars: ChartDataBarWithData[],
-  series: ChartSeries
+  series: ChartSeries,
 };

@@ -5,7 +5,7 @@ import {ChartChangedCommonPayload, ChartInitData} from '@/components/chart/type'
 
 
 export const makeInitData = (e: ChartChangedCommonPayload): ChartInitData => {
-  const series= makePxSeries(e);
+  const series = makePxSeries(e);
   const extrema = makeExtrema(e, series);
   const positionAvgPx = makePositionAvgPx(e, series);
 

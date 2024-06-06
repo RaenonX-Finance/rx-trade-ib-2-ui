@@ -6,7 +6,7 @@ type MoveOrderFromOpenToCompletedOpts = {
   state: OrderState,
   account: string,
   orderId: number,
-  target: Exclude<keyof OrderState, 'open'>
+  target: Exclude<keyof OrderState, 'open'>,
 } & ({
   orderDefault?: never,
   orderEditor: (order: Order) => Order,
