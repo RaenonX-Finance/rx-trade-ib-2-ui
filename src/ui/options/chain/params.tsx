@@ -31,7 +31,7 @@ export const OptionChainParams = () => {
   const [pxRequest, setPxRequest] = React.useState<OptionPxSubscribeRequestState>({
     account: '',
     expiry: '',
-    strikeRange: 15,
+    strikeRangePercent: 15,
     symbol: '',
     tradingClass: '',
   });
@@ -116,14 +116,14 @@ export const OptionChainParams = () => {
       </div>
       <div className="flex flex-row items-center gap-1.5">
         <label className={labelClassName} htmlFor="strike-range">
-          Strike Range ±
+          Strike Range ± %
         </label>
         <input
           type="number"
-          value={pxRequest.strikeRange}
+          value={pxRequest.strikeRangePercent}
           onChange={({target}) => setPxRequest((original) => ({
             ...original,
-            strikeRange: Number(target.value),
+            strikeRangePercent: Number(target.value),
           }))}
           required
           id="strike-range"

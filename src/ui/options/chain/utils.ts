@@ -46,16 +46,17 @@ export const useSendOptionPxRequest = ({
     }
 
     // `definition.strike` is readonly, calling sort causes error
-    const idxOfAtmStrike = [...definition.strike]
-      .sort((a, b) => a - b)
-      .findIndex((strike) => priceBase - strike < 0);
-    const {strikeRange} = pxRequestState;
+    const strikeRangeRate = pxRequestState.strikeRangePercent / 100;
+    const strikeLowerBound = priceBase * (1 - strikeRangeRate);
+    const strikeUpperBound = priceBase * (1 + strikeRangeRate);
     const request: OptionPxSubscribeRequest = {
       symbol,
       expiry,
       account,
       tradingClass,
-      strikes: definition.strike.slice(idxOfAtmStrike - strikeRange, idxOfAtmStrike + strikeRange),
+      strikes: definition.strike.filter((singleStrike) => (
+        strikeLowerBound <= singleStrike && singleStrike <= strikeUpperBound
+      )),
     };
 
     connection
