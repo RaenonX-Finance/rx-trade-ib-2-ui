@@ -13,7 +13,7 @@ import {useContractSelector} from '@/state/contract/selector';
 import {errorDispatchers} from '@/state/error/dispatchers';
 import {ErrorDispatcherName} from '@/state/error/types';
 import {optionDispatchers} from '@/state/option/dispatchers';
-import {useOptionDefinitionSelector} from '@/state/option/selector';
+import {useOptionChainDefinitionSelector} from '@/state/option/selector';
 import {OptionDispatcherName} from '@/state/option/types';
 import {usePxSelector} from '@/state/px/selector';
 import {useDispatch} from '@/state/store';
@@ -27,7 +27,7 @@ import {getErrorMessage} from '@/utils/error';
 export const OptionChainParams = () => {
   const {connection} = useSignalR();
   const currentAccount = useCurrentAccountSelector();
-  const definition = useOptionDefinitionSelector();
+  const definition = useOptionChainDefinitionSelector();
 
   const dispatch = useDispatch();
 
@@ -53,7 +53,7 @@ export const OptionChainParams = () => {
     pxRequest,
     definition,
     onRequestedPx: ({realtimeRequestIds, contractIdPairs}) => {
-      dispatch(optionDispatchers[OptionDispatcherName.UPDATE_CONTRACT_MAPPING](contractIdPairs));
+      dispatch(optionDispatchers[OptionDispatcherName.CHAIN_UPDATE_CONTRACTS](contractIdPairs));
       setParamRequest((original) => ({
         ...original,
         inUsePxRequestIds: realtimeRequestIds,
@@ -62,7 +62,7 @@ export const OptionChainParams = () => {
   });
 
   const onSubmit = React.useCallback(() => {
-    dispatch(optionDispatchers[OptionDispatcherName.CLEAR]());
+    dispatch(optionDispatchers[OptionDispatcherName.CHAIN_CLEAR]());
     connection
       .send(SignalRRequests.INIT_OPTION_CHAIN, paramRequest)
       .catch((err) => {

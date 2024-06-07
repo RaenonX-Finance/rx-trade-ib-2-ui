@@ -6,10 +6,10 @@ import {OptionDefinition} from '@/types/data/option';
 import {Nullable} from '@/utils/type';
 
 
-export const useOptionDefinitionSelector = (): Nullable<OptionDefinition> => (
-  useSelector(({option}: ReduxState) => option.definition)
+export const useOptionChainDefinitionSelector = (): Nullable<OptionDefinition> => (
+  useSelector(({option}: ReduxState) => option.chain?.definition)
 );
 
-export const useOptionContractMappingSelector = (): OptionContractIdPair[] => (
-  useSelector(({option}: ReduxState) => option.contractMapping ?? [])
+export const useOptionChainContractsSelector = (): OptionContractIdPair[] => (
+  useSelector(({option}: ReduxState) => option.chain?.contracts ?? [])
 );

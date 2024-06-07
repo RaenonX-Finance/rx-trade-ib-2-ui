@@ -12,24 +12,30 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(
-      optionDispatchers[OptionDispatcherName.UPDATE_DEFINITION],
-      (state, {payload}) => ({
+      optionDispatchers[OptionDispatcherName.CHAIN_UPDATE_DEFINITION],
+      (state, {payload}): OptionState => ({
         ...state,
-        definition: payload,
+        chain: {
+          ...state.chain,
+          definition: payload,
+        },
       }),
     );
     builder.addCase(
-      optionDispatchers[OptionDispatcherName.UPDATE_CONTRACT_MAPPING],
-      (state, {payload}) => ({
+      optionDispatchers[OptionDispatcherName.CHAIN_UPDATE_CONTRACTS],
+      (state, {payload}): OptionState => ({
         ...state,
-        contractMapping: payload.sort((a, b) => a.strike - b.strike),
+        chain: {
+          ...state.chain,
+          contracts: payload.sort((a, b) => a.strike - b.strike),
+        },
       }),
     );
     builder.addCase(
-      optionDispatchers[OptionDispatcherName.CLEAR],
-      (state) => ({
+      optionDispatchers[OptionDispatcherName.CHAIN_CLEAR],
+      (state): OptionState => ({
         ...state,
-        definition: null,
+        chain: null,
       }),
     );
   },
