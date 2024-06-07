@@ -4,6 +4,7 @@ import React from 'react';
 import {clsx} from 'clsx';
 
 import {Dropdown} from '@/components/dropdown/main';
+import {InputBox} from '@/components/inputs/box';
 import {Flex} from '@/components/layout/flex/common';
 import {FlexForm} from '@/components/layout/flex/form';
 import {useSignalR} from '@/contexts/signalR/hook';
@@ -18,7 +19,7 @@ import {useDispatch} from '@/state/store';
 import {OptionDefinitionRequest} from '@/types/api/option';
 import {useOptionChainPxSubscriber} from '@/ui/options/chain/hook';
 import {OptionChainPxSubscribeRequestState} from '@/ui/options/chain/type';
-import {CurrentUnderlyingPx} from '@/ui/options/chain/underlyingPx';
+import {CurrentUnderlyingPx} from '@/ui/options/common/underlyingPx';
 import {getErrorMessage} from '@/utils/error';
 
 
@@ -60,7 +61,7 @@ export const OptionChainInput = () => {
   });
 
   const onSubmit = React.useCallback(() => {
-    dispatch(optionDispatchers[OptionDispatcherName.CHAIN_CLEAR]());
+    dispatch(optionDispatchers[OptionDispatcherName.CLEAR_OPTION_CHAIN]());
     connection
       .send(SignalRRequests.REQUEST_OPTION_DEFINITIONS, definitionRequest)
       .catch((err) => {
@@ -86,7 +87,7 @@ export const OptionChainInput = () => {
     }));
   }, [currentAccount]);
 
-  // on param initialized
+  // on definition maybe loaded
   React.useEffect(() => {
     if (!definition?.underlyingContractId) {
       return;
@@ -109,7 +110,7 @@ export const OptionChainInput = () => {
   return (
     <FlexForm direction="row" className="items-center" onSubmit={onSubmit}>
       <Flex direction="row" noFullWidth className="mr-auto items-center gap-2">
-        <input
+        <InputBox
           type="text"
           value={definitionRequest.symbol}
           onChange={({target}) => setDefinitionRequest((original) => ({
@@ -117,10 +118,8 @@ export const OptionChainInput = () => {
             symbol: target.value.toUpperCase(),
           }))}
           required
-          className={clsx(
-            'w-20 rounded-md px-1.5 py-0.5 text-xs focus-visible:outline-0',
-            'bg-gradient-to-br from-amber-800 to-amber-700 invalid:from-red-800 invalid:to-red-700',
-          )}
+          className="w-20 text-sm"
+          classOfBorder="border-b-amber-500 invalid:border-b-red-500"
         />
         <CurrentUnderlyingPx definition={definition}/>
       </Flex>
@@ -128,7 +127,7 @@ export const OptionChainInput = () => {
         <label className={labelClassName} htmlFor="strike-range">
           Strike Range ± %
         </label>
-        <input
+        <InputBox
           type="number"
           value={pxRequest.strikeRangePercent ?? ''}
           onChange={({target}) => setPxRequest((original) => ({
@@ -138,10 +137,7 @@ export const OptionChainInput = () => {
           required
           id="strike-range"
           min={1}
-          className={clsx(
-            'w-12 rounded-md px-1.5 py-0.5 text-xs focus-visible:outline-0',
-            'bg-gradient-to-br from-gray-800 to-gray-700 invalid:from-red-800 invalid:to-red-700',
-          )}
+          className="w-12 text-sm"
         />
         <div className={labelClassName}>
           Expiry
@@ -164,7 +160,7 @@ export const OptionChainInput = () => {
               []
           }
           disabled={!definition || !definition.expiry.length}
-          buttonClassName="px-1.5 py-0.5 bg-gray-800 hover:bg-gray-600 text-xs disabled:bg-gray-800"
+          buttonClassName="px-1.5 py-0.5 bg-gray-800 hover:bg-gray-600 text-sm disabled:bg-gray-800"
           itemClassName="text-xs"
         />
       </Flex>
