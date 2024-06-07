@@ -3,7 +3,7 @@ import React from 'react';
 import {askClassName, bidClassName, markPxClassName} from '@/components/colors/const';
 import {usePxSelector} from '@/state/px/selector';
 import {ContractId} from '@/types/data/px';
-import {getMidPx, getPxSpread} from '@/utils/calc/px';
+import {getMidPx, getPxSpread} from '@/utils/calc/tick';
 import {getChange} from '@/utils/math';
 import {formatNumber, formatPercent} from '@/utils/string';
 

@@ -12,7 +12,7 @@ import {OptionDefinition} from '@/types/data/option';
 import {PxOfContract} from '@/types/data/px';
 import {OptionPxSubscribeRequestState} from '@/ui/options/chain/type';
 import {getStrikeRangeToRequest} from '@/ui/options/chain/utils';
-import {getMidPx} from '@/utils/calc/px';
+import {getMidPx} from '@/utils/calc/tick';
 import {getErrorMessage} from '@/utils/error';
 
 
