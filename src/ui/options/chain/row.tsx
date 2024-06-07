@@ -39,18 +39,14 @@ export const OptionChainDataCells = ({contractId}: Props) => {
       <td>{px?.Delta?.toFixed(4) ?? '-'}</td>
       <td>{px?.Theta?.toFixed(4) ?? '-'}</td>
       <td>
-        {
-          (!!base && !!theta && theta > 1E-5) ?
-            formatPercent({numerator: Math.abs(theta), denominator: base}) :
-            '-'
-        }
+        {(!!base && !!theta && theta > 1E-5) ?
+          formatPercent({numerator: Math.abs(theta), denominator: base}) :
+          '-'}
       </td>
       <td>
-        {
-          (!!base && !!spread) ?
-            formatPercent({numerator: spread, denominator: base}) :
-            '-'
-        }
+        {(!!base && !!spread) ?
+          formatPercent({numerator: spread, denominator: base}) :
+          '-'}
       </td>
     </>
   );
