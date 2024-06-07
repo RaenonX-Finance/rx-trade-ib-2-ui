@@ -24,7 +24,7 @@ import {CurrentUnderlyingPx} from '@/ui/options/chain/underlyingPx';
 import {getErrorMessage} from '@/utils/error';
 
 
-export const OptionChainParams = () => {
+export const OptionChainInput = () => {
   const {connection} = useSignalR();
   const currentAccount = useCurrentAccountSelector();
   const definition = useOptionChainDefinitionSelector();

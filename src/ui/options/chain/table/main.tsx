@@ -6,8 +6,8 @@ import {clsx} from 'clsx';
 import {Table} from '@/components/table/main';
 import {TableRow} from '@/components/table/row';
 import {useOptionChainContractsSelector} from '@/state/option/selector';
-import {OptionChainDataCells} from '@/ui/options/chain/row';
 import {OptionChainHeaderCells} from '@/ui/options/chain/table/headerCells';
+import {OptionChainDataCells} from '@/ui/options/chain/table/row';
 
 
 export const OptionChainTable = () => {

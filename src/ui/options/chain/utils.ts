@@ -1,5 +1,3 @@
-
-
 type GetStrikeRangeToRequestOpts = {
   priceBase: number,
   strikeRangePercent: number | null,
