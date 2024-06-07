@@ -8,10 +8,11 @@ import {getDeltaTextClass} from '@/ui/px/single/quote/utils';
 import {isSecurityTypeFutures} from '@/utils/api';
 import {getMidPx} from '@/utils/calc/tick';
 import {formatFloat4, formatToDigits} from '@/utils/format/number/regular';
+import {Nullable} from '@/utils/type';
 
 
 type Props = QuotePxProps & {
-  lastPxFallback: number | undefined,
+  lastPxFallback: Nullable<number>,
 };
 
 export const QuoteCurrentPx = ({contract, px, lastPxFallback}: Props) => {

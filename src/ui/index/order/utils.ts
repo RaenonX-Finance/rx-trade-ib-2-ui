@@ -2,6 +2,7 @@ import {OrderSide} from '@/enums/orderSide';
 import {ContractInState} from '@/types/data/contract';
 import {Order} from '@/types/data/order';
 import {PxOfContract} from '@/types/data/px';
+import {Nullable} from '@/utils/type';
 
 
 export const getSideClassName = (side: string): string => {
@@ -19,7 +20,7 @@ export const getSideClassName = (side: string): string => {
 };
 
 type GetOrderValueOpts = {
-  contract: ContractInState | undefined,
+  contract: Nullable<ContractInState>,
   order: Order,
   isCancelled: boolean,
 };

@@ -2,10 +2,11 @@ import React from 'react';
 
 import {ContractInState} from '@/types/data/contract';
 import {formatFloat} from '@/utils/format/number/regular';
+import {Nullable} from '@/utils/type';
 
 
 type Props = {
-  contract: ContractInState | undefined,
+  contract: Nullable<ContractInState>,
   quantity: number,
   costBasis: number,
   marketValue: number,

@@ -3,12 +3,13 @@ import {createSelector} from 'reselect';
 
 import {ReduxState} from '@/state/types';
 import {PositionData} from '@/types/data/positions';
+import {Nullable} from '@/utils/type';
 
 
 export const usePositionSelector = (
-  accountNumber: string | undefined,
-  contractId: number | undefined,
-): PositionData | undefined => (
+  accountNumber: Nullable<string>,
+  contractId: Nullable<number>,
+): Nullable<PositionData> => (
   useSelector(({position}: ReduxState) => {
     if (!accountNumber || !contractId) {
       return undefined;
@@ -23,18 +24,18 @@ export const usePositionSelector = (
   })
 );
 
-const selectPositionContractIds = (accountNumber: string | undefined) => createSelector(
+const selectPositionContractIds = (accountNumber: Nullable<string>) => createSelector(
   ({position}: ReduxState) => position,
   (position) => (
     accountNumber ? Object.keys(position[accountNumber] ?? []).map((contractId) => Number(contractId)) : []
   ),
 );
 
-export const usePositionContractIdsSelector = (accountNumber: string | undefined): number[] => (
+export const usePositionContractIdsSelector = (accountNumber: Nullable<string>): number[] => (
   useSelector(selectPositionContractIds(accountNumber))
 );
 
-export const useHasPositionSelector = (accountNumber: string | undefined, contractId: number | undefined): boolean => (
+export const useHasPositionSelector = (accountNumber: Nullable<string>, contractId: Nullable<number>): boolean => (
   useSelector(({position}: ReduxState) => {
     if (!accountNumber || !contractId) {
       return false;

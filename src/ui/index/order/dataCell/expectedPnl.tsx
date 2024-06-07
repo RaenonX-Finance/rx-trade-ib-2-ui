@@ -6,10 +6,11 @@ import {ContractInState} from '@/types/data/contract';
 import {Order} from '@/types/data/order';
 import {getPnlTextClassName} from '@/ui/index/positions/utils';
 import {formatFloat} from '@/utils/format/number/regular';
+import {Nullable} from '@/utils/type';
 
 
 type Props = {
-  contract: ContractInState | undefined,
+  contract: Nullable<ContractInState>,
   order: Order,
   orderValue: number,
 };

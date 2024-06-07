@@ -4,16 +4,17 @@ import {PxChart} from '@/components/chart/main';
 import {LoadingPane} from '@/components/icons/loading/pane';
 import {ChartData, ChartDataIdentifier} from '@/types/data/chart';
 import {ContractInState} from '@/types/data/contract';
+import {PartialNullable} from '@/utils/type';
 
 
-type Props = {
-  chartData: ChartData | undefined,
-  account: string | undefined,
-  contract: ContractInState | undefined,
-  identifier: ChartDataIdentifier | undefined,
-  height: number | undefined,
-  width: number | undefined,
-};
+type Props = PartialNullable<{
+  chartData: ChartData,
+  account: string,
+  contract: ContractInState,
+  identifier: ChartDataIdentifier,
+  height: number,
+  width: number,
+}>;
 
 export const SimplifiedChart = ({chartData, account, contract, identifier, width, height}: Props) => {
   if (!width || !height || !identifier) {

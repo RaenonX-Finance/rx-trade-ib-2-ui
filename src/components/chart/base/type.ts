@@ -4,6 +4,7 @@ import {IChartApi, SeriesType} from 'lightweight-charts';
 
 import {ContractInState} from '@/types/data/contract';
 import {PositionData} from '@/types/data/positions';
+import {Nullable} from '@/utils/type';
 
 
 export type ChartSetState<T> = (updateFunc: (prevLegend: T) => T) => void;
@@ -32,7 +33,7 @@ export type ChartApiRef<T> = {
 
 export type ChartUnderlyingData = {
   contract: ContractInState,
-  position: PositionData | undefined,
+  position: Nullable<PositionData>,
   simplified: boolean,
 };
 

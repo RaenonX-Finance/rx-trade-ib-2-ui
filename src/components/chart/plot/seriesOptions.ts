@@ -7,6 +7,7 @@ import {getTypeOfActiveSeries} from '@/components/chart/plot/utils';
 import {getChartConfig} from '@/state/chartConfig/utils';
 import {ChartDataBarWithData} from '@/types/api/chart';
 import {PositionData} from '@/types/data/positions';
+import {Nullable} from '@/utils/type';
 
 
 export const getAnimationMode = (enabled: boolean): LastPriceAnimationMode => (
@@ -17,7 +18,7 @@ export const getAnimationMode = (enabled: boolean): LastPriceAnimationMode => (
 
 type GetPositionAvgPxOptionsOpts = {
   chartConfig: ChartConfigSingle,
-  position: PositionData | undefined,
+  position: Nullable<PositionData>,
   bars: ChartDataBarWithData[],
   simplified: boolean,
 };

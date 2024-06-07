@@ -5,12 +5,13 @@ import {ContractInState} from '@/types/data/contract';
 import {QuoteDailyChange} from '@/ui/px/single/quote/change';
 import {QuoteCurrentPx} from '@/ui/px/single/quote/currentPx';
 import {QuotePositionStats} from '@/ui/px/single/quote/position';
+import {PartialNullable} from '@/utils/type';
 
 
-type Props = {
-  contract: ContractInState | undefined,
-  lastPxFallback: number | undefined,
-};
+type Props = PartialNullable<{
+  contract: ContractInState,
+  lastPxFallback: number,
+}>;
 
 export const Quote = ({contract, lastPxFallback}: Props) => {
   const px = usePxSelector(contract?.id);

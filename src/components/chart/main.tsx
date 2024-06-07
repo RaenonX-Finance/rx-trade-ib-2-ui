@@ -13,6 +13,7 @@ import {ChartInitData, ChartLegendData, ChartPayload} from '@/components/chart/t
 import {useCompletePxUpdateSelector} from '@/state/chartMeta/selector';
 import {usePositionSelector} from '@/state/position/selector';
 import {ChartData, ChartDataIdentifier} from '@/types/data/chart';
+import {Nullable} from '@/utils/type';
 
 
 type Props = Omit<
@@ -35,7 +36,7 @@ type Props = Omit<
   'position'
 > & {
   identifier: ChartDataIdentifier,
-  account: string | undefined,
+  account: Nullable<string>,
 };
 
 export const PxChart = (props: Props) => {

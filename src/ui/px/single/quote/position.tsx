@@ -7,10 +7,11 @@ import {getPnlTextClassName} from '@/ui/index/positions/utils';
 import {formatToDigits} from '@/utils/format/number/regular';
 import {formatSignedNumber} from '@/utils/format/number/signed';
 import {changeInfoToString, getChange} from '@/utils/math';
+import {Nullable} from '@/utils/type';
 
 
 type Props = {
-  contract: ContractInState | undefined,
+  contract: Nullable<ContractInState>,
 };
 
 export const QuotePositionStats = ({contract}: Props) => {
