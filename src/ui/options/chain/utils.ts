@@ -11,6 +11,7 @@ import {OptionPxSubscribeRequest} from '@/types/api/px';
 import {OptionDefinition} from '@/types/data/option';
 import {PxOfContract} from '@/types/data/px';
 import {OptionPxSubscribeRequestState} from '@/ui/options/chain/type';
+import {getMidPx} from '@/utils/calc/px';
 import {getErrorMessage} from '@/utils/error';
 
 
@@ -31,6 +32,8 @@ export const useSendOptionPxRequest = ({
 }: SendOptionPxRequestOpts) => {
   const dispatch = useDispatch();
 
+  const priceBase = getMidPx(px);
+
   return React.useCallback(() => {
     if (!connection) {
       throw new Error('SignalR connection not initialized');
@@ -38,14 +41,14 @@ export const useSendOptionPxRequest = ({
 
     const {symbol, expiry, account, tradingClass} = pxRequestState;
 
-    if (!px || !px.Mark || !definition || !symbol || !expiry || !account) {
+    if (!px || !priceBase || !definition || !symbol || !expiry || !account) {
       return;
     }
 
     // `definition.strike` is readonly, calling sort causes error
     const idxOfAtmStrike = [...definition.strike]
       .sort((a, b) => a - b)
-      .findIndex((strike) => px.Mark && px.Mark - strike < 0);
+      .findIndex((strike) => priceBase - strike < 0);
     const {strikeRange} = pxRequestState;
     const request: OptionPxSubscribeRequest = {
       symbol,
@@ -63,5 +66,5 @@ export const useSendOptionPxRequest = ({
           message: `Request option chain: ${getErrorMessage({err})}`,
         }));
       });
-  }, [connection, definition, !!px?.Mark, pxRequestState]);
+  }, [connection, definition, !!priceBase, pxRequestState]);
 };

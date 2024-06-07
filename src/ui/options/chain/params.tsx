@@ -37,7 +37,9 @@ export const OptionChainParams = () => {
   });
   const definition = useOptionDefinitionSelector();
 
-  const submitOptionChainRequest = React.useCallback(() => {
+  const onSubmit = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     dispatch(optionDispatchers[OptionDispatcherName.CLEAR]());
     connection
       .send(SignalRRequests.INIT_OPTION_CHAIN, paramRequest)
@@ -46,12 +48,6 @@ export const OptionChainParams = () => {
           message: `Init option chain: ${getErrorMessage({err})}`,
         }));
       });
-  }, [paramRequest]);
-
-  const onSubmit = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    submitOptionChainRequest();
   }, [paramRequest]);
 
   // on account changed
@@ -118,7 +114,7 @@ export const OptionChainParams = () => {
           }}
         />
       </div>
-      <div className="flex flex-row items-center gap-2">
+      <div className="flex flex-row items-center gap-1.5">
         <label className={labelClassName} htmlFor="strike-range">
           Strike Range ±
         </label>
@@ -154,7 +150,7 @@ export const OptionChainParams = () => {
               ] :
               []
           }
-          disabled={!definition || definition.expiry.length === 0}
+          disabled={!definition || !definition.expiry.length}
           buttonClassName="px-1.5 py-0.5 bg-gray-800 hover:bg-gray-600 text-xs disabled:bg-gray-800"
           itemClassName="text-xs"
         />

@@ -33,12 +33,12 @@ export const CurrentUnderlyingPx = ({underlyingContractId, pxRequestState, onReq
     onRequestedPx,
   });
 
-  const commonClasses = 'w-12 self-center rounded-md text-right text-sm';
+  const commonClasses = clsx('min-w-12 self-center rounded-md text-right text-sm');
   const change = getChange({original: px?.Close, after: px?.Last});
 
   React.useEffect(() => {
     sendOptionPxInitRequest();
-  }, [connection, definition, !!px?.Mark, pxRequestState]);
+  }, [connection, definition, pxRequestState]);
 
   return (
     <>
