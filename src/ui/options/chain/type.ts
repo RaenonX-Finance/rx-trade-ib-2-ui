@@ -2,5 +2,5 @@ import {OptionPxSubscribeRequest} from '@/types/api/px';
 
 
 export type OptionPxSubscribeRequestState = Omit<OptionPxSubscribeRequest, 'strikes'> & {
-  strikeRangePercent: number,
+  strikeRangePercent: number | null,
 };

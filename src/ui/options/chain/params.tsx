@@ -8,13 +8,16 @@ import {FlexForm} from '@/components/layout/flex/form';
 import {useSignalR} from '@/contexts/signalR/hook';
 import {SignalRRequests} from '@/enums/signalRRequests';
 import {useCurrentAccountSelector} from '@/state/account/selector';
+import {useContractSelector} from '@/state/contract/selector';
 import {errorDispatchers} from '@/state/error/dispatchers';
 import {ErrorDispatcherName} from '@/state/error/types';
 import {optionDispatchers} from '@/state/option/dispatchers';
 import {useOptionDefinitionSelector} from '@/state/option/selector';
 import {OptionDispatcherName} from '@/state/option/types';
+import {usePxSelector} from '@/state/px/selector';
 import {useDispatch} from '@/state/store';
 import {InitOptionChainRequest} from '@/types/api/option';
+import {useSendOptionPxRequest} from '@/ui/options/chain/hook';
 import {OptionPxSubscribeRequestState} from '@/ui/options/chain/type';
 import {CurrentUnderlyingPx} from '@/ui/options/chain/underlyingPx';
 import {getErrorMessage} from '@/utils/error';
@@ -23,7 +26,10 @@ import {getErrorMessage} from '@/utils/error';
 export const OptionChainParams = () => {
   const {connection} = useSignalR();
   const currentAccount = useCurrentAccountSelector();
+  const definition = useOptionDefinitionSelector();
+
   const dispatch = useDispatch();
+
   const [paramRequest, setParamRequest] = React.useState<InitOptionChainRequest>({
     account: '',
     symbol: '',
@@ -37,7 +43,22 @@ export const OptionChainParams = () => {
     symbol: '',
     tradingClass: '',
   });
-  const definition = useOptionDefinitionSelector();
+  const px = usePxSelector(definition?.underlyingContractId);
+  const contract = useContractSelector(definition?.underlyingContractId);
+
+  useSendOptionPxRequest({
+    connection,
+    px,
+    pxRequest,
+    definition,
+    onRequestedPx: ({realtimeRequestIds, contractIdPairs}) => {
+      dispatch(optionDispatchers[OptionDispatcherName.UPDATE_CONTRACT_MAPPING](contractIdPairs));
+      setParamRequest((original) => ({
+        ...original,
+        inUsePxRequestIds: realtimeRequestIds,
+      }));
+    },
+  });
 
   const onSubmit = React.useCallback(() => {
     dispatch(optionDispatchers[OptionDispatcherName.CLEAR]());
@@ -84,7 +105,7 @@ export const OptionChainParams = () => {
     }));
   }, [definition?.underlyingContractId]);
 
-  const labelClassName = 'text-sm text-gray-300';
+  const labelClassName = clsx('text-sm text-gray-300');
 
   return (
     <FlexForm direction="row" className="items-center" onSubmit={onSubmit}>
@@ -102,17 +123,7 @@ export const OptionChainParams = () => {
             'bg-gradient-to-br from-amber-800 to-amber-700 invalid:from-red-800 invalid:to-red-700',
           )}
         />
-        <CurrentUnderlyingPx
-          underlyingContractId={definition?.underlyingContractId}
-          pxRequestState={pxRequest}
-          onRequestedPx={({realtimeRequestIds, contractIdPairs}) => {
-            dispatch(optionDispatchers[OptionDispatcherName.UPDATE_CONTRACT_MAPPING](contractIdPairs));
-            setParamRequest((original) => ({
-              ...original,
-              inUsePxRequestIds: realtimeRequestIds,
-            }));
-          }}
-        />
+        <CurrentUnderlyingPx px={px} contract={contract}/>
       </Flex>
       <Flex direction="row" noFullWidth className="items-center gap-1.5">
         <label className={labelClassName} htmlFor="strike-range">
@@ -120,10 +131,10 @@ export const OptionChainParams = () => {
         </label>
         <input
           type="number"
-          value={pxRequest.strikeRangePercent}
+          value={pxRequest.strikeRangePercent ?? ''}
           onChange={({target}) => setPxRequest((original) => ({
             ...original,
-            strikeRangePercent: Number(target.value),
+            strikeRangePercent: target.value === '' ? null : Number(target.value),
           }))}
           required
           id="strike-range"

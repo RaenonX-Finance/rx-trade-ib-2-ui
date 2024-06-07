@@ -3,42 +3,20 @@ import React from 'react';
 import {clsx} from 'clsx';
 
 import {askClassName, bidClassName} from '@/components/colors/const';
-import {useSignalR} from '@/contexts/signalR/hook';
-import {useContractSelector} from '@/state/contract/selector';
-import {useOptionDefinitionSelector} from '@/state/option/selector';
-import {usePxSelector} from '@/state/px/selector';
-import {OptionDefinitionMessage, OptionPxResponse} from '@/types/api/option';
-import {OptionPxSubscribeRequestState} from '@/ui/options/chain/type';
-import {useSendOptionPxRequest} from '@/ui/options/chain/utils';
+import {ContractInState} from '@/types/data/contract';
+import {PxOfContract} from '@/types/data/px';
 import {changeInfoToString, getChange} from '@/utils/math';
+import {Nullable} from '@/utils/type';
 
 
 type Props = {
-  underlyingContractId: OptionDefinitionMessage['underlyingContractId'] | undefined,
-  pxRequestState: OptionPxSubscribeRequestState,
-  onRequestedPx: (response: OptionPxResponse) => void,
+  px: Nullable<PxOfContract>,
+  contract: Nullable<ContractInState>,
 };
 
-export const CurrentUnderlyingPx = ({underlyingContractId, pxRequestState, onRequestedPx}: Props) => {
-  const {connection} = useSignalR();
-  const px = usePxSelector(underlyingContractId);
-  const contract = useContractSelector(underlyingContractId);
-  const definition = useOptionDefinitionSelector();
-
-  const sendOptionPxInitRequest = useSendOptionPxRequest({
-    connection,
-    px,
-    pxRequestState,
-    definition,
-    onRequestedPx,
-  });
-
+export const CurrentUnderlyingPx = ({px, contract}: Props) => {
   const commonClasses = clsx('min-w-12 self-center rounded-md text-right text-sm');
   const change = getChange({original: px?.Close, after: px?.Last});
-
-  React.useEffect(() => {
-    sendOptionPxInitRequest();
-  }, [connection, definition, pxRequestState]);
 
   return (
     <>
