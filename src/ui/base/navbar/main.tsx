@@ -5,7 +5,7 @@ import {clsx} from 'clsx';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 
-import {FullWidthRow} from '@/components/row/fullWidthRow';
+import {Flex} from '@/components/layout/flex/common';
 import {NavEntries} from '@/ui/base/navbar/const';
 import {AccountSwitch} from '@/ui/index/accountSwitch/main';
 
@@ -14,7 +14,7 @@ export const NavBar = () => {
   const pathname = usePathname();
 
   return (
-    <FullWidthRow>
+    <Flex direction="row" className="gap-2">
       <ul className="flex flex-wrap gap-2 border-b border-gray-700 text-center text-sm text-gray-400">
         {NavEntries.map(({text, href, activeTextClassName}) => (
           <li key={href}>
@@ -32,6 +32,6 @@ export const NavBar = () => {
       <div className="ml-auto self-center">
         <AccountSwitch/>
       </div>
-    </FullWidthRow>
+    </Flex>
   );
 };
