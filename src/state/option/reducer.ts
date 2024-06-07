@@ -27,7 +27,7 @@ const slice = createSlice({
         ...state,
         chain: {
           ...state.chain,
-          contracts: payload.sort((a, b) => a.strike - b.strike),
+          contracts: payload.toSorted((a, b) => a.strike - b.strike),
         },
       }),
     );
