@@ -15,7 +15,7 @@ import {PositionQuantity} from '@/ui/index/positions/dataCell/quantity';
 import {PositionTotalPnlPercent} from '@/ui/index/positions/dataCell/totalPnlPercent';
 import {PositionFilter} from '@/ui/index/positions/type';
 import {getPnlTextClassName} from '@/ui/index/positions/utils';
-import {formatFloat, formatFloat3} from '@/utils/format/number/regular';
+import {formatFloat, formatFloat3, formatFloat4} from '@/utils/format/number/regular';
 import {isAllValueFalse} from '@/utils/record';
 
 
@@ -84,7 +84,7 @@ export const PositionRow = ({contractId, filter}: Props) => {
       <td className="text-px-bid">{formatFloat(px?.Bid)}</td>
       <td className="text-px-ask">{formatFloat(px?.Ask)}</td>
       <td className="text-px-mark">{formatFloat(px?.Mark)}</td>
-      <td>{formatFloat(px?.Delta)}</td>
+      <td>{formatFloat4(px?.Delta)}</td>
       <td>
         <PositionQuantity quantity={quantity}/>
       </td>
