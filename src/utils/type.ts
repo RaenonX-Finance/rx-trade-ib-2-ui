@@ -8,6 +8,8 @@ export type ValueOf<T> = T[keyof T];
 
 export type Nullable<T> = T | null | undefined;
 
+export type PartialNullable<T> = {[P in keyof T]?: Nullable<T[P]>};
+
 export const isNotNullish = <TValue>(value: TValue | null | undefined): value is TValue => {
   if (value === null || value === undefined) {
     return false;
