@@ -17,3 +17,7 @@ export const getPxSpread = (px: Nullable<PxOfContract>): number | null => {
 
   return Math.abs(px.Bid - px.Ask);
 };
+
+export const getOptionsOi = (px: Nullable<PxOfContract>): number | null => {
+  return px?.OptionCallOpenInterest ?? px?.OptionPutOpenInterest ?? null;
+};

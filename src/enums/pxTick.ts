@@ -4,5 +4,9 @@ export type PxTick =
   'Last' |
   'Mark' |
   'Close' |
+  'OptionCallOpenInterest' |
+  'OptionPutOpenInterest' |
+  // Options only
   'Delta' |
-  'Theta';
+  'Theta' |
+  'Gamma';
