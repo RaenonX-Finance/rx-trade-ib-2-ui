@@ -17,9 +17,9 @@ import {useOptionChainDefinitionSelector} from '@/state/option/selector';
 import {OptionDispatcherName} from '@/state/option/types';
 import {usePxSelector} from '@/state/px/selector';
 import {useDispatch} from '@/state/store';
-import {InitOptionChainRequest} from '@/types/api/option';
-import {useSendOptionPxRequest} from '@/ui/options/chain/hook';
-import {OptionPxSubscribeRequestState} from '@/ui/options/chain/type';
+import {OptionDefinitionRequest} from '@/types/api/option';
+import {useOptionChainPxSubscriber} from '@/ui/options/chain/hook';
+import {OptionChainPxSubscribeRequestState} from '@/ui/options/chain/type';
 import {CurrentUnderlyingPx} from '@/ui/options/chain/underlyingPx';
 import {getErrorMessage} from '@/utils/error';
 
@@ -31,13 +31,13 @@ export const OptionChainInput = () => {
 
   const dispatch = useDispatch();
 
-  const [paramRequest, setParamRequest] = React.useState<InitOptionChainRequest>({
+  const [definitionRequest, setDefinitionRequest] = React.useState<OptionDefinitionRequest>({
     account: '',
     symbol: '',
     inUseContractId: null,
     inUsePxRequestIds: [],
   });
-  const [pxRequest, setPxRequest] = React.useState<OptionPxSubscribeRequestState>({
+  const [pxRequest, setPxRequest] = React.useState<OptionChainPxSubscribeRequestState>({
     account: '',
     expiry: '',
     strikeRangePercent: 15,
@@ -47,14 +47,14 @@ export const OptionChainInput = () => {
   const px = usePxSelector(definition?.underlyingContractId);
   const contract = useContractSelector(definition?.underlyingContractId);
 
-  useSendOptionPxRequest({
+  useOptionChainPxSubscriber({
     connection,
     px,
     pxRequest,
     definition,
     onRequestedPx: ({realtimeRequestIds, contractIdPairs}) => {
       dispatch(optionDispatchers[OptionDispatcherName.CHAIN_UPDATE_CONTRACTS](contractIdPairs));
-      setParamRequest((original) => ({
+      setDefinitionRequest((original) => ({
         ...original,
         inUsePxRequestIds: realtimeRequestIds,
       }));
@@ -64,13 +64,13 @@ export const OptionChainInput = () => {
   const onSubmit = React.useCallback(() => {
     dispatch(optionDispatchers[OptionDispatcherName.CHAIN_CLEAR]());
     connection
-      .send(SignalRRequests.INIT_OPTION_CHAIN, paramRequest)
+      .send(SignalRRequests.REQUEST_OPTION_DEFINITIONS, definitionRequest)
       .catch((err) => {
         dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
           message: `Init option chain: ${getErrorMessage({err})}`,
         }));
       });
-  }, [paramRequest]);
+  }, [definitionRequest]);
 
   // on account changed
   React.useEffect(() => {
@@ -78,7 +78,7 @@ export const OptionChainInput = () => {
       return;
     }
 
-    setParamRequest((original) => ({
+    setDefinitionRequest((original) => ({
       ...original,
       account: currentAccount,
     }));
@@ -94,7 +94,7 @@ export const OptionChainInput = () => {
       return;
     }
 
-    setParamRequest((original) => ({
+    setDefinitionRequest((original) => ({
       ...original,
       inUseContractId: definition.underlyingContractId,
     }));
@@ -102,7 +102,7 @@ export const OptionChainInput = () => {
       ...original,
       expiry: definition.expiry[0],
       tradingClass: definition.tradingClass[0],
-      symbol: paramRequest.symbol,
+      symbol: definitionRequest.symbol,
     }));
   }, [definition?.underlyingContractId]);
 
@@ -113,8 +113,8 @@ export const OptionChainInput = () => {
       <Flex direction="row" noFullWidth className="mr-auto items-center gap-2">
         <input
           type="text"
-          value={paramRequest.symbol}
-          onChange={({target}) => setParamRequest((original) => ({
+          value={definitionRequest.symbol}
+          onChange={({target}) => setDefinitionRequest((original) => ({
             ...original,
             symbol: target.value.toUpperCase(),
           }))}

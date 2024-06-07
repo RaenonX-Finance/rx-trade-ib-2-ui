@@ -7,10 +7,10 @@ import {errorDispatchers} from '@/state/error/dispatchers';
 import {ErrorDispatcherName} from '@/state/error/types';
 import {useDispatch} from '@/state/store';
 import {OptionPxResponse} from '@/types/api/option';
-import {OptionPxSubscribeRequest} from '@/types/api/px';
+import {OptionChainPxSubscribeRequest} from '@/types/api/px';
 import {OptionDefinition} from '@/types/data/option';
 import {PxOfContract} from '@/types/data/px';
-import {OptionPxSubscribeRequestState} from '@/ui/options/chain/type';
+import {OptionChainPxSubscribeRequestState} from '@/ui/options/chain/type';
 import {getStrikeRangeToRequest} from '@/ui/options/chain/utils';
 import {getMidPx} from '@/utils/calc/tick';
 import {getErrorMessage} from '@/utils/error';
@@ -19,13 +19,13 @@ import {Nullable} from '@/utils/type';
 
 type SendOptionPxRequestOpts = {
   connection: HubConnection,
-  pxRequest: OptionPxSubscribeRequestState,
+  pxRequest: OptionChainPxSubscribeRequestState,
   px: Nullable<PxOfContract>,
   definition: Nullable<OptionDefinition>,
   onRequestedPx: (response: OptionPxResponse) => void,
 };
 
-export const useSendOptionPxRequest = ({
+export const useOptionChainPxSubscriber = ({
   connection,
   pxRequest,
   px,
@@ -50,7 +50,7 @@ export const useSendOptionPxRequest = ({
         return;
       }
 
-      const request: OptionPxSubscribeRequest = {
+      const request: OptionChainPxSubscribeRequest = {
         symbol,
         expiry,
         account,

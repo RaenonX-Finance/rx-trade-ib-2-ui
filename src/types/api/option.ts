@@ -1,7 +1,7 @@
 import {ContractId} from '@/types/data/px';
 
 
-export type InitOptionChainRequest = {
+export type OptionDefinitionRequest = {
   account: string,
   symbol: string,
   inUseContractId: ContractId | null,

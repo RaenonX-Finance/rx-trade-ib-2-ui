@@ -28,7 +28,7 @@ export type PxHistoryMessage = {
   bars: ChartDataBar[],
 };
 
-export type OptionPxSubscribeRequest = {
+export type OptionChainPxSubscribeRequest = {
   account: string,
   symbol: string,
   expiry: string,
