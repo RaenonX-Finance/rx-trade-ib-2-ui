@@ -23,7 +23,7 @@ export const PositionTotalPnlPercent = ({contract, quantity, costBasis, marketVa
   if (securityType === 'Options') {
     // Needs to x sign so the credit leg of options reflect the correct %
     totalPnlPercent = (marketValue / costBasis - 1) * (Math.sign(costBasis));
-  } else if (securityType === 'Futures') {
+  } else if (securityType === 'Futures' || securityType === 'Stocks') {
     totalPnlPercent = totalPnl / (marketValue - totalPnl);
   } else {
     throw new Error(`SecurityType: Unhandled security type ${securityType} to calculated total PnL %`);
