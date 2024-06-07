@@ -9,13 +9,11 @@ import {FlexForm} from '@/components/layout/flex/form';
 import {useSignalR} from '@/contexts/signalR/hook';
 import {SignalRRequests} from '@/enums/signalRRequests';
 import {useCurrentAccountSelector} from '@/state/account/selector';
-import {useContractSelector} from '@/state/contract/selector';
 import {errorDispatchers} from '@/state/error/dispatchers';
 import {ErrorDispatcherName} from '@/state/error/types';
 import {optionDispatchers} from '@/state/option/dispatchers';
 import {useOptionChainDefinitionSelector} from '@/state/option/selector';
 import {OptionDispatcherName} from '@/state/option/types';
-import {usePxSelector} from '@/state/px/selector';
 import {useDispatch} from '@/state/store';
 import {OptionDefinitionRequest} from '@/types/api/option';
 import {useOptionChainPxSubscriber} from '@/ui/options/chain/hook';
@@ -46,12 +44,8 @@ export const OptionChainInput = () => {
     symbol: '',
     tradingClass: '',
   });
-  const px = usePxSelector(definition?.underlyingContractId);
-  const contract = useContractSelector(definition?.underlyingContractId);
 
   useOptionChainPxSubscriber({
-    connection,
-    px,
     pxRequest,
     definition,
     onRequestedPx: (response) => {
@@ -128,7 +122,7 @@ export const OptionChainInput = () => {
             'bg-gradient-to-br from-amber-800 to-amber-700 invalid:from-red-800 invalid:to-red-700',
           )}
         />
-        <CurrentUnderlyingPx px={px} contract={contract}/>
+        <CurrentUnderlyingPx definition={definition}/>
       </Flex>
       <Flex direction="row" noFullWidth className="items-center gap-1.5">
         <label className={labelClassName} htmlFor="strike-range">
