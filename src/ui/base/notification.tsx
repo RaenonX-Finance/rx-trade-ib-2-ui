@@ -40,7 +40,7 @@ export const Notification = () => {
         <button
           title="Close"
           className={clsx(
-            'inline-flex size-10 items-center justify-center rounded-lg',
+            'transform-smooth inline-flex size-10 items-center justify-center rounded-lg',
             'hover:ring-2 hover:ring-inset hover:ring-red-400',
           )}
           onClick={() => dispatch(errorDispatchers[ErrorDispatcherName.HIDE_ERROR]())}

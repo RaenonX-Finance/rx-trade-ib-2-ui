@@ -27,6 +27,10 @@ body {
 }
 
 @layer base {
+  .transform-smooth {
+    @apply transform-gpu transition-all;
+  }
+  
   table.info-table tr > td {
     @apply py-0.5 px-2;
   }

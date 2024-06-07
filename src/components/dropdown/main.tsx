@@ -34,7 +34,7 @@ export const Dropdown = ({
         <MenuButton
           className={clsx(
             'inline-flex w-full items-center justify-center gap-x-1.5 rounded-md px-2 py-1',
-            'text-sm text-gray-200 hover:bg-indigo-700 disabled:bg-gray-700',
+            'transform-smooth text-sm text-gray-200 hover:bg-indigo-700 disabled:bg-gray-700',
             buttonClassName,
           )}
           title={title}

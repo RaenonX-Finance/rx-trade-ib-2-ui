@@ -21,7 +21,7 @@ export const NavBar = () => {
             <Link
               href={href}
               className={clsx(
-                'inline-block rounded-t-lg px-2 py-1',
+                'transform-smooth inline-block rounded-t-lg px-2 py-1',
                 href === pathname ? `bg-gray-800 ${activeTextClassName}` : 'hover:bg-gray-800 hover:text-gray-300',
               )}>
               {text}
