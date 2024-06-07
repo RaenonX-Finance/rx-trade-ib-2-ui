@@ -7,8 +7,8 @@ export const OPTION_STATE_NAME = 'Option';
 
 export enum OptionDispatcherName {
   CHAIN_CLEAR = 'Option/ChainClear',
-  CHAIN_UPDATE_DEFINITION = 'Option/ChainUpdateDefinition',
-  CHAIN_UPDATE_CONTRACT_MAPPING = 'Option/ChainUpdateContractMapping',
+  UPDATE_DEFINITION = 'Option/UpdateDefinition',
+  CHAIN_UPDATE_CONTRACTS = 'Option/ChainUpdateContracts',
 }
 
 export type OptionMetaOfType = PartialNullable<{

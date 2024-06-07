@@ -32,12 +32,14 @@ export const OptionChainInput = () => {
   const dispatch = useDispatch();
 
   const [definitionRequest, setDefinitionRequest] = React.useState<OptionDefinitionRequest>({
+    origin: 'OptionChain',
     account: '',
     symbol: '',
     inUseContractId: null,
     inUsePxRequestIds: [],
   });
   const [pxRequest, setPxRequest] = React.useState<OptionChainPxSubscribeRequestState>({
+    origin: 'OptionChain',
     account: '',
     expiry: [],
     strikeRangePercent: 15,

@@ -1,7 +1,10 @@
 import {ContractId} from '@/types/data/px';
 
 
+export type OptionPxRequestOrigin = 'OptionChain' | 'GammaExposure';
+
 export type OptionDefinitionRequest = {
+  origin: OptionPxRequestOrigin,
   account: string,
   symbol: string,
   inUseContractId: ContractId | null,
@@ -9,6 +12,7 @@ export type OptionDefinitionRequest = {
 };
 
 export type OptionDefinitionMessage = {
+  origin: OptionPxRequestOrigin,
   tradingClass: string[],
   underlyingContractId: ContractId,
   exchange: string[],
@@ -24,6 +28,7 @@ export type OptionContractIdPair = {
 };
 
 export type OptionPxResponse = {
+  origin: OptionPxRequestOrigin,
   realtimeRequestIds: number[],
   contractIdPairs: OptionContractIdPair[],
 };

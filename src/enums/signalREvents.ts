@@ -4,7 +4,7 @@ export enum SignalREvents {
   ACCOUNT_PNL_UPDATE = 'AccountPnlUpdate',
   ERROR = 'Error',
   MARGIN_INFO = 'MarginInfo',
-  OPTION_CHAIN_PARAMS = 'OptionChainParams',
+  OPTION_DEFINITIONS = 'OptionDefinitions',
   ORDER_RECORD_OPEN = 'OrderRecordOpen',
   ORDER_RECORD_COMPLETED = 'OrderRecordCompleted',
   ORDER_CANCELLED = 'OrderCancelled',

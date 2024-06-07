@@ -51,6 +51,7 @@ export const useOptionChainPxSubscriber = ({
       }
 
       const request: OptionPxSubscribeRequest = {
+        origin: 'OptionChain',
         symbol,
         expiry,
         account,

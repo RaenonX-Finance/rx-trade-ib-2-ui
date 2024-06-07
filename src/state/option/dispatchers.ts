@@ -5,8 +5,8 @@ import {OptionContractIdPair, OptionDefinitionMessage} from '@/types/api/option'
 
 
 export const optionDispatchers = {
-  [OptionDispatcherName.CHAIN_UPDATE_DEFINITION]: createAction<OptionDefinitionMessage>(
-    OptionDispatcherName.CHAIN_UPDATE_DEFINITION,
+  [OptionDispatcherName.UPDATE_DEFINITION]: createAction<OptionDefinitionMessage>(
+    OptionDispatcherName.UPDATE_DEFINITION,
   ),
   [OptionDispatcherName.CHAIN_UPDATE_CONTRACTS]: createAction<OptionContractIdPair[]>(
     OptionDispatcherName.CHAIN_UPDATE_CONTRACTS,

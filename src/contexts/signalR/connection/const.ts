@@ -45,8 +45,8 @@ export const SignalRHandlers: SignalRHandlerMap = {
   [SignalREvents.MARGIN_INFO]: (message: MarginInfoMessage) => [
     contractDispatchers[ContractDispatcherName.UPDATE_MARGIN](message),
   ],
-  [SignalREvents.OPTION_CHAIN_PARAMS]: (message: OptionDefinitionMessage) => [
-    optionDispatchers[OptionDispatcherName.CHAIN_UPDATE_DEFINITION](message),
+  [SignalREvents.OPTION_DEFINITIONS]: (message: OptionDefinitionMessage) => [
+    optionDispatchers[OptionDispatcherName.UPDATE_DEFINITION](message),
   ],
   // ---- Orders
   [SignalREvents.ORDER_RECORD_COMPLETED]: (message: OrderRecordMessage, signalRConnection) => [
