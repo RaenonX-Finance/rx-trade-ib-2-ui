@@ -4,7 +4,7 @@ import {CandlestickData} from 'lightweight-charts';
 
 import {LegendDataCell} from '@/components/chart/legend/cell';
 import {ChartLegendOfDataProps, PxDirectionText} from '@/components/chart/legend/type';
-import {formatNumber} from '@/utils/string';
+import {formatSignedNumber} from '@/utils/format/number/signed';
 
 
 export const ChartCompleteLegendOfCandlestick = ({legend, data}: ChartLegendOfDataProps<CandlestickData>) => {
@@ -33,7 +33,7 @@ export const ChartCompleteLegendOfCandlestick = ({legend, data}: ChartLegendOfDa
         value={
           diffVal === 0 ?
             '-' :
-            `${formatNumber({num: diffVal, digits})} (${formatNumber({num: diffPct, digits: 2})}%)`
+            `${formatSignedNumber({num: diffVal, digits})} (${formatSignedNumber({num: diffPct, digits: 2})}%)`
         }
         direction={direction}
       />

@@ -5,6 +5,7 @@ import {clsx} from 'clsx';
 import {askClassName, bidClassName} from '@/components/colors/const';
 import {ContractInState} from '@/types/data/contract';
 import {PxOfContract} from '@/types/data/px';
+import {formatFloat} from '@/utils/format/number/regular';
 import {changeInfoToString, getChange} from '@/utils/math';
 import {Nullable} from '@/utils/type';
 
@@ -20,9 +21,9 @@ export const CurrentUnderlyingPx = ({px, contract}: Props) => {
 
   return (
     <>
-      <div className={clsx(commonClasses, bidClassName)}>{px?.Bid?.toFixed(2) ?? '-'}</div>
-      <div className={clsx(commonClasses, askClassName)}>{px?.Ask?.toFixed(2) ?? '-'}</div>
-      <div className={clsx(commonClasses)}>{px?.Last?.toFixed(2) ?? '-'}</div>
+      <div className={clsx(commonClasses, bidClassName)}>{formatFloat(px?.Bid)}</div>
+      <div className={clsx(commonClasses, askClassName)}>{formatFloat(px?.Ask)}</div>
+      <div className={clsx(commonClasses)}>{formatFloat(px?.Last)}</div>
       <div className={clsx(commonClasses, 'w-28', change?.textClass)}>
         {changeInfoToString(change, contract?.digits)}
       </div>

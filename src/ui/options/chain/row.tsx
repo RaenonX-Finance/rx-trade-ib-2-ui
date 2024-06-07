@@ -4,8 +4,11 @@ import {askClassName, bidClassName, markPxClassName} from '@/components/colors/c
 import {usePxSelector} from '@/state/px/selector';
 import {ContractId} from '@/types/data/px';
 import {getMidPx, getPxSpread} from '@/utils/calc/tick';
+import {formatPercent} from '@/utils/format/number/percent';
+import {formatFloat, formatFloat4} from '@/utils/format/number/regular';
+import {formatSignedNumber} from '@/utils/format/number/signed';
 import {getChange} from '@/utils/math';
-import {formatNumber, formatPercent} from '@/utils/string';
+import {isNotNullish} from '@/utils/type';
 
 
 type Props = {
@@ -25,19 +28,19 @@ export const OptionChainDataCells = ({contractId}: Props) => {
   return (
     <>
       <td className="whitespace-nowrap">
-        {px?.Last?.toFixed(2) ?? `c ${px?.Close?.toFixed(2)}` ?? '-'}
+        {!isNotNullish(px?.Last) && isNotNullish(px?.Close) && 'c '}{formatFloat(px?.Last ?? px?.Close)}
       </td>
-      <td className={bidClassName}>{px?.Bid?.toFixed(2) ?? '-'}</td>
-      <td className={askClassName}>{px?.Ask?.toFixed(2) ?? '-'}</td>
-      <td className={markPxClassName}>{px?.Mark?.toFixed(2) ?? '-'}</td>
+      <td className={bidClassName}>{formatFloat(px?.Bid)}</td>
+      <td className={askClassName}>{formatFloat(px?.Ask)}</td>
+      <td className={markPxClassName}>{formatFloat(px?.Mark)}</td>
       <td className={changeInfo?.textClass}>
-        {formatNumber({num: changeInfo?.changeAmt, digits: 2, sign: true})}
+        {formatSignedNumber({num: changeInfo?.changeAmt, digits: 2, sign: true})}
       </td>
       <td className={changeInfo?.textClass}>
-        {formatNumber({num: changeInfo?.changePct, digits: 2, sign: true})}
+        {formatSignedNumber({num: changeInfo?.changePct, digits: 2, sign: true})}
       </td>
-      <td>{px?.Delta?.toFixed(4) ?? '-'}</td>
-      <td>{px?.Theta?.toFixed(4) ?? '-'}</td>
+      <td>{formatFloat4(px?.Delta)}</td>
+      <td>{formatFloat4(px?.Theta)}</td>
       <td>
         {(!!base && !!theta && theta > 1E-5) ?
           formatPercent({numerator: Math.abs(theta), denominator: base}) :

@@ -1,10 +1,14 @@
 import React from 'react';
 
+import {clsx} from 'clsx';
+
 import {askClassName, bidClassName} from '@/components/colors/const';
 import styles from '@/ui/px/main.module.css';
 import {QuotePxProps} from '@/ui/px/single/quote/type';
 import {getDeltaTextClass} from '@/ui/px/single/quote/utils';
 import {isSecurityTypeFutures} from '@/utils/api';
+import {getMidPx} from '@/utils/calc/tick';
+import {formatFloat4, formatToDigits} from '@/utils/format/number/regular';
 
 
 type Props = QuotePxProps & {
@@ -20,21 +24,21 @@ export const QuoteCurrentPx = ({contract, px, lastPxFallback}: Props) => {
 
   // Futures
   if (isSecurityTypeFutures(securityType)) {
-    return <>{px?.Last?.toFixed(digits) ?? lastPxFallback ?? '-'}</>;
+    return formatToDigits({num: px?.Last, digits}) ?? lastPxFallback ?? '-';
   }
 
   // Options
   if (securityType === 'Options') {
-    const mid = ((px?.Bid ?? NaN) + (px?.Ask ?? NaN)) / 2;
+    const mid = getMidPx(px);
 
     return (
       <div className={styles['current-px']}>
         <span className="text-2xs">M</span>
-        <span>{isNaN(mid) ? lastPxFallback?.toFixed(digits) ?? '-' : mid.toFixed(digits)}</span>
+        <span>{formatToDigits({num: mid ?? lastPxFallback, digits})}</span>
         <span className="text-2xs text-gray-400">T</span>
-        <span className="text-gray-400">{px?.Mark?.toFixed(digits) ?? '-'}</span>
-        <span className={`${getDeltaTextClass(px?.Delta)} text-2xs`}>&Delta;</span>
-        <span className={getDeltaTextClass(px?.Delta)}>{px?.Delta?.toFixed(4) ?? '-'}</span>
+        <span className="text-gray-400">{formatToDigits({num: px?.Mark, digits})}</span>
+        <span className={clsx('text-2xs', getDeltaTextClass(px?.Delta))}>&Delta;</span>
+        <span className={getDeltaTextClass(px?.Delta)}>{formatFloat4(px?.Delta)}</span>
       </div>
     );
   }
@@ -44,11 +48,11 @@ export const QuoteCurrentPx = ({contract, px, lastPxFallback}: Props) => {
     return (
       <div className={styles['current-px']}>
         <span className="text-xs">L</span>
-        <span>{px?.Last?.toFixed(digits) ?? lastPxFallback?.toFixed(digits) ?? '-'}</span>
-        <span className={`${bidClassName} text-xs`}>B</span>
-        <span className={`${bidClassName}`}>{px?.Bid?.toFixed(digits) ?? '-'}</span>
-        <span className={`${askClassName} text-xs`}>A</span>
-        <span className={`${askClassName}`}>{px?.Ask?.toFixed(digits) ?? '-'}</span>
+        <span>{formatToDigits({num: px?.Last ?? lastPxFallback, digits})}</span>
+        <span className={clsx('text-xs', bidClassName)}>B</span>
+        <span className={bidClassName}>{formatToDigits({num: px?.Bid, digits})}</span>
+        <span className={clsx('text-xs', askClassName)}>A</span>
+        <span className={askClassName}>{formatToDigits({num: px?.Ask, digits})}</span>
       </div>
     );
   }

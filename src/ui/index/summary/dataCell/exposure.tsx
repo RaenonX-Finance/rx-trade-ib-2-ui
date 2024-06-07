@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {useAccountValueSelector, useCurrentAccountSelector} from '@/state/account/selector';
-import {formatPercent} from '@/utils/string';
+import {formatPercent} from '@/utils/format/number/percent';
 
 
 export const ExposurePercent = () => {

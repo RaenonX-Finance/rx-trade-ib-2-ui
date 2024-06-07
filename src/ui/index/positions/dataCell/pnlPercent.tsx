@@ -2,7 +2,7 @@ import React from 'react';
 
 import {useAccountDataSelector, useCurrentAccountSelector} from '@/state/account/selector';
 import {getPreviousDayValue} from '@/utils/calc/account';
-import {formatPercent} from '@/utils/string';
+import {formatPercent} from '@/utils/format/number/percent';
 
 
 type Props = {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {PxDirectionText} from '@/components/chart/legend/type';
-import {formatNumber} from '@/utils/string';
+import {formatSignedNumber} from '@/utils/format/number/signed';
 
 
 export type LegendDataCellProps = {
@@ -38,7 +38,7 @@ export const LegendDataCell = ({
         <><span className="text-3xs">{title}</span>&nbsp;</>
       }
       <span className={classNameOfValue ?? (large ? '' : 'text-sm')}>
-        {typeof value === 'number' ? formatNumber({num: value, digits}) : value}
+        {typeof value === 'number' ? formatSignedNumber({num: value, digits}) : value}
       </span>
     </div>
   );

@@ -4,8 +4,9 @@ import {useCurrentAccountSelector} from '@/state/account/selector';
 import {usePositionSelector} from '@/state/position/selector';
 import {ContractInState} from '@/types/data/contract';
 import {getPnlTextClassName} from '@/ui/index/positions/utils';
+import {formatToDigits} from '@/utils/format/number/regular';
+import {formatSignedNumber} from '@/utils/format/number/signed';
 import {changeInfoToString, getChange} from '@/utils/math';
-import {formatNumber} from '@/utils/string';
 
 
 type Props = {
@@ -32,7 +33,7 @@ export const QuotePositionStats = ({contract}: Props) => {
       <span className="text-gray-400">
         Exited /&nbsp;
         <span className={getPnlTextClassName(realizedPnl)}>
-          {formatNumber({num: realizedPnl, digits, sign: true})}
+          {formatSignedNumber({num: realizedPnl, digits, sign: true})}
         </span>
       </span>
     );
@@ -44,7 +45,7 @@ export const QuotePositionStats = ({contract}: Props) => {
   });
   return (
     <>
-      {quantity} x {avgPx.toFixed(digits)} /&nbsp;
+      {quantity} x {formatToDigits({num: avgPx, digits})} /&nbsp;
       <span className={change?.textClass}>{changeInfoToString(change, digits)}</span>
     </>
   );

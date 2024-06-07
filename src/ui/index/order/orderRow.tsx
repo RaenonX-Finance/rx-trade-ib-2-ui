@@ -10,7 +10,8 @@ import {Order} from '@/types/data/order';
 import {OrderExpectedPnL} from '@/ui/index/order/dataCell/expectedPnl';
 import {OrderNetLiqPercent} from '@/ui/index/order/dataCell/netLiquidityPercent';
 import {getOrderValue, getPxMoveToHit, getSideClassName} from '@/ui/index/order/utils';
-import {formatPercent} from '@/utils/string';
+import {formatPercent} from '@/utils/format/number/percent';
+import {formatFloat} from '@/utils/format/number/regular';
 
 
 type Props = {
@@ -58,12 +59,12 @@ export const OrderRow = ({order, isCompleted = false, className}: Props) => {
       <td className={clsx('text-center', getSideClassName(side))}>{side}</td>
       <td className="text-center">{tif}</td>
       <td className="text-center">{isCancelled ? 'CXL' : type}</td>
-      <td className={orderPxClassName}>{price > 0 ? price.toFixed(2) : '-'}</td>
-      <td className={bidClassName}>{px?.Bid?.toFixed(2) ?? '-'}</td>
-      <td className={askClassName}>{px?.Ask?.toFixed(2) ?? '-'}</td>
-      <td>{px?.Last?.toFixed(2) ?? '-'}</td>
-      <td>{isOrderValueNaN ? '-' : orderValue.toFixed(2)}</td>
-      <td>{pxMoveToHit?.toFixed(2) ?? '-'}</td>
+      <td className={orderPxClassName}>{price > 0 ? formatFloat(price) : '-'}</td>
+      <td className={bidClassName}>{formatFloat(px?.Bid)}</td>
+      <td className={askClassName}>{formatFloat(px?.Ask)}</td>
+      <td>{formatFloat(px?.Last) ?? '-'}</td>
+      <td>{isOrderValueNaN ? '-' : formatFloat(orderValue)}</td>
+      <td>{formatFloat(pxMoveToHit) ?? '-'}</td>
       <td>{formatPercent({numerator: pxMoveToHit, denominator: price})}</td>
       <td>
         {isOrderValueNaN ?

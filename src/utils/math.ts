@@ -1,5 +1,5 @@
 import {TailwindTextClass} from '@/types/tailwind';
-import {formatNumber} from '@/utils/string';
+import {formatSignedNumber} from '@/utils/format/number/signed';
 
 
 type GetChangeOpts = {
@@ -40,8 +40,8 @@ export const changeInfoToString = (changeInfo: ChangeInfo | undefined, digits: n
   }
 
   const {changePct, changeAmt} = changeInfo;
-  const changeAmtString = formatNumber({num: changeAmt, digits, sign: true});
-  const changePctString = formatNumber({num: changePct, digits: 2, sign: true});
+  const changeAmtString = formatSignedNumber({num: changeAmt, digits, sign: true});
+  const changePctString = formatSignedNumber({num: changePct, digits: 2, sign: true});
 
   return `${changeAmtString} (${changePctString}%)`;
 };

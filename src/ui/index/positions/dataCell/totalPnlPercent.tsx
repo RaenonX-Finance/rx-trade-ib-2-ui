@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {ContractInState} from '@/types/data/contract';
+import {formatFloat} from '@/utils/format/number/regular';
 
 
 type Props = {
@@ -28,5 +29,5 @@ export const PositionTotalPnlPercent = ({contract, quantity, costBasis, marketVa
     throw new Error(`SecurityType: Unhandled security type ${securityType} to calculated total PnL %`);
   }
 
-  return <>{(totalPnlPercent * 100).toFixed(2)}%</>;
+  return `${formatFloat(totalPnlPercent * 100)}%`;
 };

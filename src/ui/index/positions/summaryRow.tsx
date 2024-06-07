@@ -10,6 +10,7 @@ import {AccountDailyPnlPercent} from '@/ui/index/positions/dataCell/accountDaily
 import {AccountTotalPnlPercent} from '@/ui/index/positions/dataCell/accountTotalPnlPercent';
 import {AccountCashPercent} from '@/ui/index/positions/dataCell/cashPercent';
 import {getPnlTextClassName} from '@/ui/index/positions/utils';
+import {formatFloat} from '@/utils/format/number/regular';
 
 
 export const SummaryRow = () => {
@@ -30,9 +31,9 @@ export const SummaryRow = () => {
       <td/>
       <td/>
       <td><AccountCashPercent/></td>
-      <td className={getPnlTextClassName(dailyPnl || 0)}>{dailyPnl?.toFixed(2)}</td>
+      <td className={getPnlTextClassName(dailyPnl || 0)}>{formatFloat(dailyPnl)}</td>
       <td><AccountDailyPnlPercent/></td>
-      <td className={getPnlTextClassName(totalPnl || 0)}>{totalPnl?.toFixed(2)}</td>
+      <td className={getPnlTextClassName(totalPnl || 0)}>{formatFloat(totalPnl)}</td>
       <td><AccountTotalPnlPercent/></td>
       <td/>
       <td/>

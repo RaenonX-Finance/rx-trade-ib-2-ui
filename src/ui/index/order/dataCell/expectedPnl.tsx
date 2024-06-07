@@ -5,6 +5,7 @@ import {usePositionSelector} from '@/state/position/selector';
 import {ContractInState} from '@/types/data/contract';
 import {Order} from '@/types/data/order';
 import {getPnlTextClassName} from '@/ui/index/positions/utils';
+import {formatFloat} from '@/utils/format/number/regular';
 
 
 type Props = {
@@ -40,5 +41,5 @@ export const OrderExpectedPnL = ({contract, order, orderValue}: Props) => {
     throw new Error(`SecurityType: Unhandled expected PnL for security type: ${securityType}`);
   }
 
-  return <span className={getPnlTextClassName(expectedPnl)}>{expectedPnl.toFixed(2)}</span>;
+  return <span className={getPnlTextClassName(expectedPnl)}>{formatFloat(expectedPnl)}</span>;
 };

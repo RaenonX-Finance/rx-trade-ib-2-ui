@@ -16,6 +16,7 @@ import {PositionQuantity} from '@/ui/index/positions/dataCell/quantity';
 import {PositionTotalPnlPercent} from '@/ui/index/positions/dataCell/totalPnlPercent';
 import {PositionFilter} from '@/ui/index/positions/type';
 import {getPnlTextClassName} from '@/ui/index/positions/utils';
+import {formatFloat, formatFloat3} from '@/utils/format/number/regular';
 import {isAllValueFalse} from '@/utils/record';
 
 
@@ -80,44 +81,34 @@ export const PositionRow = ({contractId, filter}: Props) => {
       <td className="whitespace-nowrap text-left">
         <code>{contract?.localSymbol || contractId}</code>
       </td>
-      <td>
-        {px?.Last?.toFixed(2) ?? '-'}
-      </td>
-      <td className={bidClassName}>
-        {px?.Bid?.toFixed(2) ?? '-'}
-      </td>
-      <td className={askClassName}>
-        {px?.Ask?.toFixed(2) ?? '-'}
-      </td>
-      <td className={markPxClassName}>
-        {px?.Mark?.toFixed(2) ?? '-'}
-      </td>
-      <td>
-        {px?.Delta?.toFixed(4) ?? '-'}
-      </td>
+      <td>{formatFloat(px?.Last)}</td>
+      <td className={bidClassName}>{formatFloat(px?.Bid)}</td>
+      <td className={askClassName}>{formatFloat(px?.Ask)}</td>
+      <td className={markPxClassName}>{formatFloat(px?.Mark)}</td>
+      <td>{formatFloat(px?.Delta)}</td>
       <td>
         <PositionQuantity quantity={quantity}/>
       </td>
       <td>
-        {quantity === 0 ? '-' : avgPx.toFixed(3)}
+        {quantity === 0 ? '-' : formatFloat3(avgPx)}
       </td>
       <td>
-        {quantity === 0 || isNaN(costBasis) ? '-' : costBasis.toFixed(2)}
+        {quantity === 0 ? '-' : formatFloat(costBasis)}
       </td>
       <td>
-        {quantity === 0 || isNaN(marketValue) ? '-' : marketValue.toFixed(2)}
+        {quantity === 0 ? '-' : formatFloat(marketValue)}
       </td>
       <td>
         <PositionAccountPercentage quantity={quantity} marketValue={marketValue}/>
       </td>
       <td className={getPnlTextClassName(dailyPnl ?? 0)}>
-        {dailyPnl?.toFixed(2) ?? '-'}
+        {formatFloat(dailyPnl)}
       </td>
       <td>
         <PositionDailyPnlPercent dailyPnl={dailyPnl}/>
       </td>
       <td className={getPnlTextClassName(totalPnl)}>
-        {totalPnl.toFixed(2)}
+        {formatFloat(totalPnl)}
       </td>
       <td>
         <PositionTotalPnlPercent
