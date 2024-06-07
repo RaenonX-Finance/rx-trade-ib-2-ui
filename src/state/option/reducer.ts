@@ -3,6 +3,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {optionDispatchers} from '@/state/option/dispatchers';
 import {OPTION_STATE_NAME, OptionDispatcherName, OptionState} from '@/state/option/types';
 import {overwrite} from '@/utils/object';
+import {sortAsc} from '@/utils/sort/byKey/asc';
 
 
 const initialState: OptionState = {};
@@ -34,7 +35,7 @@ const slice = createSlice({
         const {origin, contractIdPairs} = payload;
 
         if (origin === 'OptionChain') {
-          return overwrite(state, {chain: {contracts: contractIdPairs.sort((a, b) => a.strike - b.strike)}});
+          return overwrite(state, {chain: {contracts: contractIdPairs.toSorted(sortAsc(({strike}) => strike))}});
         }
 
         if (origin === 'GammaExposure') {

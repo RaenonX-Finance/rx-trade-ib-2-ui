@@ -145,6 +145,9 @@ rules:
   react-hooks/exhaustive-deps:
     - off
 
+  require-jsdoc:
+    - off
+
   tailwindcss/classnames-order:
     - error
 
