@@ -31,42 +31,47 @@ export const useSendOptionPxRequest = ({
   definition,
   onRequestedPx,
 }: SendOptionPxRequestOpts) => {
-  const {account, expiry} = pxRequest;
+  const {expiry} = pxRequest;
 
   const dispatch = useDispatch();
 
   const priceBase = getMidPx(px);
 
-  React.useEffect(() => {
-    if (!connection) {
-      throw new Error('SignalR connection not initialized');
-    }
+  React.useEffect(
+    () => {
+      if (!connection) {
+        throw new Error('SignalR connection not initialized');
+      }
 
-    const {symbol, expiry, account, tradingClass} = pxRequest;
+      const {symbol, expiry, account, tradingClass} = pxRequest;
 
-    if (!px || !priceBase || !definition || !symbol || !expiry || !account) {
-      return;
-    }
+      if (!px || !priceBase || !definition || !symbol || !expiry || !account) {
+        return;
+      }
 
-    const request: OptionPxSubscribeRequest = {
-      symbol,
-      expiry,
-      account,
-      tradingClass,
-      strikes: getStrikeRangeToRequest({
-        priceBase,
-        strikeRangePercent: pxRequest.strikeRangePercent,
-        possibleStrikes: definition.strike,
-      }),
-    };
+      const request: OptionPxSubscribeRequest = {
+        symbol,
+        expiry,
+        account,
+        tradingClass,
+        strikes: getStrikeRangeToRequest({
+          priceBase,
+          strikeRangePercent: pxRequest.strikeRangePercent,
+          possibleStrikes: definition.strike,
+        }),
+      };
 
-    connection
-      .invoke(SignalRRequests.REQUEST_PX_OPTION_CHAIN, request)
-      .then((message: OptionPxResponse) => onRequestedPx(message))
-      .catch((err) => {
-        dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
-          message: `Request option chain: ${getErrorMessage({err})}`,
-        }));
-      });
-  }, [connection, definition, !!priceBase, account, expiry]);
+      connection
+        .invoke(SignalRRequests.REQUEST_PX_OPTION_CHAIN, request)
+        .then((message: OptionPxResponse) => onRequestedPx(message))
+        .catch((err) => {
+          dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
+            message: `Request option chain: ${getErrorMessage({err})}`,
+          }));
+        });
+    },
+    // `account` is only used for fetching price data,
+    // therefore account change shouldn't cause immediate option chain re-fetch
+    [connection, definition, !!priceBase, expiry],
+  );
 };
