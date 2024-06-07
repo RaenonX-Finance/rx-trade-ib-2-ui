@@ -17,6 +17,7 @@ export type OptionDefinitionMessage = {
 };
 
 export type OptionContractIdPair = {
+  expiry: string,
   strike: number,
   call: number,
   put: number,
