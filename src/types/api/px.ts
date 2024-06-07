@@ -28,10 +28,10 @@ export type PxHistoryMessage = {
   bars: ChartDataBar[],
 };
 
-export type OptionChainPxSubscribeRequest = {
+export type OptionPxSubscribeRequest = {
   account: string,
   symbol: string,
-  expiry: string,
+  expiry: string[],
   tradingClass: string,
   strikes: number[],
 };

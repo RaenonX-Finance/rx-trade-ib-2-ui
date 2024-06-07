@@ -4,7 +4,7 @@ export enum SignalRRequests {
   REQUEST_PNL = 'RequestPnl',
   REQUEST_PX_TICK = 'RequestPxTick',
   REQUEST_PX_HISTORY = 'RequestPxHistory',
-  REQUEST_PX_OPTION_CHAIN = 'RequestPxOfOptionChain',
+  REQUEST_PX_OPTIONS = 'RequestPxOfOptions',
   REQUEST_CONTRACT_DETAILS = 'RequestContractDetails',
   REQUEST_OPTION_DEFINITIONS = 'RequestOptionDefinitions',
   CANCEL_PX_TICK = 'CancelPxTick',

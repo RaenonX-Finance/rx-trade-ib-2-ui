@@ -39,7 +39,7 @@ export const OptionChainInput = () => {
   });
   const [pxRequest, setPxRequest] = React.useState<OptionChainPxSubscribeRequestState>({
     account: '',
-    expiry: '',
+    expiry: [],
     strikeRangePercent: 15,
     symbol: '',
     tradingClass: '',
@@ -100,7 +100,7 @@ export const OptionChainInput = () => {
     }));
     setPxRequest((original) => ({
       ...original,
-      expiry: definition.expiry[0],
+      expiry: [definition.expiry[0]],
       tradingClass: definition.tradingClass[0],
       symbol: definitionRequest.symbol,
     }));
@@ -157,7 +157,10 @@ export const OptionChainInput = () => {
                 definition.expiry.map((expiry) => ({
                   text: expiry,
                   disabled: false,
-                  onSelected: () => setPxRequest((original) => ({...original, expiry})),
+                  onSelected: () => setPxRequest((original) => ({
+                    ...original,
+                    expiry: [expiry],
+                  })),
                 })),
               ] :
               []

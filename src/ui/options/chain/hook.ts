@@ -7,7 +7,7 @@ import {errorDispatchers} from '@/state/error/dispatchers';
 import {ErrorDispatcherName} from '@/state/error/types';
 import {useDispatch} from '@/state/store';
 import {OptionPxResponse} from '@/types/api/option';
-import {OptionChainPxSubscribeRequest} from '@/types/api/px';
+import {OptionPxSubscribeRequest} from '@/types/api/px';
 import {OptionDefinition} from '@/types/data/option';
 import {PxOfContract} from '@/types/data/px';
 import {OptionChainPxSubscribeRequestState} from '@/ui/options/chain/type';
@@ -50,7 +50,7 @@ export const useOptionChainPxSubscriber = ({
         return;
       }
 
-      const request: OptionChainPxSubscribeRequest = {
+      const request: OptionPxSubscribeRequest = {
         symbol,
         expiry,
         account,
@@ -63,7 +63,7 @@ export const useOptionChainPxSubscriber = ({
       };
 
       connection
-        .invoke(SignalRRequests.REQUEST_PX_OPTION_CHAIN, request)
+        .invoke(SignalRRequests.REQUEST_PX_OPTIONS, request)
         .then((message: OptionPxResponse) => onRequestedPx(message))
         .catch((err) => {
           dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
