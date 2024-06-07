@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 
 import {ToggleButton} from '@/components/inputs/toggleButton';

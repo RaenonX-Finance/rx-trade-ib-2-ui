@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 
 import {SignalRConnection} from '@/contexts/signalR/type';

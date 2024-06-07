@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 
 import {Flex} from '@/components/layout/flex/common';
@@ -8,7 +7,7 @@ import {Positions} from '@/ui/index/positions/main';
 import {AccountSummary} from '@/ui/index/summary/main';
 
 
-const Main = () => {
+export const Account = () => {
   return (
     <PageLayout>
       <Flex direction="row" className="h-1/2 gap-2">
@@ -25,5 +24,3 @@ const Main = () => {
     </PageLayout>
   );
 };
-
-export default Main;

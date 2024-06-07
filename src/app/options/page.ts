@@ -1,10 +1,10 @@
 import {Metadata} from 'next';
 
-import Main from '@/ui/options/main';
+import {Options} from '@/ui/options/main';
 
 
 export const metadata: Metadata = {
   title: 'Options',
 };
 
-export default Main;
+export default Options;

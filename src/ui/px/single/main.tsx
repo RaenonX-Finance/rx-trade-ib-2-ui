@@ -36,8 +36,6 @@ export const SinglePriceQuote = ({index}: Props) => {
   const {ref, width, height} = useResizeObserver<HTMLDivElement>();
   const [request, setRequest] = React.useState<ChartDataRequest>(defaultRequest);
 
-  // FIXME: Switching tab shows "server disconnected"
-  // FIXME: data update overwrites value when hovering on simplified legend (blink)
   const {
     chartData,
     contract,
@@ -70,7 +68,6 @@ export const SinglePriceQuote = ({index}: Props) => {
     }
   }, [account]);
 
-  // FIXME: Adjust period to show based on interval
   return (
     <WindowLayout className="flex-col gap-2" fullHeight={false}>
       <form className="flex flex-row gap-1.5" onSubmit={async (e) => {

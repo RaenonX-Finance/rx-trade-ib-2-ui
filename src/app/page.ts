@@ -1,4 +1,4 @@
-import Main from '@/ui/index/main';
+import {Account} from '@/ui/index/main';
 
 
-export default Main;
+export default Account;
