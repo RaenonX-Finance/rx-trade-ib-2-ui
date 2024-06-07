@@ -3,6 +3,7 @@ import React from 'react';
 import {askClassName, bidClassName, markPxClassName} from '@/components/colors/const';
 import {usePxSelector} from '@/state/px/selector';
 import {ContractId} from '@/types/data/px';
+import {getMidPx, getPxSpread} from '@/utils/calc/px';
 import {formatPercent} from '@/utils/string';
 
 
@@ -13,12 +14,9 @@ type Props = {
 export const OptionChainDataCells = ({contractId}: Props) => {
   const px = usePxSelector(contractId);
 
-  const bid = px?.Bid;
-  const ask = px?.Ask;
-  const hasBidAndAsk = !!bid && !!ask;
-  const spread = hasBidAndAsk ? Math.abs(bid - ask) : undefined;
-  const base = hasBidAndAsk ?
-    (bid + ask) / 2 :
+  const spread = getPxSpread(px);
+  const base =
+    getMidPx(px) ??
     (!!px?.Mark && px.Mark > 1E-3 ? px.Mark : undefined);
   const theta = px?.Theta ? Math.abs(px.Theta) : undefined;
 
