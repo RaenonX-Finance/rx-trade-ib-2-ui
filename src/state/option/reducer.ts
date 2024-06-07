@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 import {optionDispatchers} from '@/state/option/dispatchers';
 import {OPTION_STATE_NAME, OptionDispatcherName, OptionState} from '@/state/option/types';
-import {cloneMerge} from '@/utils/object';
+import {overwrite} from '@/utils/object';
 
 
 const initialState: OptionState = {};
@@ -18,11 +18,11 @@ const slice = createSlice({
         const {origin} = payload;
 
         if (origin === 'OptionChain') {
-          return cloneMerge(state, {chain: {definition: payload}});
+          return overwrite(state, {chain: {definition: payload}});
         }
 
         if (origin === 'GammaExposure') {
-          return cloneMerge(state, {gex: {definition: payload}});
+          return overwrite(state, {gex: {definition: payload}});
         }
 
         throw new Error(`Unhandled option definition request origin: ${origin satisfies never}`);
@@ -34,11 +34,11 @@ const slice = createSlice({
         const {origin, contractIdPairs} = payload;
 
         if (origin === 'OptionChain') {
-          return cloneMerge(state, {chain: {contracts: contractIdPairs.toSorted((a, b) => a.strike - b.strike)}});
+          return overwrite(state, {chain: {contracts: contractIdPairs.sort((a, b) => a.strike - b.strike)}});
         }
 
         if (origin === 'GammaExposure') {
-          return cloneMerge(state, {gex: {contracts: contractIdPairs}});
+          return overwrite(state, {gex: {contracts: contractIdPairs}});
         }
 
         throw new Error(`Unhandled option px request origin: ${origin satisfies never}`);
