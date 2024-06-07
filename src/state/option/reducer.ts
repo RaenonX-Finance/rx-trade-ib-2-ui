@@ -29,14 +29,20 @@ const slice = createSlice({
       },
     );
     builder.addCase(
-      optionDispatchers[OptionDispatcherName.CHAIN_UPDATE_CONTRACTS],
-      (state, {payload}): OptionState => ({
-        ...state,
-        chain: {
-          ...state.chain,
-          contracts: payload.toSorted((a, b) => a.strike - b.strike),
-        },
-      }),
+      optionDispatchers[OptionDispatcherName.UPDATE_CONTRACTS],
+      (state, {payload}): OptionState => {
+        const {origin, contractIdPairs} = payload;
+
+        if (origin === 'OptionChain') {
+          return cloneMerge(state, {chain: {contracts: contractIdPairs.toSorted((a, b) => a.strike - b.strike)}});
+        }
+
+        if (origin === 'GammaExposure') {
+          return cloneMerge(state, {gex: {contracts: contractIdPairs}});
+        }
+
+        throw new Error(`Unhandled option px request origin: ${origin satisfies never}`);
+      },
     );
     builder.addCase(
       optionDispatchers[OptionDispatcherName.CHAIN_CLEAR],

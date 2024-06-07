@@ -6,9 +6,9 @@ import {PartialNullable} from '@/utils/type';
 export const OPTION_STATE_NAME = 'Option';
 
 export enum OptionDispatcherName {
-  CHAIN_CLEAR = 'Option/ChainClear',
   UPDATE_DEFINITION = 'Option/UpdateDefinition',
-  CHAIN_UPDATE_CONTRACTS = 'Option/ChainUpdateContracts',
+  UPDATE_CONTRACTS = 'Option/UpdateContracts',
+  CHAIN_CLEAR = 'Option/ChainClear',
 }
 
 export type OptionMetaOfType = PartialNullable<{

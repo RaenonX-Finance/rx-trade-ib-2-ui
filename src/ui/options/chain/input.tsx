@@ -54,8 +54,10 @@ export const OptionChainInput = () => {
     px,
     pxRequest,
     definition,
-    onRequestedPx: ({realtimeRequestIds, contractIdPairs}) => {
-      dispatch(optionDispatchers[OptionDispatcherName.CHAIN_UPDATE_CONTRACTS](contractIdPairs));
+    onRequestedPx: (response) => {
+      const {realtimeRequestIds} = response;
+
+      dispatch(optionDispatchers[OptionDispatcherName.UPDATE_CONTRACTS](response));
       setDefinitionRequest((original) => ({
         ...original,
         inUsePxRequestIds: realtimeRequestIds,
