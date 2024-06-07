@@ -8,11 +8,7 @@ import {updateEpochSecToUtc} from '@/utils/time';
 
 
 export const ChartSimplifiedLegendOfWhitespace = ({legend}: ChartLegendOfDataProps<WhitespaceData>) => {
-  const {epochSec, hovered} = legend;
-
-  if (!hovered) {
-    return null;
-  }
+  const {epochSec} = legend;
 
   return (
     <div className="p-1 text-2xs">

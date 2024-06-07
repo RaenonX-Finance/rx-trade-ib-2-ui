@@ -8,12 +8,8 @@ import {updateEpochSecToUtc} from '@/utils/time';
 
 
 export const ChartSimplifiedLegendOfLine = ({legend, data}: ChartLegendOfDataProps<LineData>) => {
-  const {epochSec, digits, hovered} = legend;
+  const {epochSec, digits} = legend;
   const {value} = data;
-
-  if (!hovered) {
-    return null;
-  }
 
   // `epochSec` here already has timezone offset,
   // needs to revert it back so `new Date()` is taking the actual UTC epoch
