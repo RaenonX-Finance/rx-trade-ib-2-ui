@@ -48,4 +48,20 @@ body {
       @apply stroke-gray-700;
     }
   }
+  
+  .text-px-bid {
+    @apply text-sky-300;
+  }
+  
+  .text-px-ask {
+    @apply text-rose-300;
+  }
+  
+  .text-px-mark {
+    @apply text-gray-300;
+  }
+  
+  .text-px-order {
+    @apply text-yellow-300;
+  }
 }

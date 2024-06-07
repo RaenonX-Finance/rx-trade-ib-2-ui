@@ -2,7 +2,6 @@ import React from 'react';
 
 import {clsx} from 'clsx';
 
-import {askClassName, bidClassName, orderPxClassName} from '@/components/colors/const';
 import {TableRow} from '@/components/table/row';
 import {useContractSelector} from '@/state/contract/selector';
 import {usePxSelector} from '@/state/px/selector';
@@ -59,12 +58,12 @@ export const OrderRow = ({order, isCompleted = false, className}: Props) => {
       <td className={clsx('text-center', getSideClassName(side))}>{side}</td>
       <td className="text-center">{tif}</td>
       <td className="text-center">{isCancelled ? 'CXL' : type}</td>
-      <td className={orderPxClassName}>{price > 0 ? formatFloat(price) : '-'}</td>
-      <td className={bidClassName}>{formatFloat(px?.Bid)}</td>
-      <td className={askClassName}>{formatFloat(px?.Ask)}</td>
-      <td>{formatFloat(px?.Last) ?? '-'}</td>
+      <td className="text-px-order">{price > 0 ? formatFloat(price) : '-'}</td>
+      <td className="text-px-bid">{formatFloat(px?.Bid)}</td>
+      <td className="text-px-ask">{formatFloat(px?.Ask)}</td>
+      <td>{formatFloat(px?.Last) }</td>
       <td>{isOrderValueNaN ? '-' : formatFloat(orderValue)}</td>
-      <td>{formatFloat(pxMoveToHit) ?? '-'}</td>
+      <td>{formatFloat(pxMoveToHit)}</td>
       <td>{formatPercent({numerator: pxMoveToHit, denominator: price})}</td>
       <td>
         {isOrderValueNaN ?

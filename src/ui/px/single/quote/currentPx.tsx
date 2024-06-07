@@ -2,7 +2,6 @@ import React from 'react';
 
 import {clsx} from 'clsx';
 
-import {askClassName, bidClassName} from '@/components/colors/const';
 import styles from '@/ui/px/main.module.css';
 import {QuotePxProps} from '@/ui/px/single/quote/type';
 import {getDeltaTextClass} from '@/ui/px/single/quote/utils';
@@ -24,7 +23,7 @@ export const QuoteCurrentPx = ({contract, px, lastPxFallback}: Props) => {
 
   // Futures
   if (isSecurityTypeFutures(securityType)) {
-    return formatToDigits({num: px?.Last, digits}) ?? lastPxFallback ?? '-';
+    return formatToDigits({num: px?.Last ?? lastPxFallback, digits});
   }
 
   // Options
@@ -49,10 +48,10 @@ export const QuoteCurrentPx = ({contract, px, lastPxFallback}: Props) => {
       <div className={styles['current-px']}>
         <span className="text-xs">L</span>
         <span>{formatToDigits({num: px?.Last ?? lastPxFallback, digits})}</span>
-        <span className={clsx('text-xs', bidClassName)}>B</span>
-        <span className={bidClassName}>{formatToDigits({num: px?.Bid, digits})}</span>
-        <span className={clsx('text-xs', askClassName)}>A</span>
-        <span className={askClassName}>{formatToDigits({num: px?.Ask, digits})}</span>
+        <span className="text-px-bid text-xs">B</span>
+        <span className="text-px-bid">{formatToDigits({num: px?.Bid, digits})}</span>
+        <span className="text-px-ask text-xs">A</span>
+        <span className="text-px-ask">{formatToDigits({num: px?.Ask, digits})}</span>
       </div>
     );
   }

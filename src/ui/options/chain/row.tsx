@@ -1,6 +1,5 @@
 import React from 'react';
 
-import {askClassName, bidClassName, markPxClassName} from '@/components/colors/const';
 import {usePxSelector} from '@/state/px/selector';
 import {ContractId} from '@/types/data/px';
 import {getMidPx, getPxSpread} from '@/utils/calc/tick';
@@ -30,9 +29,9 @@ export const OptionChainDataCells = ({contractId}: Props) => {
       <td className="whitespace-nowrap">
         {!isNotNullish(px?.Last) && isNotNullish(px?.Close) && 'c '}{formatFloat(px?.Last ?? px?.Close)}
       </td>
-      <td className={bidClassName}>{formatFloat(px?.Bid)}</td>
-      <td className={askClassName}>{formatFloat(px?.Ask)}</td>
-      <td className={markPxClassName}>{formatFloat(px?.Mark)}</td>
+      <td className="text-px-bid">{formatFloat(px?.Bid)}</td>
+      <td className="text-px-ask">{formatFloat(px?.Ask)}</td>
+      <td className="text-px-mark">{formatFloat(px?.Mark)}</td>
       <td className={changeInfo?.textClass}>
         {formatSignedNumber({num: changeInfo?.changeAmt, digits: 2, sign: true})}
       </td>

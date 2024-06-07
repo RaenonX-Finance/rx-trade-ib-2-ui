@@ -2,7 +2,6 @@ import React from 'react';
 
 import {clsx} from 'clsx';
 
-import {askClassName, bidClassName, markPxClassName} from '@/components/colors/const';
 import {TableRow} from '@/components/table/row';
 import {useCurrentAccountSelector} from '@/state/account/selector';
 import {useContractSelector} from '@/state/contract/selector';
@@ -82,9 +81,9 @@ export const PositionRow = ({contractId, filter}: Props) => {
         <code>{contract?.localSymbol || contractId}</code>
       </td>
       <td>{formatFloat(px?.Last)}</td>
-      <td className={bidClassName}>{formatFloat(px?.Bid)}</td>
-      <td className={askClassName}>{formatFloat(px?.Ask)}</td>
-      <td className={markPxClassName}>{formatFloat(px?.Mark)}</td>
+      <td className="text-px-bid">{formatFloat(px?.Bid)}</td>
+      <td className="text-px-ask">{formatFloat(px?.Ask)}</td>
+      <td className="text-px-mark">{formatFloat(px?.Mark)}</td>
       <td>{formatFloat(px?.Delta)}</td>
       <td>
         <PositionQuantity quantity={quantity}/>
