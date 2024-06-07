@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {clsx} from 'clsx';
+
 import {Table} from '@/components/table/main';
 import {TableRow} from '@/components/table/row';
 import {useOptionContractMappingSelector} from '@/state/option/selector';
@@ -10,7 +12,7 @@ import {OptionChainHeaderCells} from '@/ui/options/chain/table/headerCells';
 export const OptionChainTable = () => {
   const contractMapping = useOptionContractMappingSelector();
 
-  const strikeClassName = 'text-center bg-orange-900';
+  const strikeClassName = clsx('bg-orange-900 text-center');
 
   return (
     <Table

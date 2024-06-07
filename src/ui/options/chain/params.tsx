@@ -3,6 +3,8 @@ import React from 'react';
 import {clsx} from 'clsx';
 
 import {Dropdown} from '@/components/dropdown/main';
+import {Flex} from '@/components/layout/flex/common';
+import {FlexForm} from '@/components/layout/flex/form';
 import {useSignalR} from '@/contexts/signalR/hook';
 import {SignalRRequests} from '@/enums/signalRRequests';
 import {useCurrentAccountSelector} from '@/state/account/selector';
@@ -37,9 +39,7 @@ export const OptionChainParams = () => {
   });
   const definition = useOptionDefinitionSelector();
 
-  const onSubmit = React.useCallback((e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit = React.useCallback(() => {
     dispatch(optionDispatchers[OptionDispatcherName.CLEAR]());
     connection
       .send(SignalRRequests.INIT_OPTION_CHAIN, paramRequest)
@@ -87,8 +87,8 @@ export const OptionChainParams = () => {
   const labelClassName = 'text-sm text-gray-300';
 
   return (
-    <form className="flex flex-row" onSubmit={onSubmit}>
-      <div className="flex grow flex-row items-center gap-2">
+    <FlexForm direction="row" className="items-center" onSubmit={onSubmit}>
+      <Flex direction="row" noFullWidth className="mr-auto items-center gap-2">
         <input
           type="text"
           value={paramRequest.symbol}
@@ -113,8 +113,8 @@ export const OptionChainParams = () => {
             }));
           }}
         />
-      </div>
-      <div className="flex flex-row items-center gap-1.5">
+      </Flex>
+      <Flex direction="row" noFullWidth className="items-center gap-1.5">
         <label className={labelClassName} htmlFor="strike-range">
           Strike Range ± %
         </label>
@@ -154,9 +154,9 @@ export const OptionChainParams = () => {
           buttonClassName="px-1.5 py-0.5 bg-gray-800 hover:bg-gray-600 text-xs disabled:bg-gray-800"
           itemClassName="text-xs"
         />
-      </div>
+      </Flex>
       {/* For allowing form submission on enter (https://stackoverflow.com/q/4196681) */}
       <input type="submit" className="hidden"/>
-    </form>
+    </FlexForm>
   );
 };
