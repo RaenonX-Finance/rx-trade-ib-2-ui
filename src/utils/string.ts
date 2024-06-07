@@ -1,3 +1,6 @@
+import {Nullable} from '@/utils/type';
+
+
 type FormatPercentOpts = {
   numerator: number | null | undefined,
   denominator: number | null | undefined,
@@ -20,11 +23,15 @@ export const formatPercent = ({numerator, denominator, onFalsy = '-', digits = 2
 };
 
 type FormatSignedNumberOpts = {
-  num: number,
+  num: Nullable<number>,
   digits?: number,
   sign?: boolean,
 };
 
 export const formatNumber = ({num, digits, sign}: FormatSignedNumberOpts): string => {
+  if (num == null) {
+    return '-';
+  }
+
   return `${num > 0 && sign ? '+' : ''}${num.toFixed(digits ?? 2)}`;
 };
