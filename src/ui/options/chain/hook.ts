@@ -14,13 +14,14 @@ import {OptionPxSubscribeRequestState} from '@/ui/options/chain/type';
 import {getStrikeRangeToRequest} from '@/ui/options/chain/utils';
 import {getMidPx} from '@/utils/calc/tick';
 import {getErrorMessage} from '@/utils/error';
+import {Nullable} from '@/utils/type';
 
 
 type SendOptionPxRequestOpts = {
-  connection: HubConnection | null,
+  connection: HubConnection,
   pxRequest: OptionPxSubscribeRequestState,
-  px: PxOfContract | undefined,
-  definition: OptionDefinition | undefined,
+  px: Nullable<PxOfContract>,
+  definition: Nullable<OptionDefinition>,
   onRequestedPx: (response: OptionPxResponse) => void,
 };
 

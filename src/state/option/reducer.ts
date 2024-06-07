@@ -29,7 +29,7 @@ const slice = createSlice({
       optionDispatchers[OptionDispatcherName.CLEAR],
       (state) => ({
         ...state,
-        definition: undefined,
+        definition: null,
       }),
     );
   },

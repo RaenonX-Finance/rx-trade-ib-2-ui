@@ -24,7 +24,7 @@ export const OptionChainTable = () => {
           <OptionChainHeaderCells/>
         </>
       }
-      body={contractMapping?.map(({strike, call, put}) => (
+      body={contractMapping.map(({strike, call, put}) => (
         <TableRow key={strike} className="text-right">
           <OptionChainDataCells contractId={call}/>
           <td className={strikeClassName}>{strike}</td>
