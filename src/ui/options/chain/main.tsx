@@ -7,7 +7,7 @@ import {OptionChainTable} from '@/ui/options/chain/table/main';
 
 export const OptionChain = () => {
   return (
-    <WindowLayout className="gap-1.5">
+    <WindowLayout className="gap-1.5" fullHeight={false}>
       <OptionChainParams/>
       <OptionChainTable/>
     </WindowLayout>

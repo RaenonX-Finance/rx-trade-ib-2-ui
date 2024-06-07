@@ -30,7 +30,6 @@ export const OptionChainTable = () => {
           <OptionChainDataCells contractId={put}/>
         </TableRow>
       ))}
-      classOfContainer="h-[70vh]"
     />
   );
 };

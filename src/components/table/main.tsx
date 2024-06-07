@@ -13,7 +13,7 @@ type Props = {
 
 export const Table = ({header, body, classOfContainer}: Props) => {
   return (
-    <Flex className={clsx('overflow-auto', classOfContainer)}>
+    <Flex className={clsx('overflow-x-auto', classOfContainer)}>
       <table className="info-table text-sm text-white">
         <thead>
           <tr className="sticky top-0 whitespace-nowrap bg-gradient-to-r from-slate-800 to-gray-950 text-right">
