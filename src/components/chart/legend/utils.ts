@@ -1,7 +1,7 @@
 import {CandlestickData, LineData, WhitespaceData} from 'lightweight-charts';
 
 import {ChartBarInUse} from '@/components/chart/type';
-import {isSubset} from '@/utils/array';
+import {isSubset} from '@/utils/array/subset';
 
 
 export const isBarInUseWhitespace = (bar: ChartBarInUse): bar is WhitespaceData => {

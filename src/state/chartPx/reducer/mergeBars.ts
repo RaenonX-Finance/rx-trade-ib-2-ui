@@ -1,5 +1,5 @@
 import {ChartDataBar, ChartDataBarWithData, isChartDataBarWithData} from '@/types/api/chart';
-import {mergeThenSort} from '@/utils/array';
+import {mergeSort} from '@/utils/array/mergeSort';
 
 
 type MergeChartDataOptions = {
@@ -18,7 +18,7 @@ export const mergeBars = ({newBars, original, lastInState}: MergeChartDataOption
     return [];
   }
 
-  let data = mergeThenSort(
+  let data = mergeSort(
     original || [],
     // Use data of the last of the original if the bar is empty
     newBars.map((bar) => !isChartDataBarWithData(bar) ? lastOfOriginal : bar),
