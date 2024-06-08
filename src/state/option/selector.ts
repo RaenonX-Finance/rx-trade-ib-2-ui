@@ -13,3 +13,11 @@ export const useOptionChainDefinitionSelector = (): Nullable<OptionDefinition> =
 export const useOptionChainContractsSelector = (): OptionContractIdPair[] => (
   useSelector(({option}: ReduxState) => option.chain?.contracts ?? [])
 );
+
+export const useOptionGexDefinitionSelector = (): Nullable<OptionDefinition> => (
+  useSelector(({option}: ReduxState) => option.gex?.definition)
+);
+
+export const useOptionGexContractsSelector = (): OptionContractIdPair[] => (
+  useSelector(({option}: ReduxState) => option.gex?.contracts ?? [])
+);

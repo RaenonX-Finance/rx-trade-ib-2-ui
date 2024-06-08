@@ -46,10 +46,17 @@ const slice = createSlice({
       },
     );
     builder.addCase(
-      optionDispatchers[OptionDispatcherName.CHAIN_CLEAR],
+      optionDispatchers[OptionDispatcherName.CLEAR_OPTION_CHAIN],
       (state): OptionState => ({
         ...state,
         chain: null,
+      }),
+    );
+    builder.addCase(
+      optionDispatchers[OptionDispatcherName.CLEAR_OPTION_GEX],
+      (state): OptionState => ({
+        ...state,
+        gex: null,
       }),
     );
   },

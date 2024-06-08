@@ -5,6 +5,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        market: {
+          up: '#26a699',
+          down: '#ef5350',
+        },
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },

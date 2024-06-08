@@ -11,5 +11,6 @@ export const optionDispatchers = {
   [OptionDispatcherName.UPDATE_CONTRACTS]: createAction<OptionPxResponse>(
     OptionDispatcherName.UPDATE_CONTRACTS,
   ),
-  [OptionDispatcherName.CHAIN_CLEAR]: createAction(OptionDispatcherName.CHAIN_CLEAR),
+  [OptionDispatcherName.CLEAR_OPTION_CHAIN]: createAction(OptionDispatcherName.CLEAR_OPTION_CHAIN),
+  [OptionDispatcherName.CLEAR_OPTION_GEX]: createAction(OptionDispatcherName.CLEAR_OPTION_GEX),
 };
