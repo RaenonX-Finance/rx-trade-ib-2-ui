@@ -1,13 +1,13 @@
 import {OptionChainPxSubscribeRequestState} from '@/ui/options/chain/type';
 import {getStrikeRangeToRequest} from '@/ui/options/chain/utils';
-import {useOptionPxSubscriber} from '@/ui/options/common/hook/pxSubscriber';
-import {UseOptionPxSubscriberCommonOpts} from '@/ui/options/common/hook/type';
+import {useOptionPxManager} from '@/ui/options/common/hook/pxManager';
+import {UseOptionPxManagerCommonOpts} from '@/ui/options/common/hook/type';
 
 
-export const useOptionChainPxSubscriber = (opts: UseOptionPxSubscriberCommonOpts) => {
+export const useOptionChainPxManager = (opts: UseOptionPxManagerCommonOpts) => {
   const {definition} = opts;
 
-  return useOptionPxSubscriber<OptionChainPxSubscribeRequestState>({
+  return useOptionPxManager<OptionChainPxSubscribeRequestState>({
     ...opts,
     getRequests: (payload, priceBase) => {
       if (!priceBase || !definition) {

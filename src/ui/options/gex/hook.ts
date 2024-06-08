@@ -2,15 +2,15 @@ import {differenceInDays} from 'date-fns/differenceInDays';
 import {format} from 'date-fns/format';
 import {parse} from 'date-fns/parse';
 
-import {useOptionPxSubscriber} from '@/ui/options/common/hook/pxSubscriber';
-import {UseOptionPxSubscriberCommonOpts} from '@/ui/options/common/hook/type';
+import {useOptionPxManager} from '@/ui/options/common/hook/pxManager';
+import {UseOptionPxManagerCommonOpts} from '@/ui/options/common/hook/type';
 import {OptionGexPxSubscribeRequestState} from '@/ui/options/gex/type';
 
 
-export const useOptionGexPxSubscriber = (opts: UseOptionPxSubscriberCommonOpts) => {
+export const useOptionGexPxManager = (opts: UseOptionPxManagerCommonOpts) => {
   const {definition} = opts;
 
-  return useOptionPxSubscriber<OptionGexPxSubscribeRequestState>({
+  return useOptionPxManager<OptionGexPxSubscribeRequestState>({
     ...opts,
     getRequests: (payload, priceBase) => {
       const {account, symbol, tradingClass, expiryMaxDays} = payload;

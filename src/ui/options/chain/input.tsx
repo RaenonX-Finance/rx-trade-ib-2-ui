@@ -7,36 +7,20 @@ import {Dropdown} from '@/components/dropdown/main';
 import {InputBox} from '@/components/inputs/box';
 import {Flex} from '@/components/layout/flex/common';
 import {FlexForm} from '@/components/layout/flex/form';
-import {useSignalR} from '@/contexts/signalR/hook';
-import {SignalRRequests} from '@/enums/signalRRequests';
 import {useCurrentAccountSelector} from '@/state/account/selector';
-import {errorDispatchers} from '@/state/error/dispatchers';
-import {ErrorDispatcherName} from '@/state/error/types';
 import {optionDispatchers} from '@/state/option/dispatchers';
 import {useOptionChainDefinitionSelector} from '@/state/option/selector';
 import {OptionDispatcherName} from '@/state/option/types';
-import {useDispatch} from '@/state/store';
 import {OptionDefinitionRequest} from '@/types/api/option';
-import {useOptionChainPxSubscriber} from '@/ui/options/chain/hook';
+import {useOptionChainPxManager} from '@/ui/options/chain/hook';
 import {OptionChainPxSubscribeRequestState} from '@/ui/options/chain/type';
 import {CurrentUnderlyingPx} from '@/ui/options/common/underlyingPx';
-import {getErrorMessage} from '@/utils/error';
 
 
 export const OptionChainInput = () => {
-  const {connection} = useSignalR();
   const currentAccount = useCurrentAccountSelector();
   const definition = useOptionChainDefinitionSelector();
 
-  const dispatch = useDispatch();
-
-  const [definitionRequest, setDefinitionRequest] = React.useState<OptionDefinitionRequest>({
-    origin: 'OptionChain',
-    account: '',
-    symbol: '',
-    inUseContractId: null,
-    inUsePxRequestIds: [],
-  });
   const [pxRequest, setPxRequest] = React.useState<OptionChainPxSubscribeRequestState>({
     origin: 'OptionChain',
     account: '',
@@ -46,33 +30,16 @@ export const OptionChainInput = () => {
     tradingClass: '',
   });
 
-  const subscribeOptionPx = useOptionChainPxSubscriber({
+  const {
+    definitionRequest,
+    setDefinitionRequest,
+    requestOptionDefinitions,
+    subscribeOptionPx,
+  } = useOptionChainPxManager({
+    origin: 'OptionChain',
     definition,
-    onRequestedPx: (response) => {
-      const {realtimeRequestIds} = response;
-
-      // `onRequestPx()` could get called multiple times on a single `definition` change,
-      // therefore concatenating `inUsePxRequestIds` instead of overwriting
-      dispatch(optionDispatchers[OptionDispatcherName.UPDATE_CONTRACTS](response));
-      setDefinitionRequest((original): OptionDefinitionRequest => ({
-        ...original,
-        inUsePxRequestIds: [...original.inUsePxRequestIds, ...realtimeRequestIds],
-      }));
-    },
+    clearAction: optionDispatchers[OptionDispatcherName.CLEAR_OPTION_CHAIN],
   });
-
-  const onSubmit = React.useCallback(() => {
-    dispatch(optionDispatchers[OptionDispatcherName.CLEAR_OPTION_CHAIN]());
-    connection
-      .send(SignalRRequests.REQUEST_OPTION_DEFINITIONS, definitionRequest)
-      .catch((err) => dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
-        message: `Init option chain: ${getErrorMessage({err})}`,
-      })));
-    setDefinitionRequest((original) => ({
-      ...original,
-      inUsePxRequestIds: [],
-    }));
-  }, [definitionRequest]);
 
   // on account changed
   React.useEffect(() => {
@@ -116,7 +83,7 @@ export const OptionChainInput = () => {
   const labelClassName = clsx('text-sm text-gray-300');
 
   return (
-    <FlexForm direction="row" className="items-center" onSubmit={onSubmit}>
+    <FlexForm direction="row" className="items-center" onSubmit={requestOptionDefinitions}>
       <Flex direction="row" noFullWidth className="mr-auto items-center gap-2">
         <InputBox
           type="text"
