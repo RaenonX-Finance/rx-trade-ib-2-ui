@@ -8,59 +8,46 @@ import {usePxSelector} from '@/state/px/selector';
 import {useDispatch} from '@/state/store';
 import {OptionPxResponse} from '@/types/api/option';
 import {OptionPxSubscribeRequest} from '@/types/api/px';
-import {OptionDefinition} from '@/types/data/option';
+import {UseOptionPxSubscriberCommonOpts} from '@/ui/options/common/hook/type';
 import {getMidPx} from '@/utils/calc/tick';
 import {getErrorMessage} from '@/utils/error';
 import {Nullable} from '@/utils/type';
 
 
-type UseOptionPxSubscriberOpts<TRequestFixed extends Partial<OptionPxSubscribeRequest>> = {
-  definition: Nullable<OptionDefinition>,
-  requestFixed: TRequestFixed,
-  getRequest: (requestFixed: TRequestFixed, priceBase: number | null) => Nullable<OptionPxSubscribeRequest>,
-  getDependencies: (requestFixed: TRequestFixed) => React.DependencyList,
-  onRequestedPx: (response: OptionPxResponse) => void,
+type UseOptionPxSubscriberOpts<TPayload> = UseOptionPxSubscriberCommonOpts & {
+  getRequests: (payload: TPayload, priceBase: number | null) => Nullable<OptionPxSubscribeRequest[]>,
 };
 
-export const useOptionPxSubscriber = <TRequestFixed extends Partial<OptionPxSubscribeRequest>>({
+export const useOptionPxSubscriber = <TPayload>({
   definition,
-  requestFixed,
-  getRequest,
-  getDependencies,
   onRequestedPx,
-}: UseOptionPxSubscriberOpts<TRequestFixed>) => {
+  getRequests,
+}: UseOptionPxSubscriberOpts<TPayload>) => {
   const {connection} = useSignalR();
   const px = usePxSelector(definition?.underlyingContractId);
 
   const dispatch = useDispatch();
 
-  React.useEffect(
-    () => {
-      if (!connection) {
-        throw new Error('SignalR connection not initialized');
-      }
-
+  return React.useCallback(
+    (payload: TPayload) => {
       const priceBase = getMidPx(px);
-      const request = getRequest(requestFixed, priceBase);
+      const requests = getRequests(payload, priceBase);
 
-      if (!px || !priceBase || !definition || !request) {
+      if (!px || !priceBase || !definition || !requests?.length) {
         return;
       }
 
-      connection
-        .invoke(SignalRRequests.REQUEST_PX_OPTIONS, request)
-        .then((message: OptionPxResponse) => onRequestedPx(message))
-        .catch((err) => {
-          dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
-            message: `Request option chain: ${getErrorMessage({err})}`,
-          }));
-        });
+      for (const request of requests) {
+        connection
+          .invoke(SignalRRequests.REQUEST_PX_OPTIONS, request)
+          .then((message: OptionPxResponse) => onRequestedPx(message))
+          .catch((err) => {
+            dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
+              message: `Request option chain: ${getErrorMessage({err})}`,
+            }));
+          });
+      }
     },
-    // `account` is only used for fetching price data,
-    // therefore account change shouldn't cause immediate option Px re-fetch
-    // `px` will keep changing, therefore only check if `px` is available
-    // to determine if option Px should get requested
-    // `request` could keep changing, so only trigger option Px re-fetch right after `request` becomes available
-    [connection, definition, !!px, ...getDependencies(requestFixed)],
+    [px, definition, getRequests, onRequestedPx],
   );
 };

@@ -1,48 +1,39 @@
-import {OptionPxResponse} from '@/types/api/option';
-import {OptionDefinition} from '@/types/data/option';
 import {OptionChainPxSubscribeRequestState} from '@/ui/options/chain/type';
 import {getStrikeRangeToRequest} from '@/ui/options/chain/utils';
 import {useOptionPxSubscriber} from '@/ui/options/common/hook/pxSubscriber';
-import {Nullable} from '@/utils/type';
+import {UseOptionPxSubscriberCommonOpts} from '@/ui/options/common/hook/type';
 
 
-type UseOptionChainPxSubscriberOpts = {
-  pxRequest: OptionChainPxSubscribeRequestState,
-  definition: Nullable<OptionDefinition>,
-  onRequestedPx: (response: OptionPxResponse) => void,
-};
+export const useOptionChainPxSubscriber = (opts: UseOptionPxSubscriberCommonOpts) => {
+  const {definition} = opts;
 
-export const useOptionChainPxSubscriber = ({
-  pxRequest,
-  definition,
-  onRequestedPx,
-}: UseOptionChainPxSubscriberOpts) => {
-  const {symbol, expiry, account, tradingClass} = pxRequest;
-
-  useOptionPxSubscriber({
-    definition,
-    requestFixed: {
-      symbol,
-      expiry,
-      account,
-      tradingClass,
-    },
-    getRequest: (requestFixed, priceBase) => {
+  return useOptionPxSubscriber<OptionChainPxSubscribeRequestState>({
+    ...opts,
+    getRequests: (payload, priceBase) => {
       if (!priceBase || !definition) {
         return null;
       }
 
-      return {
-        ...requestFixed,
+      const {
+        account,
+        symbol,
+        expiry,
+        tradingClass,
+        strikeRangePercent,
+      } = payload;
+
+      return [{
         origin: 'OptionChain',
+        account,
+        symbol,
+        expiry,
+        tradingClass,
         strikes: getStrikeRangeToRequest({
           priceBase,
-          strikeRangePercent: pxRequest.strikeRangePercent,
+          strikeRangePercent,
           possibleStrikes: definition.strike,
         }),
-      };
+      }];
     },
-    getDependencies: ({expiry}) => [expiry],
-    onRequestedPx,
   });
 };

@@ -46,16 +46,17 @@ export const OptionChainInput = () => {
     tradingClass: '',
   });
 
-  useOptionChainPxSubscriber({
-    pxRequest,
+  const subscribeOptionPx = useOptionChainPxSubscriber({
     definition,
     onRequestedPx: (response) => {
       const {realtimeRequestIds} = response;
 
+      // `onRequestPx()` could get called multiple times on a single `definition` change,
+      // therefore concatenating `inUsePxRequestIds` instead of overwriting
       dispatch(optionDispatchers[OptionDispatcherName.UPDATE_CONTRACTS](response));
-      setDefinitionRequest((original) => ({
+      setDefinitionRequest((original): OptionDefinitionRequest => ({
         ...original,
-        inUsePxRequestIds: realtimeRequestIds,
+        inUsePxRequestIds: [...original.inUsePxRequestIds, ...realtimeRequestIds],
       }));
     },
   });
@@ -64,11 +65,13 @@ export const OptionChainInput = () => {
     dispatch(optionDispatchers[OptionDispatcherName.CLEAR_OPTION_CHAIN]());
     connection
       .send(SignalRRequests.REQUEST_OPTION_DEFINITIONS, definitionRequest)
-      .catch((err) => {
-        dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
-          message: `Init option chain: ${getErrorMessage({err})}`,
-        }));
-      });
+      .catch((err) => dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
+        message: `Init option chain: ${getErrorMessage({err})}`,
+      })));
+    setDefinitionRequest((original) => ({
+      ...original,
+      inUsePxRequestIds: [],
+    }));
   }, [definitionRequest]);
 
   // on account changed
@@ -77,11 +80,11 @@ export const OptionChainInput = () => {
       return;
     }
 
-    setDefinitionRequest((original) => ({
+    setDefinitionRequest((original): OptionDefinitionRequest => ({
       ...original,
       account: currentAccount,
     }));
-    setPxRequest((original) => ({
+    setPxRequest((original): OptionChainPxSubscribeRequestState => ({
       ...original,
       account: currentAccount,
     }));
@@ -93,16 +96,21 @@ export const OptionChainInput = () => {
       return;
     }
 
-    setDefinitionRequest((original) => ({
+    setDefinitionRequest((original): OptionDefinitionRequest => ({
       ...original,
       inUseContractId: definition.underlyingContractId,
     }));
-    setPxRequest((original) => ({
-      ...original,
-      expiry: [definition.expiry[0]],
-      tradingClass: definition.tradingClass[0],
-      symbol: definitionRequest.symbol,
-    }));
+    setPxRequest((original): OptionChainPxSubscribeRequestState => {
+      const updated: OptionChainPxSubscribeRequestState = {
+        ...original,
+        expiry: [definition.expiry[0]],
+        tradingClass: definition.tradingClass[0],
+        symbol: definitionRequest.symbol,
+      };
+
+      subscribeOptionPx(updated);
+      return updated;
+    });
   }, [definition?.underlyingContractId]);
 
   const labelClassName = clsx('text-sm text-gray-300');
