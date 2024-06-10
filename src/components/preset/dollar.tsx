@@ -10,13 +10,15 @@ import {formatInt} from '@/utils/format/number/regular';
 type Props = {
   amount: number,
   withColor?: boolean,
+  className?: string,
 };
 
-export const Dollar = ({amount, withColor}: Props) => {
+export const Dollar = ({amount, withColor, className}: Props) => {
   return (
     <Flex direction="row" noFullWidth className={clsx(
       'items-end gap-1 leading-none',
       withColor && getMarketColorClassOfNumber(amount),
+      className,
     )}>
       <small>$</small>
       <span>{formatInt(amount)}</span>
