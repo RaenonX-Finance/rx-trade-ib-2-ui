@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 import {optionDispatchers} from '@/state/option/dispatchers';
 import {OPTION_STATE_NAME, OptionDispatcherName, OptionState} from '@/state/option/types';
-import {overwrite} from '@/utils/object';
+import {overwrite, overwriteIncludingArray} from '@/utils/object';
 import {sortAsc} from '@/utils/sort/byKey/asc';
 
 
@@ -35,11 +35,14 @@ const slice = createSlice({
         const {origin, contractIdPairs} = payload;
 
         if (origin === 'OptionChain') {
-          return overwrite(state, {chain: {contracts: contractIdPairs.toSorted(sortAsc(({strike}) => strike))}});
+          return overwriteIncludingArray(
+            state,
+            {chain: {contracts: contractIdPairs.toSorted(sortAsc(({strike}) => strike))}},
+          );
         }
 
         if (origin === 'GammaExposure') {
-          return overwrite(state, {gex: {contracts: contractIdPairs}});
+          return overwriteIncludingArray(state, {gex: {contracts: contractIdPairs}});
         }
 
         throw new Error(`Unhandled option px request origin: ${origin satisfies never}`);
