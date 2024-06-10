@@ -126,10 +126,15 @@ export const OptionChainInput = () => {
                 definition.expiry.map((expiry) => ({
                   text: expiry,
                   disabled: false,
-                  onSelected: () => setPxRequest((original) => ({
-                    ...original,
-                    expiry: [expiry],
-                  })),
+                  onSelected: () => setPxRequest((original) => {
+                    const updated = {
+                      ...original,
+                      expiry: [expiry],
+                    };
+
+                    subscribeOptionPx(updated);
+                    return updated;
+                  }),
                 })),
               ] :
               []
