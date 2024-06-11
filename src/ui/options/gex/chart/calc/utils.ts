@@ -3,21 +3,22 @@ import {Nullable} from '@/utils/type';
 
 
 type GetOptionsGammaExposureOfSideOpts = {
-  px: Nullable<PxOfContract>,
+  optionsPx: Nullable<PxOfContract>,
+  spotPx: Nullable<PxOfContract>,
 };
 
-export const getOptionsGammaExposureOfSide = ({px}: GetOptionsGammaExposureOfSideOpts): number => {
-  if (!px) {
+export const getOptionsGammaExposureOfSide = ({optionsPx, spotPx}: GetOptionsGammaExposureOfSideOpts): number => {
+  if (!optionsPx || !spotPx) {
     return 0;
   }
 
   return (
     // Option OI
-    ((px?.OptionCallOpenInterest ?? 0) + (px?.OptionPutOpenInterest ?? 0)) *
+    ((optionsPx?.OptionCallOpenInterest ?? 0) + (optionsPx?.OptionPutOpenInterest ?? 0)) *
     // Option gamma
-    (px?.Gamma ?? 0) *
+    (optionsPx?.Gamma ?? 0) *
     // Spot price
-    (px?.Last ?? px?.Mark ?? 0) *
+    (spotPx?.Last ?? spotPx?.Mark ?? 0) *
     // Option multiplier
     100
   );
