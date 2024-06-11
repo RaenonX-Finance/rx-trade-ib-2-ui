@@ -32,7 +32,7 @@ export const useOptionsGexCalcResult = (): OptionsGexCalcResult => {
           optionsPx: pxGlobal[call],
           spotPx,
         });
-        const netGammaPut = -getOptionsGammaExposureOfSide({
+        const netGammaPut = getOptionsGammaExposureOfSide({
           optionsPx: pxGlobal[put],
           spotPx,
         });
@@ -42,7 +42,7 @@ export const useOptionsGexCalcResult = (): OptionsGexCalcResult => {
           netGamma: {
             call: netGammaCall,
             put: netGammaPut,
-            total: netGammaCall + netGammaPut,
+            total: netGammaCall - netGammaPut,
           } satisfies OptionsGexNetGamma,
         };
       });
