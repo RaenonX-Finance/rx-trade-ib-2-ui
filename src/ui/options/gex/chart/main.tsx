@@ -6,6 +6,7 @@ import {Bar, BarChart, Cell, ReferenceLine, ResponsiveContainer, Tooltip, XAxis,
 
 import {Flex} from '@/components/layout/flex/common';
 import {Dollar} from '@/components/preset/dollar';
+import {useOptionGexContractsSelector, useOptionGexExpectedExpirySelector} from '@/state/option/selector';
 import {useOptionsGexCalcResult} from '@/ui/options/gex/chart/calc/hook';
 import {OptionsGexData} from '@/ui/options/gex/chart/calc/type';
 import {OptionsGexChartTooltip} from '@/ui/options/gex/chart/tooltip';
@@ -14,11 +15,28 @@ import {formatToAbbreviation} from '@/utils/format/number/abbreviation';
 
 export const OptionsGexChart = () => {
   const {byStrike, possibleExpiry, total} = useOptionsGexCalcResult();
+  const gexLoadedContracts = useOptionGexContractsSelector();
+  const expectedExpiry = useOptionGexExpectedExpirySelector();
+
+  const gexLoadedExpiry = React.useMemo(
+    () => new Set([...gexLoadedContracts.map(({expiry}) => expiry)]),
+    [gexLoadedContracts],
+  );
 
   return (
     <Flex className="gap-2">
-      <Flex className="text-2xl" center>
+      <Flex className="text-3xl" center>
         <Dollar amount={total} withColor/>
+      </Flex>
+      <Flex direction="row" center wrap className="gap-2 text-xs">
+        {expectedExpiry.map((expiry) => (
+          <span key={expiry} className={clsx(
+            'rounded-lg bg-slate-300/20 p-1',
+            gexLoadedExpiry.has(expiry) ? 'text-green-400' : 'text-slate-400',
+          )}>
+            {expiry}
+          </span>
+        ))}
       </Flex>
       <Flex className="h-[70vh]">
         {

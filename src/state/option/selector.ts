@@ -21,3 +21,7 @@ export const useOptionGexDefinitionSelector = (): Nullable<OptionDefinition> => 
 export const useOptionGexContractsSelector = (): OptionContractIdPair[] => (
   useSelector(({option}: ReduxState) => option.gex?.contracts ?? [])
 );
+
+export const useOptionGexExpectedExpirySelector = (): string[] => (
+  useSelector(({option}: ReduxState) => option.gex?.expectedExpiry ?? [])
+);

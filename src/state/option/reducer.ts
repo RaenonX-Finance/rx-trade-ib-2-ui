@@ -35,7 +35,7 @@ const slice = createSlice({
         const {origin, contractIdPairs} = payload;
 
         if (origin === 'OptionChain') {
-          return overwriteIncludingArray(
+          return overwriteIncludingArray<OptionState>(
             state,
             {chain: {contracts: contractIdPairs.toSorted(sortAsc(({strike}) => strike))}},
           );
@@ -44,11 +44,21 @@ const slice = createSlice({
         if (origin === 'GammaExposure') {
           const contracts = state.gex?.contracts ?? [];
 
-          return overwriteIncludingArray(state, {gex: {contracts: [...contracts, ...contractIdPairs]}});
+          return overwriteIncludingArray<OptionState>(
+            state,
+            {gex: {contracts: [...contracts, ...contractIdPairs]},
+            });
         }
 
         throw new Error(`Unhandled option px request origin: ${origin satisfies never}`);
       },
+    );
+    builder.addCase(
+      optionDispatchers[OptionDispatcherName.GEX_SET_EXPECTED_EXPIRY],
+      (state, {payload}): OptionState => overwriteIncludingArray<OptionState>(
+        state,
+        {gex: {expectedExpiry: payload.toSorted(sortAsc())}},
+      ),
     );
     builder.addCase(
       optionDispatchers[OptionDispatcherName.CLEAR_OPTION_CHAIN],
