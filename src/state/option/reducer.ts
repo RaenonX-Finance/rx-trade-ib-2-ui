@@ -42,7 +42,9 @@ const slice = createSlice({
         }
 
         if (origin === 'GammaExposure') {
-          return overwriteIncludingArray(state, {gex: {contracts: contractIdPairs}});
+          const contracts = state.gex?.contracts ?? [];
+
+          return overwriteIncludingArray(state, {gex: {contracts: [...contracts, ...contractIdPairs]}});
         }
 
         throw new Error(`Unhandled option px request origin: ${origin satisfies never}`);
