@@ -13,13 +13,15 @@ export const getOptionsGammaExposureOfSide = ({optionsPx, spotPx}: GetOptionsGam
     return 0;
   }
 
+  // Squaring the spot price then (x 0.01) for calculating the 1% move
+  // https://perfiliev.co.uk/market-commentary/how-to-calculate-gamma-exposure-and-zero-gamma-level/
   return (
     // Option OI
     ((optionsPx?.OptionCallOpenInterest ?? 0) + (optionsPx?.OptionPutOpenInterest ?? 0)) *
     // Option gamma
     (optionsPx?.Gamma ?? 0) *
     // Spot price
-    getPx(spotPx) *
+    (getPx(spotPx) ** 2 * 0.01) *
     // Option multiplier
     100
   );
