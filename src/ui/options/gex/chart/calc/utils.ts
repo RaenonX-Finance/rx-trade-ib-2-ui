@@ -1,4 +1,5 @@
 import {PxOfContract} from '@/types/data/px';
+import {getPx} from '@/utils/calc/px';
 import {Nullable} from '@/utils/type';
 
 
@@ -18,7 +19,7 @@ export const getOptionsGammaExposureOfSide = ({optionsPx, spotPx}: GetOptionsGam
     // Option gamma
     (optionsPx?.Gamma ?? 0) *
     // Spot price
-    (spotPx?.Last ?? spotPx?.Mark ?? 0) *
+    getPx(spotPx) *
     // Option multiplier
     100
   );
