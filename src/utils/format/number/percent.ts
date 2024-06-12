@@ -1,9 +1,28 @@
 import {formatToDigits} from '@/utils/format/number/regular';
+import {Nullable} from '@/utils/type';
 
+
+type FormatPercentOpts = {
+  percent: number,
+  onFalsy?: string,
+  digits?: number,
+};
+
+export const formatPercent = ({
+  percent,
+  onFalsy = '-',
+  digits = 2,
+}: FormatPercentOpts) => {
+  if (isNaN(percent)) {
+    return onFalsy;
+  }
+
+  return `${formatToDigits({num: percent, digits})}%`;
+};
 
 type FormatPercentFromFractionOpts = {
-  numerator: number | null | undefined,
-  denominator: number | null | undefined,
+  numerator: Nullable<number>,
+  denominator: Nullable<number>,
   onFalsy?: string,
   digits?: number,
 };
@@ -11,18 +30,15 @@ type FormatPercentFromFractionOpts = {
 export const formatPercentFromFraction = ({
   numerator,
   denominator,
-  onFalsy = '-',
-  digits = 2,
+  onFalsy,
+  digits,
 }: FormatPercentFromFractionOpts): string => {
-  if (numerator === null || numerator === undefined || denominator === null || denominator === undefined) {
-    return onFalsy;
+  if (numerator == null || denominator == null) {
+    return onFalsy ?? '-';
   }
 
-  const percent = numerator / denominator * 100;
-
-  if (isNaN(percent)) {
-    return onFalsy;
-  }
-
-  return `${formatToDigits({num: percent, digits})}%`;
+  return formatPercent({
+    percent: numerator / denominator * 100,
+    digits,
+  });
 };
