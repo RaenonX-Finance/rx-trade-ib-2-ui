@@ -1,9 +1,10 @@
+import {isValidNumberToFormat} from '@/utils/format/number/common';
 import {formatToDigits} from '@/utils/format/number/regular';
 import {Nullable} from '@/utils/type';
 
 
 type FormatPercentOpts = {
-  percent: number,
+  percent: Nullable<number>,
   onFalsy?: string,
   digits?: number,
 };
@@ -13,7 +14,7 @@ export const formatPercent = ({
   onFalsy = '-',
   digits = 2,
 }: FormatPercentOpts) => {
-  if (isNaN(percent)) {
+  if (!isValidNumberToFormat(percent)) {
     return onFalsy;
   }
 

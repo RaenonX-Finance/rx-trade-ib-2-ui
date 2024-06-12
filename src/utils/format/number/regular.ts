@@ -1,5 +1,6 @@
+import {isValidNumberToFormat} from '@/utils/format/number/common';
 import {NumberFormat} from '@/utils/format/number/type';
-import {isNotNullish, Nullable} from '@/utils/type';
+import {Nullable} from '@/utils/type';
 
 
 const formatNumberLocale = 'en-US';
@@ -11,8 +12,6 @@ export const formatter: {[format in NumberFormat]: ReturnType<typeof Intl.Number
   float3: new Intl.NumberFormat(formatNumberLocale, {minimumFractionDigits: 3, maximumFractionDigits: 3}),
   float4: new Intl.NumberFormat(formatNumberLocale, {minimumFractionDigits: 4, maximumFractionDigits: 4}),
 };
-
-const isValidNumberToFormat = (num: Nullable<number>): num is number => isNotNullish(num) && !isNaN(num);
 
 export const formatInt = (num: Nullable<number>): string => {
   if (isValidNumberToFormat(num)) {
