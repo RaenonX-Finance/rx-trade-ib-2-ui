@@ -5,7 +5,7 @@ import {clsx} from 'clsx';
 import {usePxSelector} from '@/state/px/selector';
 import {ContractId} from '@/types/data/px';
 import {getDeltaTextStyle} from '@/ui/options/chain/table/style';
-import {getMidPx, getPxSpread} from '@/utils/calc/tick';
+import {getPxSpread, getReferencePx} from '@/utils/calc/tick';
 import {formatPercent} from '@/utils/format/number/percent';
 import {formatFloat, formatFloat4} from '@/utils/format/number/regular';
 import {formatSignedNumber} from '@/utils/format/number/signed';
@@ -21,11 +21,8 @@ export const OptionChainDataCells = ({contractId}: Props) => {
   const px = usePxSelector(contractId);
 
   const spread = getPxSpread(px);
-  const base =
-    getMidPx(px) ??
-    (!!px?.Mark && px.Mark > 1E-3 ? px.Mark : undefined);
-  const theta = px?.Theta ? Math.abs(px.Theta) : undefined;
-  const changeInfo = getChange({original: px?.Close, after: base});
+  const referencePx = getReferencePx(px);
+  const changeInfo = getChange({original: px?.Close, after: referencePx});
 
   return (
     <>
@@ -44,14 +41,10 @@ export const OptionChainDataCells = ({contractId}: Props) => {
       <td className={clsx(getDeltaTextStyle(px?.Delta))}>{formatFloat4(px?.Delta)}</td>
       <td>{formatFloat4(px?.Theta)}</td>
       <td>
-        {(!!base && !!theta && theta > 1E-5) ?
-          formatPercent({numerator: Math.abs(theta), denominator: base}) :
-          '-'}
+        {formatPercent({numerator: px?.Theta, denominator: referencePx})}
       </td>
       <td>
-        {(!!base && !!spread) ?
-          formatPercent({numerator: spread, denominator: base}) :
-          '-'}
+        {formatPercent({numerator: spread, denominator: referencePx})}
       </td>
     </>
   );

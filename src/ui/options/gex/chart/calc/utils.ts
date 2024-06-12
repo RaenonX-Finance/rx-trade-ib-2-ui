@@ -1,5 +1,5 @@
 import {PxOfContract} from '@/types/data/px';
-import {getPx} from '@/utils/calc/px';
+import {getReferencePx} from '@/utils/calc/tick';
 import {Nullable} from '@/utils/type';
 
 
@@ -21,7 +21,7 @@ export const getOptionsGammaExposureOfSide = ({optionsPx, spotPx}: GetOptionsGam
     // Option gamma
     (optionsPx?.Gamma ?? 0) *
     // Spot price
-    (getPx(spotPx) ** 2 * 0.01) *
+    (getReferencePx(spotPx) ** 2 * 0.01) *
     // Option multiplier
     100
   );

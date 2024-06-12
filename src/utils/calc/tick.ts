@@ -2,6 +2,10 @@ import {PxOfContract} from '@/types/data/px';
 import {Nullable} from '@/utils/type';
 
 
+export const getReferencePx = (px: Nullable<PxOfContract>): number => {
+  return px?.Last ?? getMidPx(px) ?? px?.Mark ?? 0;
+};
+
 export const getMidPx = (px: Nullable<PxOfContract>): number | null => {
   if (!px || px.Bid === undefined || px.Ask === undefined) {
     return null;

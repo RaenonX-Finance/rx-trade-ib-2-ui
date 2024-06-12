@@ -9,7 +9,7 @@ import {useOptionGexContractsSelector, useOptionGexDefinitionSelector} from '@/s
 import {useGlobalPxSelector} from '@/state/px/selector';
 import {OptionsGexCalcResult, OptionsGexData, OptionsGexNetGamma} from '@/ui/options/gex/chart/calc/type';
 import {getOptionsGammaExposureOfSide} from '@/ui/options/gex/chart/calc/utils';
-import {getPx} from '@/utils/calc/px';
+import {getReferencePx} from '@/utils/calc/tick';
 import {sortAsc} from '@/utils/sort/byKey/asc';
 
 
@@ -35,7 +35,7 @@ export const useOptionsGexCalcResult = (): OptionsGexCalcResult => {
 
     const closestStrike = minBy(
       strikes,
-      (strike) => Math.abs(strike - getPx(spotPx)),
+      (strike) => Math.abs(strike - getReferencePx(spotPx)),
     );
 
     const byStrike = strikes.map((strike): OptionsGexData => {
