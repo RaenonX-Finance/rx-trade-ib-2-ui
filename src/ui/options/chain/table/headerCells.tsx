@@ -11,7 +11,6 @@ export const OptionChainHeaderCells = () => {
       <td>Change</td>
       <td>%</td>
       <td>Delta</td>
-      <td>Theta</td>
       <td>Theta %</td>
       <td>Spread %</td>
     </>

@@ -39,7 +39,6 @@ export const OptionChainDataCells = ({contractId}: Props) => {
         {formatSignedNumber({num: changeInfo?.changePct, digits: 2, sign: true})}
       </td>
       <td className={clsx(getDeltaTextStyle(px?.Delta))}>{formatFloat4(px?.Delta)}</td>
-      <td>{formatFloat4(px?.Theta)}</td>
       <td>
         {formatPercent({numerator: px?.Theta, denominator: referencePx})}
       </td>
