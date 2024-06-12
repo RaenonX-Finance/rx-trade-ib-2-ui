@@ -25,7 +25,7 @@ export const Orders = () => {
   const showAll = isAllValueFalse(filter);
 
   return (
-    <WindowLayout className="w-full flex-col gap-2">
+    <WindowLayout className="gap-common flex-col">
       <div className="h-full overflow-auto">
         <Table
           header={

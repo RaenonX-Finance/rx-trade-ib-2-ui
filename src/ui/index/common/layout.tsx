@@ -14,8 +14,8 @@ export const WindowLayout = ({children, className, fullHeight = true}: React.Pro
   return (
     <Flex
       className={clsx(
-        'rounded-lg bg-gradient-to-br from-violet-950 to-indigo-800 p-2',
-        fullHeight ? 'h-full' : '',
+        'rounded-lg bg-slate-500/10 p-2',
+        fullHeight && 'h-full',
         className,
       )}
     >

@@ -10,7 +10,7 @@ import {AccountSummary} from '@/ui/index/summary/main';
 export const Account = () => {
   return (
     <PageLayout>
-      <Flex direction="row" className="h-1/2 gap-2">
+      <Flex direction="row" className="gap-common h-1/2">
         <div className="grow overflow-auto">
           <Positions/>
         </div>
@@ -18,7 +18,7 @@ export const Account = () => {
           <AccountSummary/>
         </div>
       </Flex>
-      <Flex direction="row" className="h-1/2 gap-2">
+      <Flex direction="row" className="gap-common h-1/2">
         <Orders/>
       </Flex>
     </PageLayout>

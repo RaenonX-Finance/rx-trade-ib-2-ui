@@ -3,28 +3,10 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --foreground-rgb: 0, 0, 0;
-    --background-start-rgb: 214, 219, 220;
-    --background-end-rgb: 255, 255, 255;
-  }
-  
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --foreground-rgb: 255, 255, 255;
-      --background-start-rgb: 0, 0, 0;
-      --background-end-rgb: 0, 0, 0;
-    }
-  }
-  
   body {
-    color: rgb(var(--foreground-rgb));
-    background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    @apply bg-gradient-radial from-slate-900 to-slate-950;
+    
+    color: theme('colors.neutral.100');
   }
   
   input::-webkit-outer-spin-button,
@@ -41,6 +23,10 @@
 @layer utilities {
   .transform-smooth {
     @apply transform-gpu transition-all;
+  }
+  
+  .gap-common {
+    @apply gap-1;
   }
   
   button.button-chart-toolbar {

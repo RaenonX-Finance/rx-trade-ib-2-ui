@@ -6,6 +6,7 @@ import useResizeObserver from 'use-resize-observer';
 
 import {Dropdown} from '@/components/dropdown/main';
 import {ToggleButton} from '@/components/inputs/toggleButton';
+import {FlexForm} from '@/components/layout/flex/form';
 import {useCurrentAccountSelector} from '@/state/account/selector';
 import {chartConfigDispatchers} from '@/state/chartConfig/dispatchers';
 import {useChartLockedRequestSelector} from '@/state/chartConfig/selector';
@@ -69,11 +70,8 @@ export const SinglePriceQuote = ({index}: Props) => {
   }, [account]);
 
   return (
-    <WindowLayout className="flex-col gap-2" fullHeight={false}>
-      <form className="flex flex-row gap-1.5" onSubmit={async (e) => {
-        e.preventDefault();
-        await requestChartData(request);
-      }}>
+    <WindowLayout className="gap-common flex-col" fullHeight={false}>
+      <FlexForm direction="row" className="gap-common flex" onSubmit={() => requestChartData(request)}>
         <input
           type="text"
           value={request.symbol}
@@ -130,7 +128,7 @@ export const SinglePriceQuote = ({index}: Props) => {
           disabled={disabled}
         />
         <input type="submit" className="hidden"/>
-      </form>
+      </FlexForm>
       <div className="h-28 w-full" ref={ref}>
         <SimplifiedChart
           chartData={chartData}

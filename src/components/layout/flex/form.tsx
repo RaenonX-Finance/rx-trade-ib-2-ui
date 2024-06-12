@@ -6,7 +6,7 @@ import {getFlexStyles} from '@/components/layout/flex/utils';
 
 type Props = FlexCommonProps & {
   action?: () => void,
-  onSubmit?: () => void,
+  onSubmit?: () => Promise<void>,
 };
 
 const FlexFormInternal = ({
@@ -21,7 +21,7 @@ const FlexFormInternal = ({
       e.preventDefault();
 
       if (onSubmit) {
-        onSubmit();
+        void onSubmit();
       }
     }}>
       {children}
