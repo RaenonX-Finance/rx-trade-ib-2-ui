@@ -9,4 +9,8 @@ export type PxTick =
   // Options only
   'Delta' |
   'Theta' |
-  'Gamma';
+  'Gamma' |
+  'Vega' |
+  'OptionsUnderlyingPx' |
+  'PvDividend' |
+  'ImpliedVolatility';
