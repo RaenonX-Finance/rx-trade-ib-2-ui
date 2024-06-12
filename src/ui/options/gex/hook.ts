@@ -42,9 +42,7 @@ export const useOptionGexPxManager = (opts: UseOptionPxManagerCommonOpts) => {
         symbol,
         tradingClass,
         expiry: [expiry],
-        strikes: definition.strike.filter((strike) => (
-          strike >= priceBase * strikeLowerBound && strike <= strikeUpperBound
-        )),
+        strikes: definition.strike.filter((strike) => strike >= strikeLowerBound && strike <= strikeUpperBound),
       }));
     },
   });
