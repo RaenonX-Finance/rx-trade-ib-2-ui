@@ -17,6 +17,8 @@ import {OptionChainPxSubscribeRequestState} from '@/ui/options/chain/type';
 import {CurrentUnderlyingPx} from '@/ui/options/common/underlyingPx';
 
 
+const labelClassName = clsx('text-sm text-gray-300');
+
 export const OptionChainInput = () => {
   const currentAccount = useCurrentAccountSelector();
   const definition = useOptionChainDefinitionSelector();
@@ -80,10 +82,8 @@ export const OptionChainInput = () => {
     });
   }, [definition?.underlyingContractId]);
 
-  const labelClassName = clsx('text-sm text-gray-300');
-
   return (
-    <FlexForm direction="row" className="items-center" onSubmit={requestOptionDefinitions}>
+    <FlexForm className="items-center md:flex-row" onSubmit={requestOptionDefinitions}>
       <Flex direction="row" noFullWidth className="mr-auto items-center gap-2">
         <InputBox
           type="text"

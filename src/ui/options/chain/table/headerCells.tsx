@@ -11,8 +11,14 @@ export const OptionChainHeaderCells = () => {
       <td>Change</td>
       <td>%</td>
       <td>Delta</td>
-      <td>Theta %</td>
-      <td>Spread %</td>
+      <td>Daily Loss</td>
+      <td title={[
+        'Time neutral underlying movement.',
+        'A value of 2% means that the underlying needs to move ~2% to hedge against the loss due to theta.',
+      ].join('\n')}>
+        T= Move
+      </td>
+      <td>Spread</td>
     </>
   );
 };

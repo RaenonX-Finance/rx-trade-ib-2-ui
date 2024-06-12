@@ -2,17 +2,12 @@ import React from 'react';
 
 import {clsx} from 'clsx';
 
-import {useOptionChainDefinitionSelector} from '@/state/option/selector';
-import {usePxSelector} from '@/state/px/selector';
 import {ContractId} from '@/types/data/px';
-import {getTimeNeutralUnderlyingMovementRequired} from '@/ui/options/chain/table/calc/utils';
+import {useOptionChainDataOfContract} from '@/ui/options/chain/table/calc/hook';
 import {getDeltaTextStyle} from '@/ui/options/chain/table/style';
-import {getPxSpread, getReferencePx} from '@/utils/calc/tick';
-import {formatPercentFromFraction} from '@/utils/format/number/percent';
+import {formatPercent} from '@/utils/format/number/percent';
 import {formatFloat, formatFloat4} from '@/utils/format/number/regular';
 import {formatSignedNumber} from '@/utils/format/number/signed';
-import {getChange} from '@/utils/math';
-import {isNotNullish} from '@/utils/type';
 
 
 type Props = {
@@ -20,39 +15,38 @@ type Props = {
 };
 
 export const OptionChainDataCells = ({contractId}: Props) => {
-  const optionsPx = usePxSelector(contractId);
-
-  const definition = useOptionChainDefinitionSelector();
-  const underlyingPx = usePxSelector(definition?.underlyingContractId);
-
-  const spread = getPxSpread(optionsPx);
-  const referencePx = getReferencePx(optionsPx);
-  const changeInfo = getChange({original: optionsPx?.Close, after: referencePx});
+  const {
+    optionsPx,
+    last,
+    changeInfo,
+    dailyLossPercent,
+    timeNeutralMovementPercent,
+    spreadPercent,
+  } = useOptionChainDataOfContract(contractId);
 
   return (
     <>
-      <td className="whitespace-nowrap">
-        {!isNotNullish(optionsPx?.Last) && isNotNullish(optionsPx?.Close) && 'c '}
-        {formatFloat(optionsPx?.Last ?? optionsPx?.Close)}
-      </td>
+      <td className="whitespace-nowrap">{last.isClose && 'c '}{formatFloat(last.px)}</td>
       <td className="text-px-bid">{formatFloat(optionsPx?.Bid)}</td>
       <td className="text-px-ask">{formatFloat(optionsPx?.Ask)}</td>
       <td className="text-px-mark">{formatFloat(optionsPx?.Mark)}</td>
       <td className={changeInfo?.textClass}>
-        {formatSignedNumber({num: changeInfo?.changeAmt, digits: 2, sign: true})}
+        {formatSignedNumber({num: changeInfo?.changeAmt, sign: true})}
       </td>
       <td className={changeInfo?.textClass}>
-        {formatSignedNumber({num: changeInfo?.changePct, digits: 2, sign: true})}
+        {formatSignedNumber({num: changeInfo?.changePct, sign: true})}
       </td>
-      <td className={clsx(getDeltaTextStyle(optionsPx?.Delta))}>{formatFloat4(optionsPx?.Delta)}</td>
-      <td>
-        {formatPercentFromFraction({numerator: optionsPx?.Theta, denominator: referencePx})}
-      </td>
-      <td>
-        {getTimeNeutralUnderlyingMovementRequired({optionsPx, underlyingPx})}
+      <td className={clsx(getDeltaTextStyle(optionsPx?.Delta))}>
+        {formatFloat4(optionsPx?.Delta)}
       </td>
       <td>
-        {formatPercentFromFraction({numerator: spread, denominator: referencePx})}
+        {formatPercent({percent: dailyLossPercent})}
+      </td>
+      <td>
+        {formatSignedNumber({num: timeNeutralMovementPercent})}%
+      </td>
+      <td>
+        {formatPercent({percent: spreadPercent})}
       </td>
     </>
   );
