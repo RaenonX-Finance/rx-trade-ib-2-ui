@@ -7,6 +7,7 @@ import {Bar, BarChart, Cell, ReferenceLine, ResponsiveContainer, Tooltip, XAxis,
 import {Flex} from '@/components/layout/flex/common';
 import {Dollar} from '@/components/preset/dollar';
 import {useOptionGexContractsSelector, useOptionGexExpectedExpirySelector} from '@/state/option/selector';
+import {getMarketColorClassOfFill} from '@/styles/color/fill';
 import {useOptionsGexCalcResult} from '@/ui/options/gex/chart/calc/hook';
 import {OptionsGexData} from '@/ui/options/gex/chart/calc/type';
 import {OptionsGexChartTooltip} from '@/ui/options/gex/chart/tooltip';
@@ -57,7 +58,7 @@ export const OptionsGexChart = () => {
               />
               <Tooltip content={<OptionsGexChartTooltip/>} cursor={{fill: 'transparent'}}/>
               <ReferenceLine y={0} className="stroke-slate-300"/>
-              {possibleExpiry.map((expiry) => (
+              {possibleExpiry.map((expiry, idx) => (
                 <Bar
                   key={expiry}
                   dataKey={({netGammaByExpiry}: OptionsGexData) => netGammaByExpiry[expiry]?.total}
@@ -67,7 +68,7 @@ export const OptionsGexChart = () => {
                     <Cell
                       key={strike}
                       className={clsx(
-                        (netGammaByExpiry[expiry]?.total ?? 0) > 0 ? 'fill-market-up' : 'fill-market-down',
+                        getMarketColorClassOfFill(netGammaByExpiry[expiry]?.total ?? 0, idx),
                       )}
                     />
                   ))}
