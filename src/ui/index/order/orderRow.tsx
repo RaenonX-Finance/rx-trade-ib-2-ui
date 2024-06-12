@@ -9,7 +9,7 @@ import {Order} from '@/types/data/order';
 import {OrderExpectedPnL} from '@/ui/index/order/dataCell/expectedPnl';
 import {OrderNetLiqPercent} from '@/ui/index/order/dataCell/netLiquidityPercent';
 import {getOrderValue, getPxMoveToHit, getSideClassName} from '@/ui/index/order/utils';
-import {formatPercent} from '@/utils/format/number/percent';
+import {formatPercentFromFraction} from '@/utils/format/number/percent';
 import {formatFloat} from '@/utils/format/number/regular';
 
 
@@ -64,7 +64,7 @@ export const OrderRow = ({order, isCompleted = false, className}: Props) => {
       <td>{formatFloat(px?.Last) }</td>
       <td>{isOrderValueNaN ? '-' : formatFloat(orderValue)}</td>
       <td>{formatFloat(pxMoveToHit)}</td>
-      <td>{formatPercent({numerator: pxMoveToHit, denominator: price})}</td>
+      <td>{formatPercentFromFraction({numerator: pxMoveToHit, denominator: price})}</td>
       <td>
         {isOrderValueNaN ?
           '-' :

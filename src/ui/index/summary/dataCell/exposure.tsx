@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {useAccountValueSelector, useCurrentAccountSelector} from '@/state/account/selector';
-import {formatPercent} from '@/utils/format/number/percent';
+import {formatPercentFromFraction} from '@/utils/format/number/percent';
 
 
 export const ExposurePercent = () => {
@@ -15,5 +15,5 @@ export const ExposurePercent = () => {
 
   const underwater = netLiquidation - availableFunds;
 
-  return <>{formatPercent({numerator: underwater, denominator: netLiquidation})}</>;
+  return <>{formatPercentFromFraction({numerator: underwater, denominator: netLiquidation})}</>;
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {useAccountValueSelector, useCurrentAccountSelector} from '@/state/account/selector';
-import {formatPercent} from '@/utils/format/number/percent';
+import {formatPercentFromFraction} from '@/utils/format/number/percent';
 
 
 type Props = {
@@ -16,5 +16,5 @@ export const OrderNetLiqPercent = ({orderValue}: Props) => {
     return <>-</>;
   }
 
-  return <>{formatPercent({numerator: orderValue, denominator: netLiquidation})}</>;
+  return <>{formatPercentFromFraction({numerator: orderValue, denominator: netLiquidation})}</>;
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {useAccountValueSelector, useCurrentAccountSelector} from '@/state/account/selector';
-import {formatPercent} from '@/utils/format/number/percent';
+import {formatPercentFromFraction} from '@/utils/format/number/percent';
 
 
 type Props = {
@@ -18,6 +18,6 @@ export const PositionAccountPercentage = ({quantity, marketValue}: Props) => {
   }
 
   return (
-    <>{formatPercent({numerator: marketValue, denominator: accountValue})}</>
+    <>{formatPercentFromFraction({numerator: marketValue, denominator: accountValue})}</>
   );
 };

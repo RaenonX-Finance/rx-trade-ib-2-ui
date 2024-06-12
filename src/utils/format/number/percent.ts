@@ -1,19 +1,19 @@
 import {formatToDigits} from '@/utils/format/number/regular';
 
 
-type FormatPercentOpts = {
+type FormatPercentFromFractionOpts = {
   numerator: number | null | undefined,
   denominator: number | null | undefined,
   onFalsy?: string,
   digits?: number,
 };
 
-export const formatPercent = ({
+export const formatPercentFromFraction = ({
   numerator,
   denominator,
   onFalsy = '-',
   digits = 2,
-}: FormatPercentOpts): string => {
+}: FormatPercentFromFractionOpts): string => {
   if (numerator === null || numerator === undefined || denominator === null || denominator === undefined) {
     return onFalsy;
   }

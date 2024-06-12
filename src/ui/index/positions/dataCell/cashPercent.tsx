@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {useAccountValueSelector, useCurrentAccountSelector} from '@/state/account/selector';
-import {formatPercent} from '@/utils/format/number/percent';
+import {formatPercentFromFraction} from '@/utils/format/number/percent';
 
 
 export const AccountCashPercent = () => {
@@ -10,6 +10,6 @@ export const AccountCashPercent = () => {
   const accountValue = useAccountValueSelector(currentAccount, 'NetLiquidation');
 
   return (
-    <>{formatPercent({numerator: balance, denominator: accountValue})}</>
+    <>{formatPercentFromFraction({numerator: balance, denominator: accountValue})}</>
   );
 };
