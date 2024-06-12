@@ -6,7 +6,7 @@ import {getFlexStyles} from '@/components/layout/flex/utils';
 
 type Props = FlexCommonProps & {
   action?: () => void,
-  onSubmit?: () => Promise<void>,
+  onSubmit?: () => Promise<void> | void,
 };
 
 const FlexFormInternal = ({

@@ -23,7 +23,7 @@ export const OptionsGexInput = () => {
     account: '',
     symbol: '',
     tradingClass: '',
-    expiryMaxDays: 120,
+    expiryMaxDays: 90,
   });
 
   const {
