@@ -15,7 +15,12 @@ import {formatToAbbreviation} from '@/utils/format/number/abbreviation';
 
 
 export const OptionsGexChart = () => {
-  const {byStrike, possibleExpiry, total} = useOptionsGexCalcResult();
+  const {
+    byStrike,
+    closestStrike,
+    possibleExpiry,
+    total,
+  } = useOptionsGexCalcResult();
   const gexLoadedContracts = useOptionGexContractsSelector();
   const expectedExpiry = useOptionGexExpectedExpirySelector();
 
@@ -58,6 +63,7 @@ export const OptionsGexChart = () => {
               />
               <Tooltip content={<OptionsGexChartTooltip/>} cursor={{fill: 'transparent'}}/>
               <ReferenceLine y={0} className="stroke-slate-300"/>
+              {closestStrike != null && <ReferenceLine x={closestStrike} className="stroke-sky-500"/>}
               {possibleExpiry.map((expiry, idx) => (
                 <Bar
                   key={expiry}

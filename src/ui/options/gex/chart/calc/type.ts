@@ -1,3 +1,6 @@
+import {Nullable} from '@/utils/type';
+
+
 export type OptionsGexNetGamma = {
   call: number,
   put: number,
@@ -12,6 +15,8 @@ export type OptionsGexData = {
 
 export type OptionsGexCalcResult = {
   byStrike: OptionsGexData[],
+  closestStrike: Nullable<number>,
+  // `possible` means the contract received for showing the related stats
   possibleExpiry: string[],
   total: number,
 };
