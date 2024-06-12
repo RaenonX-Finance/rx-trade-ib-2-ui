@@ -1,7 +1,10 @@
 import React from 'react';
 
+import {clsx} from 'clsx';
+
 import {usePxSelector} from '@/state/px/selector';
 import {ContractId} from '@/types/data/px';
+import {getDeltaTextStyle} from '@/ui/options/chain/table/style';
 import {getMidPx, getPxSpread} from '@/utils/calc/tick';
 import {formatPercent} from '@/utils/format/number/percent';
 import {formatFloat, formatFloat4} from '@/utils/format/number/regular';
@@ -38,7 +41,7 @@ export const OptionChainDataCells = ({contractId}: Props) => {
       <td className={changeInfo?.textClass}>
         {formatSignedNumber({num: changeInfo?.changePct, digits: 2, sign: true})}
       </td>
-      <td>{formatFloat4(px?.Delta)}</td>
+      <td className={clsx(getDeltaTextStyle(px?.Delta))}>{formatFloat4(px?.Delta)}</td>
       <td>{formatFloat4(px?.Theta)}</td>
       <td>
         {(!!base && !!theta && theta > 1E-5) ?

@@ -10,7 +10,7 @@ import {OptionChainHeaderCells} from '@/ui/options/chain/table/headerCells';
 import {OptionChainDataCells} from '@/ui/options/chain/table/row';
 
 
-const strikeClassName = clsx('bg-orange-900 text-center');
+const strikeClassName = clsx('bg-slate-700 text-center');
 
 export const OptionChainTable = () => {
   const contracts = useOptionChainContractsSelector();
