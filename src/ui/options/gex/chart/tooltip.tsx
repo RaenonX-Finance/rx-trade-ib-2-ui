@@ -40,7 +40,7 @@ export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, n
               <small className="whitespace-nowrap">{expiryFormatted}</small>
               <Dollar amount={total} withColor className="self-end"/>
               <ProgressBarMulti
-                data={[{value: call, data: call}, {value: Math.abs(put), data: put}]}
+                data={[{value: call, data: call}, {value: put, data: put}]}
                 renderSummary={({data}) => <Dollar amount={data} withColor/>}
                 classOfColors={['bg-market-up', 'bg-market-down']}
                 className="gap-1 text-xs"

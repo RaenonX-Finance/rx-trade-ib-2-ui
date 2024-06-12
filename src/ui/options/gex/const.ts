@@ -1,1 +1,1 @@
-export const optionsGexStrikeRange = 0.2;
+export const optionsGexStrikeRange = 0.15;

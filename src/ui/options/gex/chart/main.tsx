@@ -37,7 +37,7 @@ export const OptionsGexChart = () => {
       <Flex direction="row" center wrap className="gap-2 text-xs">
         {expectedExpiry.map((expiry) => (
           <span key={expiry} className={clsx(
-            'rounded-lg bg-slate-300/20 p-1',
+            'rounded-lg bg-slate-300/20 px-1.5 py-1',
             gexLoadedExpiry.has(expiry) ? 'text-green-400' : 'text-slate-400',
           )}>
             {expiry}
