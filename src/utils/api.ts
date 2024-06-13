@@ -1,16 +1,23 @@
-import {SecurityType} from '@/enums/securityType';
-import {PxHistoryMeta} from '@/types/api/px';
-import {ChartDataIdentifier} from '@/types/data/chart';
-
-
-export const historyMetaToIdentifier = ({contractId, interval}: PxHistoryMeta): ChartDataIdentifier => (
-  `${contractId}@${interval}`
-);
-
-export const isSecurityTypeFutures = (securityType: SecurityType | undefined): boolean => {
-  return securityType === 'Futures' || securityType === 'ContinuousFutures';
+type SendPostOpts<TRequest> = {
+  url: string,
+  payload: TRequest,
 };
 
-export const isSecurityTypeOptions = (securityType: SecurityType | undefined): boolean => {
-  return securityType === 'Options' || securityType === 'OptionsCombo';
+export const sendPost = async <TRequest, TResponse>({
+  url,
+  payload,
+}: SendPostOpts<TRequest>): Promise<TResponse> => {
+  const response = await fetch(
+    url,
+    {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    },
+  );
+
+  return response.json();
 };
