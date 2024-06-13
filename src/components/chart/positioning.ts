@@ -4,7 +4,7 @@ import {IChartApi, ITimeScaleApi, Time, UTCTimestamp} from 'lightweight-charts';
 
 import {ChartData} from '@/types/data/chart';
 import {ContractInState} from '@/types/data/contract';
-import {isSecurityTypeOptions} from '@/utils/api';
+import {isSecurityTypeOptions} from '@/utils/pxData';
 import {updateEpochSecToLocal} from '@/utils/time';
 
 

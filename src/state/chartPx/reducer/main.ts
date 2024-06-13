@@ -8,7 +8,7 @@ import {chartStateUpdaterOnUpdate} from '@/state/chartPx/reducer/stateUpdaterOnU
 import {updateChartDataBar} from '@/state/chartPx/reducer/utils';
 import {CHART_STATE_NAME, ChartDataState, ChartDispatcherName} from '@/state/chartPx/types';
 import {PxHistoryMessage} from '@/types/api/px';
-import {historyMetaToIdentifier} from '@/utils/api';
+import {historyMetaToIdentifier} from '@/utils/pxData';
 
 
 const initialState: ChartDataState = {

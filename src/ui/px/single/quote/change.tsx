@@ -3,8 +3,8 @@ import React from 'react';
 import {clsx} from 'clsx';
 
 import {QuotePxProps} from '@/ui/px/single/quote/type';
-import {isSecurityTypeOptions} from '@/utils/api';
 import {changeInfoToString, getChange} from '@/utils/math';
+import {isSecurityTypeOptions} from '@/utils/pxData';
 
 
 export const QuoteDailyChange = ({contract, px}: QuotePxProps) => {

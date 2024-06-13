@@ -5,9 +5,9 @@ import {clsx} from 'clsx';
 import {Flex} from '@/components/layout/flex/common';
 import {QuotePxProps} from '@/ui/px/single/quote/type';
 import {getDeltaTextClass} from '@/ui/px/single/quote/utils';
-import {isSecurityTypeFutures} from '@/utils/api';
 import {getMidPx} from '@/utils/calc/tick';
 import {formatFloat4, formatToDigits} from '@/utils/format/number/regular';
+import {isSecurityTypeFutures} from '@/utils/pxData';
 import {Nullable} from '@/utils/type';
 
 
