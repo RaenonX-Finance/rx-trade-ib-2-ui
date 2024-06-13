@@ -1,15 +1,14 @@
 import React from 'react';
 
-import {minBy} from 'lodash';
 import groupBy from 'lodash/groupBy';
 import sum from 'lodash/sum';
 import uniq from 'lodash/uniq';
 
 import {useOptionGexContractsSelector, useOptionGexDefinitionSelector} from '@/state/option/selector';
 import {useGlobalPxSelector} from '@/state/px/selector';
+import {getClosestStrike} from '@/ui/options/common/utils';
 import {OptionsGexCalcResult, OptionsGexData, OptionsGexNetGamma} from '@/ui/options/gex/chart/calc/type';
 import {getOptionsGammaExposureOfSide} from '@/ui/options/gex/chart/calc/utils';
-import {getReferencePx} from '@/utils/calc/tick';
 import {sortAsc} from '@/utils/sort/byKey/asc';
 
 
@@ -33,10 +32,7 @@ export const useOptionsGexCalcResult = (): OptionsGexCalcResult => {
     const strikes = uniq(contracts.map(({strike}) => strike)).toSorted(sortAsc((strike) => strike));
     const contractsByStrike = groupBy(contracts, ({strike}) => strike);
 
-    const closestStrike = minBy(
-      strikes,
-      (strike) => Math.abs(strike - getReferencePx(spotPx)),
-    );
+    const closestStrike = getClosestStrike({strikes, spotPx});
 
     const byStrike = strikes.map((strike): OptionsGexData => {
       const netGammaByExpiry = contractsByStrike[strike].map(({call, put, expiry}) => {
