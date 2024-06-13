@@ -5,29 +5,37 @@ import {clsx} from 'clsx';
 
 import {Table} from '@/components/table/main';
 import {TableRow} from '@/components/table/row';
-import {useOptionChainContractsSelector} from '@/state/option/selector';
+import {useOptionChainContractsSelector, useOptionChainDefinitionSelector} from '@/state/option/selector';
+import {usePxSelector} from '@/state/px/selector';
 import {OptionChainHeaderCells} from '@/ui/options/chain/table/headerCells';
 import {OptionChainDataCells} from '@/ui/options/chain/table/row';
+import {getClosestStrike} from '@/ui/options/common/utils';
 
-
-const strikeClassName = clsx('bg-slate-700 text-center');
 
 export const OptionChainTable = () => {
   const contracts = useOptionChainContractsSelector();
+  const definition = useOptionChainDefinitionSelector();
+  const spotPx = usePxSelector(definition?.underlyingContractId);
+
+  const closestStrike = React.useMemo(() => {
+    return getClosestStrike({strikes: contracts.map(({strike}) => strike), spotPx});
+  }, [spotPx, contracts]);
 
   return (
     <Table
       header={
         <>
           <OptionChainHeaderCells/>
-          <td className={strikeClassName}>Strike</td>
+          <td className="text-center">Strike</td>
           <OptionChainHeaderCells/>
         </>
       }
       body={contracts.map(({strike, call, put}) => (
         <TableRow key={strike} className="text-right">
           <OptionChainDataCells contractId={call}/>
-          <td className={strikeClassName}>{strike}</td>
+          <td className={clsx('text-center', strike === closestStrike ? 'bg-sky-600' : 'bg-slate-700')}>
+            {strike}
+          </td>
           <OptionChainDataCells contractId={put}/>
         </TableRow>
       ))}
