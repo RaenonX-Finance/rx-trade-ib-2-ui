@@ -120,8 +120,8 @@ export const useQuoteData = ({account, request, setRequest, onSetLocked}: UseQuo
       exchange: contract.exchange,
     };
     const [_, requestId] = await Promise.all([
-      connection.send(SignalRRequests.REQUEST_PX_TICK, pxTickRequest),
-      connection.invoke<number | null>(SignalRRequests.REQUEST_PX_HISTORY, pxHistoryRequest),
+      connection.send(SignalRRequests.SUBSCRIBE_PX_TICK, pxTickRequest),
+      connection.invoke<number | null>(SignalRRequests.SUBSCRIBE_PX_HISTORY, pxHistoryRequest),
     ]);
 
     if (!requestId) {

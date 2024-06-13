@@ -35,7 +35,7 @@ export const positionDispatchers = {
 
         try {
           await signalRConnection.send(SignalRRequests.REQUEST_PNL, pnlRequest);
-          await signalRConnection.send(SignalRRequests.REQUEST_PX_TICK, pxDataRequest);
+          await signalRConnection.send(SignalRRequests.SUBSCRIBE_PX_TICK, pxDataRequest);
         } catch (err) {
           return onAsyncThunkError({
             message: getErrorMessage({err}),

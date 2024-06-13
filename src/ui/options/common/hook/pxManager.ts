@@ -63,7 +63,7 @@ export const useOptionPxManager = <TPayload>({
 
       for (const request of requests) {
         connection
-          .invoke(SignalRRequests.REQUEST_PX_OPTIONS, request)
+          .invoke(SignalRRequests.SUBSCRIBE_PX_OPTIONS, request)
           .then((response: OptionPxResponse) => {
             const {realtimeRequestIds} = response;
 

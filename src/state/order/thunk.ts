@@ -26,7 +26,7 @@ export const createOrderRecordThunk = (dispatcherName: OrderDispatcherName) => c
       };
 
       try {
-        await signalRConnection.send(SignalRRequests.REQUEST_PX_TICK, pxTickRequest);
+        await signalRConnection.send(SignalRRequests.SUBSCRIBE_PX_TICK, pxTickRequest);
       } catch (err) {
         return onAsyncThunkError({
           message: getErrorMessage({err}),
