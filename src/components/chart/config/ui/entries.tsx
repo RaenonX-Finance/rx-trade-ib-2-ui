@@ -39,15 +39,15 @@ export const ChartConfigEntries = ({config, updateConfig, configCheckOptions}: P
               return (
                 <ToggleButton
                   key={key}
-                  id={`chart-config-${configKey}`}
                   active={value}
-                  title={title}
-                  onChange={() => updateConfig(configKey, !value)}
-                  className={clsx(
-                    'ring-1 ring-inset ring-gray-700',
-                    'peer-checked:text-neutral-300 peer-checked:ring-neutral-300',
-                    'peer-checked:hover:bg-neutral-300 peer-checked:hover:text-slate-800',
+                  text={title}
+                  onClick={() => updateConfig(configKey, !value)}
+                  getClassName={(active) => clsx(
+                    active ?
+                      'text-neutral-300 ring-neutral-300 hover:bg-neutral-300 hover:text-slate-800' :
+                      'text-neutral-300 ring-gray-700 hover:bg-gray-700',
                   )}
+                  className="ring-1 ring-inset"
                 />
               );
             })}

@@ -117,15 +117,11 @@ export const SinglePriceQuote = ({index}: Props) => {
         />
         <ToggleButton
           active={request.rthOnly}
-          id={`rthOnly-${index}-${request.symbol}`}
-          title={request.rthOnly ? 'RTH' : 'ETH'}
-          onChange={() => setRequest((original) => ({...original, rthOnly: !request.rthOnly}))}
-          className={clsx(
-            'hover:text-amber-300 peer-checked:text-amber-300 peer-checked:hover:bg-amber-700',
-            'peer-disabled:text-gray-500 peer-disabled:hover:bg-transparent',
-          )}
-          defaultTextClassName="text-gray-200"
+          text={request.rthOnly ? 'RTH' : 'ETH'}
+          onClick={() => setRequest((original) => ({...original, rthOnly: !request.rthOnly}))}
           disabled={disabled}
+          getClassName={(active) => clsx(active ? 'text-amber-200 hover:bg-amber-700' : 'hover:bg-slate-700')}
+          className="disabled:text-gray-500 disabled:hover:bg-transparent"
         />
         <input type="submit" className="hidden"/>
       </FlexForm>

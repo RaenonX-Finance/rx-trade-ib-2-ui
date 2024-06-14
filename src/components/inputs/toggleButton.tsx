@@ -5,44 +5,31 @@ import {clsx} from 'clsx';
 
 export type ToggleButtonProps = {
   active: boolean,
-  id: string,
-  title: string,
-  onChange: () => void,
-  className: string,
-  defaultTextClassName?: string,
+  text: string,
+  onClick: () => void,
   disabled?: boolean,
+  getClassName?: (active: boolean) => string,
+  classOfText?: string,
+  className?: string,
 };
 
 export const ToggleButton = ({
   active,
-  id,
-  title,
-  onChange,
-  className,
-  defaultTextClassName,
+  text,
+  onClick,
   disabled,
+  getClassName,
+  classOfText,
+  className,
 }: ToggleButtonProps) => {
   return (
-    <div className="flex">
-      <input
-        type="checkbox"
-        id={id}
-        className="peer hidden"
-        checked={active}
-        onChange={onChange}
-        disabled={disabled}
-      />
-      <label
-        htmlFor={id}
-        className={clsx(
-          'transform-smooth cursor-pointer select-none rounded-lg px-2 py-1 text-sm',
-          'hover:bg-gray-700 hover:text-gray-200 peer-checked:hover:text-gray-100',
-          defaultTextClassName ?? 'text-gray-500',
-          className,
-        )}
-      >
-        {title}
-      </label>
-    </div>
+    <button type="button" onClick={onClick} disabled={disabled} className={clsx(
+      'transform-smooth flex rounded-lg px-2 py-1',
+      getClassName ? getClassName(active) : (active ? 'hover:text-gray-100' : 'hover:text-gray-200'),
+      classOfText ?? 'text-sm',
+      className,
+    )}>
+      {text}
+    </button>
   );
 };

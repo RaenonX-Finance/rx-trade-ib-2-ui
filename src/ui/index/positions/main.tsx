@@ -1,6 +1,8 @@
 'use client';
 import React from 'react';
 
+import {clsx} from 'clsx';
+
 import {ToggleButton} from '@/components/inputs/toggleButton';
 import {Table} from '@/components/table/main';
 import {useCurrentAccountSelector} from '@/state/account/selector';
@@ -59,17 +61,17 @@ export const Positions = () => {
       <div className="inline-flex justify-end gap-1">
         <ToggleButton
           active={holding}
-          onChange={() => setFilter({...filter, holding: !holding})}
-          id="Holding"
-          title="Holding"
-          className="hover:text-purple-300 peer-checked:text-purple-300 peer-checked:hover:bg-purple-700"
+          onClick={() => setFilter({...filter, holding: !holding})}
+          text="Holding"
+          getClassName={(active) => clsx(active && 'text-purple-300 hover:bg-purple-700')}
+          className="hover:text-purple-300"
         />
         <ToggleButton
           active={exited}
-          onChange={() => setFilter({...filter, exited: !exited})}
-          id="Exited"
-          title="Exited"
-          className="hover:text-red-300 peer-checked:text-red-300 peer-checked:hover:bg-red-700"
+          onClick={() => setFilter({...filter, exited: !exited})}
+          text="Exited"
+          getClassName={(active) => clsx(active && 'text-red-300 hover:bg-red-700')}
+          className="hover:text-red-300"
         />
       </div>
     </WindowLayout>

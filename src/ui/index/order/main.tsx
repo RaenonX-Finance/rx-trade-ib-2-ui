@@ -1,7 +1,10 @@
 'use client';
 import React from 'react';
 
+import {clsx} from 'clsx';
+
 import {ToggleButton} from '@/components/inputs/toggleButton';
+import {Flex} from '@/components/layout/flex/common';
 import {Table} from '@/components/table/main';
 import {useCurrentAccountSelector} from '@/state/account/selector';
 import {useCancelledOrderSelector, useFilledOrderSelector, useOpenOrderSelector} from '@/state/order/selector';
@@ -73,29 +76,32 @@ export const Orders = () => {
           </div>
         }
       </div>
-      <div className="inline-flex justify-end gap-1">
+      <Flex direction="row" noFullWidth className="gap-1 self-end">
         <ToggleButton
           active={open}
-          onChange={() => setFilter({...filter, open: !open})}
-          id="Open"
-          title="Open"
-          className="hover:text-yellow-300 peer-checked:text-yellow-300 peer-checked:hover:bg-yellow-700"
+          onClick={() => setFilter({...filter, open: !open})}
+          text="Open"
+          getClassName={(active) => clsx(
+            active ? 'text-yellow-300 hover:bg-yellow-700' : 'text-gray-500 hover:text-yellow-300',
+          )}
         />
         <ToggleButton
           active={filled}
-          onChange={() => setFilter({...filter, filled: !filled})}
-          id="Filled"
-          title="Filled"
-          className="hover:text-green-300 peer-checked:text-green-300 peer-checked:hover:bg-green-700"
+          onClick={() => setFilter({...filter, filled: !filled})}
+          text="Filled"
+          getClassName={(active) => clsx(
+            active ? 'text-gray-500 hover:text-green-300' : 'text-green-300 hover:bg-green-700',
+          )}
         />
         <ToggleButton
           active={cancelled}
-          onChange={() => setFilter({...filter, cancelled: !cancelled})}
-          id="Cancelled"
-          title="Cancelled"
-          className="hover:text-red-300 peer-checked:text-red-300 peer-checked:hover:bg-red-700"
+          onClick={() => setFilter({...filter, cancelled: !cancelled})}
+          text="Cancelled"
+          getClassName={(active) => clsx(
+            active ? 'text-gray-500 hover:text-red-300' : 'text-red-300 hover:bg-red-700',
+          )}
         />
-      </div>
+      </Flex>
     </WindowLayout>
   );
 };
