@@ -9,14 +9,17 @@ import {getClosestStrike} from '@/ui/options/common/utils';
 import {OptionsGexCalcResult, OptionsGexData, OptionsGexNetGamma} from '@/ui/options/gex/chart/calc/type';
 import {getOptionsGammaExposureOfSide} from '@/ui/options/gex/chart/calc/utils';
 import {sortAsc} from '@/utils/sort/byKey/asc';
+import {isNotNullish} from '@/utils/type';
 
 
-export const useOptionsGexCalcResult = (): OptionsGexCalcResult => {
+export const useOptionsGexCalcResult = () => {
   const contracts = useOptionGexContractsSelector();
   const definition = useOptionGexDefinitionSelector();
   const pxGlobal = useGlobalPxSelector();
 
-  return React.useMemo(() => {
+  const [inactiveExpiry, setInactiveExpiry] = React.useState<Record<string, boolean>>({});
+
+  const result = React.useMemo((): OptionsGexCalcResult => {
     if (!definition) {
       return {
         byStrike: [],
@@ -33,37 +36,50 @@ export const useOptionsGexCalcResult = (): OptionsGexCalcResult => {
 
     const closestStrike = getClosestStrike({strikes, spotPx});
 
-    const byStrike = strikes.map((strike): OptionsGexData => {
-      const netGammaByExpiry = contractsByStrike[strike]?.map(({call, put, expiry}) => {
-        const netGammaCall = getOptionsGammaExposureOfSide({
-          optionsPx: pxGlobal[call],
-          spotPx,
-        });
-        const netGammaPut = getOptionsGammaExposureOfSide({
-          optionsPx: pxGlobal[put],
-          spotPx,
-        });
+    const byStrike = strikes
+      .map((strike): OptionsGexData | null => {
+        const contractsOfStrike = contractsByStrike[strike];
+        if (!contractsOfStrike) {
+          return null;
+        }
+
+        const netGammaByExpiry = contractsOfStrike
+          .map(({call, put, expiry}) => {
+            if (inactiveExpiry[expiry]) {
+              return null;
+            }
+
+            const netGammaCall = getOptionsGammaExposureOfSide({
+              optionsPx: pxGlobal[call],
+              spotPx,
+            });
+            const netGammaPut = getOptionsGammaExposureOfSide({
+              optionsPx: pxGlobal[put],
+              spotPx,
+            });
+
+            return {
+              expiry,
+              netGamma: {
+                call: netGammaCall,
+                put: netGammaPut,
+                total: netGammaCall - netGammaPut,
+              } satisfies OptionsGexNetGamma,
+            };
+          })
+          .filter(isNotNullish);
 
         return {
-          expiry,
-          netGamma: {
-            call: netGammaCall,
-            put: netGammaPut,
-            total: netGammaCall - netGammaPut,
-          } satisfies OptionsGexNetGamma,
+          strike,
+          netGammaSum: {
+            call: sum(netGammaByExpiry?.map(({netGamma}) => netGamma.call)),
+            put: sum(netGammaByExpiry?.map(({netGamma}) => netGamma.put)),
+            total: sum(netGammaByExpiry?.map(({netGamma}) => netGamma.total)),
+          },
+          netGammaByExpiry: Object.fromEntries(netGammaByExpiry.map(({expiry, netGamma}) => [expiry, netGamma]) ?? []),
         };
-      });
-
-      return {
-        strike,
-        netGammaSum: {
-          call: sum(netGammaByExpiry?.map(({netGamma}) => netGamma.call)),
-          put: sum(netGammaByExpiry?.map(({netGamma}) => netGamma.put)),
-          total: sum(netGammaByExpiry?.map(({netGamma}) => netGamma.total)),
-        },
-        netGammaByExpiry: Object.fromEntries(netGammaByExpiry?.map(({expiry, netGamma}) => [expiry, netGamma]) ?? []),
-      };
-    });
+      })
+      .filter(isNotNullish);
 
     return {
       byStrike,
@@ -71,5 +87,11 @@ export const useOptionsGexCalcResult = (): OptionsGexCalcResult => {
       possibleExpiry: uniq(contracts.map(({expiry}) => expiry).toSorted(sortAsc())),
       total: sum(byStrike.map(({netGammaSum}) => netGammaSum.total)),
     };
-  }, [contracts, definition, pxGlobal]);
+  }, [contracts, definition, pxGlobal, inactiveExpiry]);
+
+  return {
+    result,
+    inactiveExpiry,
+    setInactiveExpiry,
+  };
 };

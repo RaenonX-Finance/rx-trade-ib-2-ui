@@ -4,6 +4,7 @@ import React from 'react';
 import {clsx} from 'clsx';
 import {Bar, BarChart, Cell, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 
+import {ToggleButton} from '@/components/inputs/toggleButton';
 import {Flex} from '@/components/layout/flex/common';
 import {Dollar} from '@/components/preset/dollar';
 import {useOptionGexContractsSelector, useOptionGexExpectedExpirySelector} from '@/state/option/selector';
@@ -17,11 +18,17 @@ import {formatToAbbreviation} from '@/utils/format/number/abbreviation';
 
 export const OptionsGexChart = () => {
   const {
+    result,
+    inactiveExpiry,
+    setInactiveExpiry,
+  } = useOptionsGexCalcResult();
+  const {
     byStrike,
     closestStrike,
     possibleExpiry,
     total,
-  } = useOptionsGexCalcResult();
+  } = result;
+
   const gexLoadedContracts = useOptionGexContractsSelector();
   const expectedExpiry = useOptionGexExpectedExpirySelector();
 
@@ -35,14 +42,24 @@ export const OptionsGexChart = () => {
       <Flex className="text-3xl" center>
         <Dollar amount={total} withColor/>
       </Flex>
-      <Flex direction="row" center wrap className="gap-2 text-xs">
+      <Flex direction="row" center wrap className="gap-2">
         {expectedExpiry.map((expiry) => (
-          <span key={expiry} className={clsx(
-            'rounded-lg bg-slate-300/20 px-1.5 py-1',
-            gexLoadedExpiry.has(expiry) ? 'text-green-400' : 'text-slate-400',
-          )}>
-            {expiry}
-          </span>
+          <ToggleButton
+            key={expiry}
+            active={!inactiveExpiry[expiry]}
+            text={expiry}
+            onClick={() => setInactiveExpiry((original) => ({
+              ...original,
+              [expiry]: !original[expiry],
+            }))}
+            disabled={!gexLoadedExpiry.has(expiry)}
+            getClassName={(active) => clsx(active ? 'text-green-400' : 'text-red-400')}
+            classOfText="text-xs"
+            className={clsx(
+              'disabled:bg-slate-800 disabled:text-slate-400',
+              'enabled:ring-1 enabled:ring-inset enabled:ring-slate-600 enabled:hover:bg-slate-700',
+            )}
+          />
         ))}
       </Flex>
       <OptionsGexStats/>
