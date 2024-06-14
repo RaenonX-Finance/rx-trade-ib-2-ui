@@ -5,7 +5,7 @@ import uniq from 'lodash/uniq';
 
 import {useOptionGexContractsSelector, useOptionGexDefinitionSelector} from '@/state/option/selector';
 import {useGlobalPxSelector} from '@/state/px/selector';
-import {getClosestStrike} from '@/ui/options/common/utils';
+import {getClosestStrikeFromContract} from '@/ui/options/common/utils';
 import {OptionsGexCalcResult, OptionsGexData, OptionsGexDataOfPair} from '@/ui/options/gex/chart/calc/type';
 import {getOptionsGammaExposureOfSide} from '@/ui/options/gex/chart/calc/utils';
 import {sortAsc} from '@/utils/sort/byKey/asc';
@@ -39,7 +39,7 @@ export const useOptionsGexCalcResult = () => {
     ).toSorted(sortAsc((strike) => strike));
     const contractsByStrike = Object.groupBy(contracts, ({strike}) => strike);
 
-    const closestStrike = getClosestStrike({strikes, spotPx});
+    const closestStrike = getClosestStrikeFromContract({strikes, spotPx});
 
     const byStrike = strikes
       .map((strike): OptionsGexData | null => {

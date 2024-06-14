@@ -9,7 +9,7 @@ import {useOptionChainContractsSelector, useOptionChainDefinitionSelector} from 
 import {usePxSelector} from '@/state/px/selector';
 import {OptionChainHeaderCells} from '@/ui/options/chain/table/headerCells';
 import {OptionChainDataCells} from '@/ui/options/chain/table/row';
-import {getClosestStrike} from '@/ui/options/common/utils';
+import {getClosestStrikeFromContract} from '@/ui/options/common/utils';
 
 
 export const OptionChainTable = () => {
@@ -17,9 +17,9 @@ export const OptionChainTable = () => {
   const definition = useOptionChainDefinitionSelector();
   const spotPx = usePxSelector(definition?.underlyingContractId);
 
-  const closestStrike = React.useMemo(() => {
-    return getClosestStrike({strikes: contracts.map(({strike}) => strike), spotPx});
-  }, [spotPx, contracts]);
+  const closestStrike = React.useMemo(() => (
+    getClosestStrikeFromContract({strikes: contracts.map(({strike}) => strike), spotPx})
+  ), [spotPx, contracts]);
 
   return (
     <Table
