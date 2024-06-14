@@ -13,6 +13,7 @@ import {useOptionsGexCalcResult} from '@/ui/options/gex/chart/calc/hook';
 import {OptionsGexData} from '@/ui/options/gex/chart/calc/type';
 import {OptionsGexStats} from '@/ui/options/gex/chart/stats/main';
 import {OptionsGexChartTooltip} from '@/ui/options/gex/chart/tooltip';
+import {useOptionsGexStats} from '@/ui/options/gex/stats/hook';
 import {formatToAbbreviation} from '@/utils/format/number/abbreviation';
 
 
@@ -31,6 +32,8 @@ export const OptionsGexChart = () => {
 
   const gexLoadedContracts = useOptionGexContractsSelector();
   const expectedExpiry = useOptionGexExpectedExpirySelector();
+
+  const gexStats = useOptionsGexStats();
 
   const gexLoadedExpiry = React.useMemo(
     () => new Set([...gexLoadedContracts.map(({expiry}) => expiry)]),
@@ -62,17 +65,18 @@ export const OptionsGexChart = () => {
           />
         ))}
       </Flex>
-      <OptionsGexStats/>
+      <OptionsGexStats gexStats={gexStats}/>
       <Flex className="h-[70vh]">
         {
           !!byStrike.length &&
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={byStrike} stackOffset="sign" margin={{top: 0, right: 0, left: -15, bottom: 0}}>
               <XAxis
-                type="category"
+                type="number"
                 dataKey={({strike}: OptionsGexData) => strike}
                 className="text-xs"
                 stroke="white"
+                domain={['dataMin', 'dataMax']}
               />
               <YAxis
                 type="number"
@@ -81,8 +85,16 @@ export const OptionsGexChart = () => {
                 tickFormatter={(value) => formatToAbbreviation({num: value, decimals: 0})}
               />
               <Tooltip content={<OptionsGexChartTooltip/>} cursor={{fill: 'transparent'}}/>
-              <ReferenceLine y={0} className="stroke-slate-300"/>
-              {closestStrike != null && <ReferenceLine x={closestStrike} className="stroke-sky-500"/>}
+              <ReferenceLine y={0} className="[&>line]:stroke-slate-500"/>
+              {closestStrike != null && <ReferenceLine x={closestStrike} className="[&>line]:stroke-sky-500"/>}
+              {
+                gexStats?.gammaFlip != null &&
+                <ReferenceLine x={gexStats.gammaFlip} className="[&>line]:stroke-amber-500"/>
+              }
+              {
+                gexStats?.gammaField != null &&
+                <ReferenceLine x={gexStats.gammaField} className="[&>line]:stroke-fuchsia-500"/>
+              }
               {possibleExpiry.map((expiry, idx) => (
                 <Bar
                   key={expiry}
@@ -92,9 +104,7 @@ export const OptionsGexChart = () => {
                   {byStrike.map(({strike, netGammaByExpiry}) => (
                     <Cell
                       key={strike}
-                      className={clsx(
-                        getMarketColorClassOfFill(netGammaByExpiry[expiry]?.total ?? 0, idx),
-                      )}
+                      className={clsx(getMarketColorClassOfFill(netGammaByExpiry[expiry]?.total ?? 0, idx))}
                     />
                   ))}
                 </Bar>

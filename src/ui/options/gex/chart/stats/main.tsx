@@ -3,12 +3,15 @@ import React from 'react';
 import {Flex} from '@/components/layout/flex/common';
 import {useOptionGexUnderlyingPxSelector} from '@/state/option/selector';
 import {OptionsGexStatsLayout} from '@/ui/options/gex/chart/stats/layout';
-import {useOptionsGexStats} from '@/ui/options/gex/stats/hook';
+import {OptionsGexStatsResponse} from '@/ui/options/gex/stats/type';
 import {getReferencePx} from '@/utils/calc/tick';
 
 
-export const OptionsGexStats = () => {
-  const gexStats = useOptionsGexStats();
+type Props = {
+  gexStats: OptionsGexStatsResponse | null,
+};
+
+export const OptionsGexStats = ({gexStats}: Props) => {
   const underlyingPx = useOptionGexUnderlyingPxSelector();
 
   const underlyingCurrentPx = getReferencePx(underlyingPx);
@@ -19,11 +22,13 @@ export const OptionsGexStats = () => {
         name="Gamma Field"
         value={gexStats?.gammaField}
         spotPx={underlyingCurrentPx}
+        className="text-fuchsia-300"
       />
       <OptionsGexStatsLayout
         name="Gamma Flip"
         value={gexStats?.gammaFlip}
         spotPx={underlyingCurrentPx}
+        className="text-amber-300"
       />
     </Flex>
   );
