@@ -9,6 +9,7 @@ import {Flex} from '@/components/layout/flex/common';
 import {Dollar} from '@/components/preset/dollar';
 import {useOptionGexContractsSelector, useOptionGexExpectedExpirySelector} from '@/state/option/selector';
 import {getMarketColorClassOfFill} from '@/styles/color/fill';
+import {getClosestStrikeFromPx} from '@/ui/options/common/utils';
 import {useOptionsGexCalcResult} from '@/ui/options/gex/chart/calc/hook';
 import {OptionsGexData} from '@/ui/options/gex/chart/calc/type';
 import {OptionsGexStats} from '@/ui/options/gex/chart/stats/main';
@@ -39,6 +40,8 @@ export const OptionsGexChart = () => {
     () => new Set([...gexLoadedContracts.map(({expiry}) => expiry)]),
     [gexLoadedContracts],
   );
+
+  const strikes = React.useMemo(() => byStrike.map(({strike}) => strike), [byStrike]);
 
   return (
     <Flex className="gap-2">
@@ -72,11 +75,10 @@ export const OptionsGexChart = () => {
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={byStrike} stackOffset="sign" margin={{top: 0, right: 0, left: -15, bottom: 0}}>
               <XAxis
-                type="number"
+                type="category"
                 dataKey={({strike}: OptionsGexData) => strike}
                 className="text-xs"
                 stroke="white"
-                domain={['dataMin', 'dataMax']}
               />
               <YAxis
                 type="number"
@@ -89,11 +91,17 @@ export const OptionsGexChart = () => {
               {closestStrike != null && <ReferenceLine x={closestStrike} className="[&>line]:stroke-sky-500"/>}
               {
                 gexStats?.gammaFlip != null &&
-                <ReferenceLine x={gexStats.gammaFlip} className="[&>line]:stroke-amber-500"/>
+                <ReferenceLine
+                  x={getClosestStrikeFromPx({strikes, px: gexStats.gammaFlip})}
+                  className="[&>line]:stroke-amber-500"
+                />
               }
               {
                 gexStats?.gammaField != null &&
-                <ReferenceLine x={gexStats.gammaField} className="[&>line]:stroke-fuchsia-500"/>
+                <ReferenceLine
+                  x={getClosestStrikeFromPx({strikes, px: gexStats.gammaField})}
+                  className="[&>line]:stroke-fuchsia-500"
+                />
               }
               {possibleExpiry.map((expiry, idx) => (
                 <Bar
