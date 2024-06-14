@@ -9,7 +9,7 @@ import {OptionDispatcherName} from '@/state/option/types';
 import {usePxSelector} from '@/state/px/selector';
 import {useDispatch} from '@/state/store';
 import {OptionDefinitionRequest, OptionPxResponse} from '@/types/api/option';
-import {OptionPxSubscribeRequest} from '@/types/api/px';
+import {OptionPxRequest} from '@/types/api/px';
 import {UseOptionPxManagerCommonOpts} from '@/ui/options/common/hook/type';
 import {getMidPx} from '@/utils/calc/tick';
 import {getErrorMessage} from '@/utils/error';
@@ -17,7 +17,7 @@ import {Nullable} from '@/utils/type';
 
 
 type UseOptionPxSubscriberOpts<TPayload> = UseOptionPxManagerCommonOpts & {
-  getRequests: (payload: TPayload, priceBase: number | null) => Nullable<OptionPxSubscribeRequest[]>,
+  getRequests: (payload: TPayload, priceBase: number | null) => Nullable<OptionPxRequest[]>,
 };
 
 export const useOptionPxManager = <TPayload>({
@@ -67,17 +67,17 @@ export const useOptionPxManager = <TPayload>({
           .then((response: OptionPxResponse) => {
             const {realtimeRequestIds} = response;
 
-            // `SignalRRequests.REQUEST_PX_OPTIONS` is invoked multiple times,
-            // therefore concatenating `inUsePxRequestIds` instead of overwriting
             dispatch(optionDispatchers[OptionDispatcherName.UPDATE_CONTRACTS](response));
             setDefinitionRequest((original): OptionDefinitionRequest => ({
               ...original,
+              // `SignalRRequests.REQUEST_PX_OPTIONS` is invoked multiple times,
+              // therefore concatenating `inUsePxRequestIds` instead of overwriting
               inUsePxRequestIds: [...original.inUsePxRequestIds, ...realtimeRequestIds],
             }));
           })
           .catch((err) => {
             dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
-              message: `Request option chain: ${getErrorMessage({err})}`,
+              message: `Error while requesting option px: ${getErrorMessage({err})}`,
             }));
           });
       }

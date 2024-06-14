@@ -1,7 +1,7 @@
 import {HistoryDataType} from '@/enums/historyDataType';
 import {PxTick} from '@/enums/pxTick';
 import {ChartDataBar} from '@/types/api/chart';
-import {OptionPxRequestOrigin} from '@/types/api/option';
+import {OptionPxRequestOrigin, OptionPxRequestType} from '@/types/api/option';
 import {ChartDataInterval} from '@/types/data/chart';
 import {ContractId} from '@/types/data/px';
 
@@ -29,8 +29,9 @@ export type PxHistoryMessage = {
   bars: ChartDataBar[],
 };
 
-export type OptionPxSubscribeRequest = {
+export type OptionPxRequest = {
   origin: OptionPxRequestOrigin,
+  type: OptionPxRequestType,
   account: string,
   symbol: string,
   expiry: string[],

@@ -20,6 +20,7 @@ export const OptionsGexInput = () => {
 
   const [pxRequest, setPxRequest] = React.useState<OptionGexPxSubscribeRequestState>({
     origin: 'GammaExposure',
+    type: 'OneTime',
     account: '',
     symbol: '',
     tradingClass: '',

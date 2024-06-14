@@ -1,6 +1,6 @@
-import {OptionPxSubscribeRequest} from '@/types/api/px';
+import {OptionPxRequest} from '@/types/api/px';
 
 
-export type OptionChainPxSubscribeRequestState = Omit<OptionPxSubscribeRequest, 'strikes'> & {
+export type OptionChainPxSubscribeRequestState = Omit<OptionPxRequest, 'strikes'> & {
   strikeRangePercent: number | null,
 };

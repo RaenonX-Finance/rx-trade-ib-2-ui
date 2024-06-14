@@ -25,6 +25,7 @@ export const OptionChainInput = () => {
 
   const [pxRequest, setPxRequest] = React.useState<OptionChainPxSubscribeRequestState>({
     origin: 'OptionChain',
+    type: 'Subscribe',
     account: '',
     expiry: [],
     strikeRangePercent: 15,

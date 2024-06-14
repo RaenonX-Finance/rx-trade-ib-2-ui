@@ -38,6 +38,7 @@ export const useOptionGexPxManager = (opts: UseOptionPxManagerCommonOpts) => {
 
       return expiryList.map((expiry) => ({
         origin: 'GammaExposure',
+        type: 'OneTime',
         account,
         symbol,
         tradingClass,

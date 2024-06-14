@@ -24,6 +24,7 @@ export const useOptionChainPxManager = (opts: UseOptionPxManagerCommonOpts) => {
 
       return [{
         origin: 'OptionChain',
+        type: 'Subscribe',
         account,
         symbol,
         expiry,

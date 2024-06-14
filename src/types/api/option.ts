@@ -3,6 +3,8 @@ import {ContractId} from '@/types/data/px';
 
 export type OptionPxRequestOrigin = 'OptionChain' | 'GammaExposure';
 
+export type OptionPxRequestType = 'OneTime' | 'Subscribe';
+
 export type OptionDefinitionRequest = {
   origin: OptionPxRequestOrigin,
   account: string,
