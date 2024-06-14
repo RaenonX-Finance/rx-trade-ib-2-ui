@@ -40,15 +40,16 @@ export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, n
           const daysToExpiry = differenceInDays(expiryDate, new Date());
 
           return (
-            <Flex key={expiry} className="w-44 gap-0.5">
+            <Flex key={expiry} className="w-48 gap-0.5">
               <Flex direction="row" center className="gap-0.5 whitespace-nowrap text-xs">
                 <span>{expiryFormatted}</span>
                 <span>(T-{daysToExpiry})</span>
               </Flex>
               <Dollar amount={total} withColor className="self-end"/>
               <ProgressBarMulti
-                data={[{value: call, data: call}, {value: put, data: put}]}
-                renderSummary={({data}) => <Dollar amount={data} withColor/>}
+                data={[{value: call, data: call}, {value: put, data: -put}]}
+                // +0 for fixing -0 issue
+                renderSummary={({data}) => <Dollar amount={data + 0} withColor/>}
                 classOfColors={['bg-market-up', 'bg-market-down']}
                 className="gap-1 text-xs"
               />
