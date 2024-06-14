@@ -40,6 +40,7 @@ export const OptionChainInput = () => {
     subscribeOptionPx,
   } = useOptionChainPxManager({
     origin: 'OptionChain',
+    type: 'Subscribe',
     definition,
     clearAction: optionDispatchers[OptionDispatcherName.CLEAR_OPTION_CHAIN],
   });

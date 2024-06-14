@@ -10,6 +10,7 @@ import {usePxSelector} from '@/state/px/selector';
 import {useDispatch} from '@/state/store';
 import {OptionDefinitionRequest, OptionPxResponse} from '@/types/api/option';
 import {OptionPxRequest} from '@/types/api/px';
+import {optionPxSignalREventName} from '@/ui/options/common/hook/const';
 import {UseOptionPxManagerCommonOpts} from '@/ui/options/common/hook/type';
 import {getMidPx} from '@/utils/calc/tick';
 import {getErrorMessage} from '@/utils/error';
@@ -22,6 +23,7 @@ type UseOptionPxSubscriberOpts<TPayload> = UseOptionPxManagerCommonOpts & {
 
 export const useOptionPxManager = <TPayload>({
   origin,
+  type,
   definition,
   clearAction,
   getRequests,
@@ -63,7 +65,7 @@ export const useOptionPxManager = <TPayload>({
 
       for (const request of requests) {
         connection
-          .invoke(SignalRRequests.SUBSCRIBE_PX_OPTIONS, request)
+          .invoke(optionPxSignalREventName[type], request)
           .then((response: OptionPxResponse) => {
             const {realtimeRequestIds} = response;
 

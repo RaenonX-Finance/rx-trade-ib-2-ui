@@ -34,6 +34,7 @@ export const OptionsGexInput = () => {
     subscribeOptionPx,
   } = useOptionGexPxManager({
     origin: 'GammaExposure',
+    type: 'OneTime',
     definition,
     clearAction: optionDispatchers[OptionDispatcherName.CLEAR_OPTION_GEX],
   });
