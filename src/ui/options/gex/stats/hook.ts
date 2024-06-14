@@ -14,8 +14,8 @@ export const useOptionsGexStats = () => {
 
   const [stats, setStats] = React.useState<OptionsGexStatsResponse | null>(null);
 
-  const calculateGexFlip = React.useCallback(async (): Promise<OptionsGexStatsResponse | null> => {
-    if (!definition) {
+  const calculateGexStats = React.useCallback(async (): Promise<OptionsGexStatsResponse | null> => {
+    if (!definition || !gexLoadedContracts.length) {
       return null;
     }
 
@@ -66,12 +66,19 @@ export const useOptionsGexStats = () => {
   }, [definition, gexLoadedContracts, globalPx]);
 
   React.useEffect(() => {
-    const updateGexStats = () => calculateGexFlip().then(setStats);
+    const updateGexStats = () => calculateGexStats().then(setStats);
+
+    // Initial run on load
+    // Using `setTimeout()` to debounce because `calculateGexStats()` could update a lot in a short time
+    const timeoutId = setTimeout(updateGexStats, 1000);
 
     const intervalId = setInterval(updateGexStats, 3000);
 
-    return () => clearInterval(intervalId);
-  }, []);
+    return () => {
+      clearTimeout(timeoutId);
+      clearInterval(intervalId);
+    };
+  }, [calculateGexStats]);
 
   return stats;
 };
