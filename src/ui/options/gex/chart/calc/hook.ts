@@ -6,7 +6,7 @@ import uniq from 'lodash/uniq';
 import {useOptionGexContractsSelector, useOptionGexDefinitionSelector} from '@/state/option/selector';
 import {useGlobalPxSelector} from '@/state/px/selector';
 import {getClosestStrike} from '@/ui/options/common/utils';
-import {OptionsGexCalcResult, OptionsGexData, OptionsGexNetGamma} from '@/ui/options/gex/chart/calc/type';
+import {OptionsGexCalcResult, OptionsGexData, OptionsGexDataOfPair} from '@/ui/options/gex/chart/calc/type';
 import {getOptionsGammaExposureOfSide} from '@/ui/options/gex/chart/calc/utils';
 import {sortAsc} from '@/utils/sort/byKey/asc';
 import {isNotNullish} from '@/utils/type';
@@ -69,7 +69,27 @@ export const useOptionsGexCalcResult = () => {
                 call: netGammaCall,
                 put: netGammaPut,
                 total: netGammaCall - netGammaPut,
-              } satisfies OptionsGexNetGamma,
+              } satisfies OptionsGexDataOfPair,
+            };
+          })
+          .filter(isNotNullish);
+
+        const oiByExpiry = contractsOfStrike
+          .map(({call, put, expiry}) => {
+            if (inactiveExpiry[expiry]) {
+              return null;
+            }
+
+            const callOi = pxGlobal[call]?.OptionCallOpenInterest ?? 0;
+            const putOi = pxGlobal[put]?.OptionPutOpenInterest ?? 0;
+
+            return {
+              expiry,
+              oi: {
+                call: callOi,
+                put: putOi,
+                total: callOi + putOi,
+              } satisfies OptionsGexDataOfPair,
             };
           })
           .filter(isNotNullish);
@@ -82,6 +102,12 @@ export const useOptionsGexCalcResult = () => {
             total: sum(netGammaByExpiry?.map(({netGamma}) => netGamma.total)),
           },
           netGammaByExpiry: Object.fromEntries(netGammaByExpiry.map(({expiry, netGamma}) => [expiry, netGamma]) ?? []),
+          oi: {
+            call: sum(oiByExpiry?.map(({oi}) => oi.call)),
+            put: sum(oiByExpiry?.map(({oi}) => oi.put)),
+            total: sum(oiByExpiry?.map(({oi}) => oi.total)),
+          },
+          oiByExpiry: Object.fromEntries(oiByExpiry.map(({expiry, oi}) => [expiry, oi]) ?? []),
         };
       })
       .filter(isNotNullish);

@@ -10,6 +10,7 @@ import {Grid} from '@/components/layout/grid';
 import {Dollar} from '@/components/preset/dollar';
 import {ProgressBarMulti} from '@/components/progressBar/multi/main';
 import {OptionsGexData} from '@/ui/options/gex/chart/calc/type';
+import {formatInt} from '@/utils/format/number/regular';
 
 
 export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, number>) => {
@@ -21,14 +22,15 @@ export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, n
     strike,
     netGammaByExpiry,
     netGammaSum,
+    oiByExpiry,
   } = payload[0].payload as OptionsGexData;
 
   return (
     <Flex center className="min-w-48 gap-1 rounded-lg bg-slate-900/70 p-2">
-      <span className="text-2xl">{strike}</span>
-      <Dollar amount={netGammaSum.total} withColor className="self-end text-lg"/>
+      <span className="text-xl">{strike}</span>
+      <Dollar amount={netGammaSum.total} withColor className="self-end text-2xl"/>
       <hr className="my-1 w-full border-t-gray-500"/>
-      <Grid className="grid-cols-3 gap-3">
+      <Grid className="grid-cols-2 gap-3.5">
         {Object.entries(netGammaByExpiry).map(([expiry, netGamma]) => {
           if (netGamma == null) {
             return null;
@@ -39,13 +41,15 @@ export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, n
           const expiryFormatted = format(expiryDate, 'yyyy-MM-dd');
           const daysToExpiry = differenceInDays(expiryDate, new Date());
 
+          const oiOfExpiry = oiByExpiry[expiry];
+
           return (
             <Flex key={expiry} className="w-48 gap-0.5">
               <Flex direction="row" center className="gap-0.5 whitespace-nowrap text-xs">
                 <span>{expiryFormatted}</span>
                 <span>(T-{daysToExpiry})</span>
               </Flex>
-              <Dollar amount={total} withColor className="self-end"/>
+              <Dollar amount={total} withColor className="self-end text-lg"/>
               <ProgressBarMulti
                 data={[{value: call, data: call}, {value: put, data: -put}]}
                 // +0 for fixing -0 issue
@@ -53,6 +57,12 @@ export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, n
                 classOfColors={['bg-market-up', 'bg-market-down']}
                 className="gap-1 text-xs"
               />
+              <Flex direction="row" className="items-end gap-1 text-xs leading-none">
+                <small className="text-market-up">C</small>
+                <span className="text-market-up">{formatInt(oiOfExpiry?.call)}</span>
+                <small className="ml-auto text-market-down">P</small>
+                <span className="text-market-down">{formatInt(oiOfExpiry?.put)}</span>
+              </Flex>
             </Flex>
           );
         })}

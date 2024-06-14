@@ -1,16 +1,20 @@
 import {Nullable} from '@/utils/type';
 
 
-export type OptionsGexNetGamma = {
+export type OptionsGexDataOfPair = {
   call: number,
   put: number,
   total: number,
 };
 
+export type OptionsGexDataByExpiry = {[expiry in string]?: OptionsGexDataOfPair};
+
 export type OptionsGexData = {
   strike: number,
-  netGammaSum: OptionsGexNetGamma,
-  netGammaByExpiry: {[expiry in string]?: OptionsGexNetGamma},
+  netGammaSum: OptionsGexDataOfPair,
+  netGammaByExpiry: OptionsGexDataByExpiry,
+  oi: OptionsGexDataOfPair,
+  oiByExpiry: OptionsGexDataByExpiry,
 };
 
 export type OptionsGexCalcResult = {
