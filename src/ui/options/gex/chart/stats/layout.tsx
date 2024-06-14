@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const OptionsGexStatsLayout = ({name, value, spotPx}: Props) => {
-  const diffPercent = value ? value / spotPx - 1 : null;
+  const diffPercent = value ? (value / spotPx - 1) * 100 : null;
 
   return (
     <Flex direction="row" className="items-end justify-center gap-1">
