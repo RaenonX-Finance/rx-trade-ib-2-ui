@@ -1,6 +1,5 @@
 import React from 'react';
 
-import groupBy from 'lodash/groupBy';
 import sum from 'lodash/sum';
 import uniq from 'lodash/uniq';
 
@@ -30,12 +29,12 @@ export const useOptionsGexCalcResult = (): OptionsGexCalcResult => {
     const spotPx = pxGlobal[definition.underlyingContractId];
 
     const strikes = uniq(contracts.map(({strike}) => strike)).toSorted(sortAsc((strike) => strike));
-    const contractsByStrike = groupBy(contracts, ({strike}) => strike);
+    const contractsByStrike = Object.groupBy(contracts, ({strike}) => strike);
 
     const closestStrike = getClosestStrike({strikes, spotPx});
 
     const byStrike = strikes.map((strike): OptionsGexData => {
-      const netGammaByExpiry = contractsByStrike[strike].map(({call, put, expiry}) => {
+      const netGammaByExpiry = contractsByStrike[strike]?.map(({call, put, expiry}) => {
         const netGammaCall = getOptionsGammaExposureOfSide({
           optionsPx: pxGlobal[call],
           spotPx,
@@ -58,11 +57,11 @@ export const useOptionsGexCalcResult = (): OptionsGexCalcResult => {
       return {
         strike,
         netGammaSum: {
-          call: sum(netGammaByExpiry.map(({netGamma}) => netGamma.call)),
-          put: sum(netGammaByExpiry.map(({netGamma}) => netGamma.put)),
-          total: sum(netGammaByExpiry.map(({netGamma}) => netGamma.total)),
+          call: sum(netGammaByExpiry?.map(({netGamma}) => netGamma.call)),
+          put: sum(netGammaByExpiry?.map(({netGamma}) => netGamma.put)),
+          total: sum(netGammaByExpiry?.map(({netGamma}) => netGamma.total)),
         },
-        netGammaByExpiry: Object.fromEntries(netGammaByExpiry.map(({expiry, netGamma}) => [expiry, netGamma])),
+        netGammaByExpiry: Object.fromEntries(netGammaByExpiry?.map(({expiry, netGamma}) => [expiry, netGamma]) ?? []),
       };
     });
 
