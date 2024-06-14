@@ -1,7 +1,13 @@
 import {clsx} from 'clsx';
 
+import {Nullable} from '@/utils/type';
 
-export const getMarketColorClassOfText = (num: number) => {
+
+export const getMarketColorClassOfText = (num: Nullable<number>) => {
+  if (num == null) {
+    return '';
+  }
+
   if (num === 0) {
     return clsx('text-slate-300');
   }
