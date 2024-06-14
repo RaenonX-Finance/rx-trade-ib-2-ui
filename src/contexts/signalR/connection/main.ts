@@ -23,6 +23,7 @@ export const useSignalRConnection = ({onConnected}: UseSignalRConnectionOpts): H
     new HubConnectionBuilder()
       .withUrl('http://localhost:5075/signalr')
       .withAutomaticReconnect()
+      .withServerTimeout(120000) // 2 min
       .build(),
   );
 
