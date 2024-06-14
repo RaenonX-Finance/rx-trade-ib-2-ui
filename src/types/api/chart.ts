@@ -25,7 +25,7 @@ export type ChartDataBar = ChartDataBarWithData | ChartDataBarNoData;
 
 export const isChartDataBarWithData = (bar: ChartDataBar): bar is ChartDataBarWithData => bar.open !== null;
 
-// HistoryPxRequestForQuote of server
+// `PxHistoryRequest` of server
 export type ChartHistoryPxRequest = {
   account: string,
   contractId: number,

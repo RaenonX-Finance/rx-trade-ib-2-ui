@@ -31,8 +31,8 @@ export const useQuoteData = ({account, request, setRequest, onSetLocked}: UseQuo
   const dispatch = useDispatch();
 
   const [locked, setLocked] = React.useState<LockedContractState>({
-    contractId: undefined,
-    requested: undefined,
+    contractId: null,
+    requested: null,
     failed: false,
   });
 
@@ -81,8 +81,8 @@ export const useQuoteData = ({account, request, setRequest, onSetLocked}: UseQuo
     if (request.symbol === '') {
       // If symbol not specified, cancel the px subscription if no position
       setLocked({
-        contractId: undefined,
-        requested: undefined,
+        contractId: null,
+        requested: null,
         failed: false,
       });
       onSetLocked(request);
@@ -96,8 +96,8 @@ export const useQuoteData = ({account, request, setRequest, onSetLocked}: UseQuo
 
     if (response.length === 0) {
       setLocked({
-        contractId: undefined,
-        requested: undefined,
+        contractId: null,
+        requested: null,
         failed: true,
       });
       onSetLocked(request);

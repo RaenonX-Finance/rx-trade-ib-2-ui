@@ -3,7 +3,7 @@ export enum SignalRRequests {
   INIT_ACCOUNT = 'InitAccount',
   REQUEST_PNL = 'RequestPnl',
   SUBSCRIBE_PX_TICK = 'SubscribePxTick',
-  SUBSCRIBE_PX_HISTORY = 'RequestPxHistory',
+  SUBSCRIBE_PX_HISTORY = 'SubscribePxHistory',
   SUBSCRIBE_PX_OPTIONS = 'SubscribePxOfOptions',
   REQUEST_CONTRACT_DETAILS = 'RequestContractDetails',
   REQUEST_OPTION_DEFINITIONS = 'RequestOptionDefinitions',
