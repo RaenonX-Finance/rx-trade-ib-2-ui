@@ -31,7 +31,12 @@ export const useOptionsGexCalcResult = () => {
 
     const spotPx = pxGlobal[definition.underlyingContractId];
 
-    const strikes = uniq(contracts.map(({strike}) => strike)).toSorted(sortAsc((strike) => strike));
+    const strikes = uniq(
+      contracts
+        // For `call` and `put`, being `0` means that there's no corresponding contract for it
+        .filter(({expiry, call, put}) => !inactiveExpiry[expiry] && (!!call || !!put))
+        .map(({strike}) => strike),
+    ).toSorted(sortAsc((strike) => strike));
     const contractsByStrike = Object.groupBy(contracts, ({strike}) => strike);
 
     const closestStrike = getClosestStrike({strikes, spotPx});
