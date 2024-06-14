@@ -10,6 +10,7 @@ import {useOptionGexContractsSelector, useOptionGexExpectedExpirySelector} from 
 import {getMarketColorClassOfFill} from '@/styles/color/fill';
 import {useOptionsGexCalcResult} from '@/ui/options/gex/chart/calc/hook';
 import {OptionsGexData} from '@/ui/options/gex/chart/calc/type';
+import {OptionsGexStats} from '@/ui/options/gex/chart/stats/main';
 import {OptionsGexChartTooltip} from '@/ui/options/gex/chart/tooltip';
 import {formatToAbbreviation} from '@/utils/format/number/abbreviation';
 
@@ -44,6 +45,7 @@ export const OptionsGexChart = () => {
           </span>
         ))}
       </Flex>
+      <OptionsGexStats/>
       <Flex className="h-[70vh]">
         {
           !!byStrike.length &&
