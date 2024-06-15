@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Dialog} from '@headlessui/react';
+import {DialogTitle} from '@headlessui/react';
 
 import {ChartConfigCheckOptions} from '@/components/chart/config/type';
 import {ChartConfigEntries} from '@/components/chart/config/ui/entries';
@@ -32,10 +32,10 @@ export const ChartConfigPanel = ({
 }: ChartConfigPanelProps) => {
   return (
     <Popup show={show} setShow={setShow} className="flex flex-col gap-2 text-start">
-      <Dialog.Title className="flex flex-row items-end gap-1 text-xl text-cyan-300">
+      <DialogTitle className="flex flex-row items-end gap-1 text-xl text-cyan-300">
         <div>{contract.localSymbol}</div>
         <small className="text-sm text-slate-400">{identifier}</small>
-      </Dialog.Title>
+      </DialogTitle>
       <hr className="border-gray-600"/>
       <ChartConfigEntries
         config={config}
