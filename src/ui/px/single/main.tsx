@@ -4,6 +4,7 @@ import React from 'react';
 import {clsx} from 'clsx';
 import useResizeObserver from 'use-resize-observer';
 
+import {SimplifiedChart} from '@/components/chart/preset/simplified';
 import {Dropdown} from '@/components/dropdown/main';
 import {ToggleButton} from '@/components/inputs/toggleButton';
 import {FlexForm} from '@/components/layout/flex/form';
@@ -16,7 +17,6 @@ import {ErrorDispatcherName} from '@/state/error/types';
 import {useDispatch} from '@/state/store';
 import {chartDataInterval} from '@/types/data/chart';
 import {WindowLayout} from '@/ui/index/common/layout';
-import {SimplifiedChart} from '@/ui/px/single/chart/simplified';
 import {useQuoteData} from '@/ui/px/single/hook';
 import {Quote} from '@/ui/px/single/quote/main';
 import {getChartInputBoxStyling} from '@/ui/px/single/utils';
