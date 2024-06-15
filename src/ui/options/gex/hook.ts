@@ -7,7 +7,7 @@ import {OptionDispatcherName} from '@/state/option/types';
 import {useDispatch} from '@/state/store';
 import {useOptionPxManager} from '@/ui/options/common/hook/pxManager';
 import {UseOptionPxManagerCommonOpts} from '@/ui/options/common/hook/type';
-import {optionsGexStrikeRange} from '@/ui/options/gex/const';
+import {optionsGexDefaultStrikeRangePercent} from '@/ui/options/gex/const';
 import {OptionGexPxSubscribeRequestState} from '@/ui/options/gex/type';
 
 
@@ -19,7 +19,13 @@ export const useOptionGexPxManager = (opts: UseOptionPxManagerCommonOpts) => {
   return useOptionPxManager<OptionGexPxSubscribeRequestState>({
     ...opts,
     getRequests: (payload, priceBase) => {
-      const {account, symbol, tradingClass, expiryMaxDays} = payload;
+      const {
+        account,
+        symbol,
+        tradingClass,
+        expiryMaxDays,
+        rangePercent,
+      } = payload;
 
       if (!priceBase || !definition) {
         return null;
@@ -33,8 +39,9 @@ export const useOptionGexPxManager = (opts: UseOptionPxManagerCommonOpts) => {
 
       dispatch(optionDispatchers[OptionDispatcherName.GEX_SET_EXPECTED_EXPIRY](expiryList));
 
-      const strikeLowerBound = priceBase * (1 - optionsGexStrikeRange);
-      const strikeUpperBound = priceBase * (1 + optionsGexStrikeRange);
+      const strikeRange = (rangePercent ?? optionsGexDefaultStrikeRangePercent) / 100;
+      const strikeLowerBound = priceBase * (1 - strikeRange / 100);
+      const strikeUpperBound = priceBase * (1 + strikeRange / 100);
 
       return expiryList.map((expiry) => ({
         origin: 'GammaExposure',

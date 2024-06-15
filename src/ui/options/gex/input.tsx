@@ -25,6 +25,7 @@ export const OptionsGexInput = () => {
     symbol: '',
     tradingClass: '',
     expiryMaxDays: 90,
+    rangePercent: 15,
   });
 
   const {
@@ -94,6 +95,21 @@ export const OptionsGexInput = () => {
         <CurrentUnderlyingPx definition={definition}/>
       </Flex>
       <Flex direction="row" noFullWidth className="items-center gap-1.5">
+        <label className="text-sm text-gray-300" htmlFor="strike-range">
+          Range (%)
+        </label>
+        <InputBox
+          type="number"
+          value={pxRequest.rangePercent ?? ''}
+          onChange={({target}) => setPxRequest((original) => ({
+            ...original,
+            rangePercent: target.value === '' ? null : Number(target.value),
+          }))}
+          required
+          id="strike-range"
+          min={1}
+          className="w-12 text-sm"
+        />
         <label className="text-sm text-gray-300" htmlFor="max-expiry">
           Max Expiry Days
         </label>
