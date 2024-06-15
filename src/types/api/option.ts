@@ -34,3 +34,9 @@ export type OptionPxResponse = {
   realtimeRequestIds: number[],
   contractIdPairs: OptionContractIdPair[],
 };
+
+export type OptionVolatilityHistoryRequest = {
+  account: string,
+  symbol: string,
+  contractId: number,
+};

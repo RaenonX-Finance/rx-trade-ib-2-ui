@@ -16,7 +16,7 @@ export type PxUpdateMessage = {
   update: {[tick in PxTick]?: number},
 };
 
-// IbApiHistoryPxRequestMeta of server
+// `IbApiHistoryPxRequestMeta` of server
 export type PxHistoryMeta = {
   contractId: number,
   interval: ChartDataInterval,

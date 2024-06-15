@@ -5,6 +5,7 @@ export enum SignalRRequests {
   SUBSCRIBE_PX_TICK = 'SubscribePxTick',
   SUBSCRIBE_PX_HISTORY = 'SubscribePxHistory',
   SUBSCRIBE_PX_OPTIONS = 'SubscribePxOfOptions',
+  SUBSCRIBE_OPTION_VOLATILITY_HISTORY = 'SubscribeOptionVolatilityHistory',
   REQUEST_CONTRACT_DETAILS = 'RequestContractDetails',
   REQUEST_OPTION_DEFINITIONS = 'RequestOptionDefinitions',
   REQUEST_PX_OPTIONS = 'RequestPxOfOptions',

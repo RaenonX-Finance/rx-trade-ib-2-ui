@@ -1,4 +1,6 @@
-// https://interactivebrokers.github.io/tws-api/historical_bars.html#hd_what_to_show
+// `HistoryDataType` of the server
 export type HistoryDataType =
-  'MidPoint' | // Mid price
-  'Trades'; // Last price equivalent
+  'MidPoint' |
+  'Trades' |
+  'OptionImpliedVolatility' |
+  'HistoricalVolatility';

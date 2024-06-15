@@ -142,7 +142,7 @@ export const useQuoteData = ({account, request, setRequest, onSetLocked}: UseQuo
     onSetLocked(request);
   }, [connection, account, request, hasPosition, isSymbolLocked]);
 
-  const onKeyDown = React.useCallback(async (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = React.useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Escape' || !locked.requested) {
       return;
     }

@@ -1,5 +1,6 @@
 import {HistoryDataType} from '@/enums/historyDataType';
 import {ChartDataBarWithData} from '@/types/api/chart';
+import {OptionsVolatilityType} from '@/types/data/option';
 import {ContractId} from '@/types/data/px';
 
 
@@ -20,7 +21,9 @@ export const chartDataInterval = [
 
 export type ChartDataInterval = typeof chartDataInterval[number];
 
-export type ChartDataIdentifier = `${ContractId}@${ChartDataInterval}`;
+export type ChartDataIdentifierForVolatility = `${ContractId}@${OptionsVolatilityType}`;
+
+export type ChartDataIdentifier = `${ContractId}@${ChartDataInterval}` | ChartDataIdentifierForVolatility;
 
 export type ChartData = {
   bars: ChartDataBarWithData[],
