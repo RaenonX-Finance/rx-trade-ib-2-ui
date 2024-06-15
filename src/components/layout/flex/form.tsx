@@ -25,6 +25,8 @@ const FlexFormInternal = ({
       }
     }}>
       {children}
+      {/* For allowing form submission on enter (https://stackoverflow.com/q/4196681) */}
+      <input type="submit" className="hidden"/>
     </form>
   );
 };

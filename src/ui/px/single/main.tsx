@@ -123,7 +123,6 @@ export const SinglePriceQuote = ({index}: Props) => {
           getClassName={(active) => clsx(active ? 'text-amber-200 hover:bg-amber-700' : 'hover:bg-slate-700')}
           className="disabled:text-gray-500 disabled:hover:bg-transparent"
         />
-        <input type="submit" className="hidden"/>
       </FlexForm>
       <div className="h-28 w-full" ref={ref}>
         <SimplifiedChart
