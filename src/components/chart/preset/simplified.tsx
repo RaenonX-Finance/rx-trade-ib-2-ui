@@ -31,6 +31,9 @@ export const SimplifiedChart = ({chartData, account, contract, identifier, width
 
   return (
     <PxChart
+      // Force re-rendering the chart if `identifier` changes
+      // Despite no effect under dev build, prod build will not change without this
+      key={identifier}
       chartData={chartData}
       account={account}
       contract={contract}
