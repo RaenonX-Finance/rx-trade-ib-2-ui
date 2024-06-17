@@ -3,8 +3,8 @@ import React from 'react';
 import {clsx} from 'clsx';
 
 import {Flex} from '@/components/layout/flex/common';
-import {defaultProgressBarMultiColors} from '@/components/progressBar/multi/const';
-import {ProgressBarMultiData, ProgressBarMultiRenderSummaryOpts} from '@/components/progressBar/multi/type';
+import {defaultProgressBarMultiColors} from '@/components/progress/bar/multi/const';
+import {ProgressBarMultiData, ProgressBarMultiRenderSummaryOpts} from '@/components/progress/bar/multi/type';
 import {toAccumulated} from '@/utils/array/accumulate';
 import {toNormalized} from '@/utils/array/normalize';
 

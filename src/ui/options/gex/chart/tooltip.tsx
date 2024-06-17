@@ -8,7 +8,7 @@ import {TooltipProps} from 'recharts';
 import {Flex} from '@/components/layout/flex/common';
 import {Grid} from '@/components/layout/grid';
 import {Dollar} from '@/components/preset/dollar';
-import {ProgressBarMulti} from '@/components/progressBar/multi/main';
+import {ProgressBarMulti} from '@/components/progress/bar/multi/main';
 import {OptionsGexData} from '@/ui/options/gex/chart/calc/type';
 import {formatInt} from '@/utils/format/number/regular';
 
