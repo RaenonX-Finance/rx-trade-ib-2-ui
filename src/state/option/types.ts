@@ -8,6 +8,7 @@ export const OPTION_STATE_NAME = 'Option';
 export enum OptionDispatcherName {
   UPDATE_DEFINITION = 'Option/UpdateDefinition',
   UPDATE_CONTRACTS = 'Option/UpdateContracts',
+  RESET_CONTRACTS = 'Option/ResetContracts',
   GEX_SET_EXPECTED_EXPIRY = 'Option/Gex/ExpectedExpiry',
   CLEAR_OPTION_CHAIN = 'Option/Clear/OptionChain',
   CLEAR_OPTION_GEX = 'Option/Clear/Gex',

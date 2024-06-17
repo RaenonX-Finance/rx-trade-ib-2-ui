@@ -73,7 +73,7 @@ export const OptionsGexInput = () => {
         symbol: definitionRequest.symbol,
       };
 
-      subscribeOptionPx(updated);
+      void subscribeOptionPx(updated);
       return updated;
     });
   }, [definition?.underlyingContractId]);

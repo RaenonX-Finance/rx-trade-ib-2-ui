@@ -35,22 +35,38 @@ const slice = createSlice({
         const {origin, contractIdPairs} = payload;
 
         if (origin === 'OptionChain') {
+          const updatedContracts = [...state.chain?.contracts ?? [], ...contractIdPairs];
+
           return overwriteIncludingArray<OptionState>(
             state,
-            {chain: {contracts: contractIdPairs.toSorted(sortAsc(({strike}) => strike))}},
+            {chain: {contracts: updatedContracts.toSorted(sortAsc(({strike}) => strike))}},
           );
         }
 
         if (origin === 'GammaExposure') {
-          const contracts = state.gex?.contracts ?? [];
+          const updatedContracts = [...state.gex?.contracts ?? [], ...contractIdPairs];
 
           return overwriteIncludingArray<OptionState>(
             state,
-            {gex: {contracts: [...contracts, ...contractIdPairs]},
-            });
+            {gex: {contracts: updatedContracts}},
+          );
         }
 
-        throw new Error(`Unhandled option px request origin: ${origin satisfies never}`);
+        throw new Error(`Unhandled option px request origin for contract update: ${origin satisfies never}`);
+      },
+    );
+    builder.addCase(
+      optionDispatchers[OptionDispatcherName.RESET_CONTRACTS],
+      (state, {payload}): OptionState => {
+        if (payload === 'OptionChain') {
+          return overwriteIncludingArray<OptionState>(state, {chain: {contracts: []}});
+        }
+
+        if (payload === 'GammaExposure') {
+          return overwriteIncludingArray<OptionState>(state, {gex: {contracts: []}});
+        }
+
+        throw new Error(`Unhandled option px request origin for contract reset: ${payload satisfies never}`);
       },
     );
     builder.addCase(

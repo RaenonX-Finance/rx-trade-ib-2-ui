@@ -54,38 +54,34 @@ export const useOptionPxManager = <TPayload>({
     }));
   }, [definitionRequest]);
 
-  const subscribeOptionPx = React.useCallback(
-    (payload: TPayload) => {
-      const priceBase = getMidPx(px);
-      const requests = getRequests(payload, priceBase);
+  const subscribeOptionPx = React.useCallback(async (payload: TPayload) => {
+    dispatch(optionDispatchers[OptionDispatcherName.RESET_CONTRACTS](origin));
+    const priceBase = getMidPx(px);
+    const requests = getRequests(payload, priceBase);
 
-      if (!px || !priceBase || !definition || !requests?.length) {
-        return;
+    if (!px || !priceBase || !definition || !requests?.length) {
+      return;
+    }
+
+    for (const request of requests) {
+      try {
+        const response = await connection.invoke<OptionPxResponse>(optionPxSignalREventName[type], request);
+        const {realtimeRequestIds} = response;
+
+        dispatch(optionDispatchers[OptionDispatcherName.UPDATE_CONTRACTS](response));
+        setDefinitionRequest((original): OptionDefinitionRequest => ({
+          ...original,
+          // `SignalRRequests.REQUEST_PX_OPTIONS` is invoked multiple times,
+          // therefore concatenating `inUsePxRequestIds` instead of overwriting
+          inUsePxRequestIds: [...original.inUsePxRequestIds, ...realtimeRequestIds],
+        }));
+      } catch (err) {
+        dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
+          message: `Error while requesting option px: ${getErrorMessage({err})}`,
+        }));
       }
-
-      for (const request of requests) {
-        connection
-          .invoke(optionPxSignalREventName[type], request)
-          .then((response: OptionPxResponse) => {
-            const {realtimeRequestIds} = response;
-
-            dispatch(optionDispatchers[OptionDispatcherName.UPDATE_CONTRACTS](response));
-            setDefinitionRequest((original): OptionDefinitionRequest => ({
-              ...original,
-              // `SignalRRequests.REQUEST_PX_OPTIONS` is invoked multiple times,
-              // therefore concatenating `inUsePxRequestIds` instead of overwriting
-              inUsePxRequestIds: [...original.inUsePxRequestIds, ...realtimeRequestIds],
-            }));
-          })
-          .catch((err) => {
-            dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
-              message: `Error while requesting option px: ${getErrorMessage({err})}`,
-            }));
-          });
-      }
-    },
-    [px, definition, getRequests, setDefinitionRequest],
-  );
+    }
+  }, [px, definition, getRequests, setDefinitionRequest]);
 
   return {
     definitionRequest,

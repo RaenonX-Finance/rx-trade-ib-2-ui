@@ -79,7 +79,7 @@ export const OptionChainInput = () => {
         symbol: definitionRequest.symbol,
       };
 
-      subscribeOptionPx(updated);
+      void subscribeOptionPx(updated);
       return updated;
     });
   }, [definition?.underlyingContractId]);
@@ -134,7 +134,7 @@ export const OptionChainInput = () => {
                       expiry: [expiry],
                     };
 
-                    subscribeOptionPx(updated);
+                    void subscribeOptionPx(updated);
                     return updated;
                   }),
                 })),

@@ -1,6 +1,7 @@
 import {differenceInDays} from 'date-fns/differenceInDays';
 import {format} from 'date-fns/format';
 import {parse} from 'date-fns/parse';
+import chunk from 'lodash/chunk';
 
 import {optionDispatchers} from '@/state/option/dispatchers';
 import {OptionDispatcherName} from '@/state/option/types';
@@ -43,15 +44,21 @@ export const useOptionGexPxManager = (opts: UseOptionPxManagerCommonOpts) => {
       const strikeLowerBound = priceBase * (1 - strikeRange);
       const strikeUpperBound = priceBase * (1 + strikeRange);
 
-      return expiryList.map((expiry) => ({
+      const chunkedStrikes = chunk(
+        definition.strike.filter((strike) => strike >= strikeLowerBound && strike <= strikeUpperBound),
+        5,
+      );
+
+      // Sends strikes into chunks instead of sending tons of data at once
+      return expiryList.flatMap((expiry) => chunkedStrikes.map((strikes) => ({
         origin: 'GammaExposure',
         type: 'OneTime',
         account,
         symbol,
         tradingClass,
         expiry: [expiry],
-        strikes: definition.strike.filter((strike) => strike >= strikeLowerBound && strike <= strikeUpperBound),
-      }));
+        strikes,
+      })));
     },
   });
 };

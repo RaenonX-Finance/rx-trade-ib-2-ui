@@ -1,7 +1,7 @@
 import {createAction} from '@reduxjs/toolkit';
 
 import {OptionDispatcherName} from '@/state/option/types';
-import {OptionDefinitionMessage, OptionPxResponse} from '@/types/api/option';
+import {OptionDefinitionMessage, OptionPxRequestOrigin, OptionPxResponse} from '@/types/api/option';
 
 
 export const optionDispatchers = {
@@ -10,6 +10,9 @@ export const optionDispatchers = {
   ),
   [OptionDispatcherName.UPDATE_CONTRACTS]: createAction<OptionPxResponse>(
     OptionDispatcherName.UPDATE_CONTRACTS,
+  ),
+  [OptionDispatcherName.RESET_CONTRACTS]: createAction<OptionPxRequestOrigin>(
+    OptionDispatcherName.RESET_CONTRACTS,
   ),
   [OptionDispatcherName.GEX_SET_EXPECTED_EXPIRY]: createAction<string[]>(
     OptionDispatcherName.GEX_SET_EXPECTED_EXPIRY,
