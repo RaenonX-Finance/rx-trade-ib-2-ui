@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {clsx} from 'clsx';
 import {differenceInDays} from 'date-fns/differenceInDays';
 import {format} from 'date-fns/format';
 import {parse} from 'date-fns/parse';
@@ -9,11 +10,16 @@ import {Flex} from '@/components/layout/flex/common';
 import {Grid} from '@/components/layout/grid';
 import {Dollar} from '@/components/preset/dollar';
 import {ProgressBarMulti} from '@/components/progress/bar/multi/main';
+import {useOptionGexUnderlyingPxSelector} from '@/state/option/selector';
+import {getMarketColorClassOfText} from '@/styles/color/text';
 import {OptionsGexData} from '@/ui/options/gex/chart/calc/type';
-import {formatInt} from '@/utils/format/number/regular';
+import {getReferencePx} from '@/utils/calc/tick';
+import {formatFloat, formatInt} from '@/utils/format/number/regular';
 
 
 export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, number>) => {
+  const spotPx = useOptionGexUnderlyingPxSelector();
+
   if (!active || !payload || !payload.length) {
     return null;
   }
@@ -25,9 +31,16 @@ export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, n
     oiByExpiry,
   } = payload[0].payload as OptionsGexData;
 
+  const spotStrikeDiffPercent = (strike / getReferencePx(spotPx) - 1) * 100;
+
   return (
     <Flex center className="min-w-48 gap-1 rounded-lg bg-slate-900/70 p-2">
-      <span className="text-xl">{strike}</span>
+      <Flex direction="row" className="items-end justify-center gap-1 leading-none">
+        <span className="text-xl">{strike}</span>
+        <span className={clsx('text-sm', getMarketColorClassOfText(spotStrikeDiffPercent))}>
+          {formatFloat(spotStrikeDiffPercent)}%
+        </span>
+      </Flex>
       <Dollar amount={netGammaSum.total} withColor className="self-end text-2xl"/>
       <hr className="my-1 w-full border-t-gray-500"/>
       <Grid className="grid-cols-2 gap-3.5">
