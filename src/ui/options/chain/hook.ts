@@ -30,7 +30,7 @@ export const useOptionChainPxManager = (opts: UseOptionPxManagerCommonOpts) => {
           strikeRangePercent,
           possibleStrikes: definition.strike,
         }),
-        5,
+        3,
       );
 
       return chunkedStrikes.map((strikes) => ({

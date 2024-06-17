@@ -46,7 +46,7 @@ export const useOptionGexPxManager = (opts: UseOptionPxManagerCommonOpts) => {
 
       const chunkedStrikes = chunk(
         definition.strike.filter((strike) => strike >= strikeLowerBound && strike <= strikeUpperBound),
-        5,
+        3,
       );
 
       // Sends strikes into chunks instead of sending tons of data at once
