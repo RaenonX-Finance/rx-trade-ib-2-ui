@@ -1,5 +1,6 @@
 import React from 'react';
 
+import {ProgressComboData} from '@/components/progress/combo/type';
 import {useSignalR} from '@/contexts/signalR/hook';
 import {SignalRRequests} from '@/enums/signalRRequests';
 import {errorDispatchers} from '@/state/error/dispatchers';
@@ -41,6 +42,8 @@ export const useOptionPxManager = <TPayload>({
     inUsePxRequestIds: [],
   });
 
+  const [progress, setProgress] = React.useState<ProgressComboData | null>(null);
+
   const requestOptionDefinitions = React.useCallback(() => {
     dispatch(clearAction());
     connection
@@ -63,7 +66,13 @@ export const useOptionPxManager = <TPayload>({
       return;
     }
 
-    for (const request of requests) {
+    setProgress({
+      completed: 0,
+      total: requests.length,
+    });
+    for (let idx = 0; idx < requests.length; idx++) {
+      const request = requests[idx];
+
       try {
         const response = await connection.invoke<OptionPxResponse>(optionPxSignalREventName[type], request);
         const {realtimeRequestIds} = response;
@@ -80,6 +89,10 @@ export const useOptionPxManager = <TPayload>({
           message: `Error while requesting option px: ${getErrorMessage({err})}`,
         }));
       }
+      setProgress({
+        completed: idx + 1,
+        total: requests.length,
+      });
     }
   }, [px, definition, getRequests, setDefinitionRequest]);
 
@@ -88,5 +101,6 @@ export const useOptionPxManager = <TPayload>({
     setDefinitionRequest,
     requestOptionDefinitions,
     subscribeOptionPx,
+    progress,
   };
 };

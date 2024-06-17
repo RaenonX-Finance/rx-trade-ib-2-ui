@@ -4,6 +4,7 @@ import React from 'react';
 import {InputBox} from '@/components/inputs/box';
 import {Flex} from '@/components/layout/flex/common';
 import {FlexForm} from '@/components/layout/flex/form';
+import {ProgressCombo} from '@/components/progress/combo/main';
 import {useCurrentAccountSelector} from '@/state/account/selector';
 import {optionDispatchers} from '@/state/option/dispatchers';
 import {useOptionGexDefinitionSelector} from '@/state/option/selector';
@@ -33,6 +34,7 @@ export const OptionsGexInput = () => {
     setDefinitionRequest,
     requestOptionDefinitions,
     subscribeOptionPx,
+    progress,
   } = useOptionGexPxManager({
     origin: 'GammaExposure',
     type: 'OneTime',
@@ -79,7 +81,7 @@ export const OptionsGexInput = () => {
   }, [definition?.underlyingContractId]);
 
   return (
-    <FlexForm direction="row" className="items-center" onSubmit={requestOptionDefinitions}>
+    <FlexForm className="items-center gap-1" onSubmit={requestOptionDefinitions}>
       <Flex direction="row" noFullWidth className="mr-auto items-center gap-2">
         <InputBox
           type="text"
@@ -126,6 +128,7 @@ export const OptionsGexInput = () => {
           className="w-12 text-sm"
         />
       </Flex>
+      {progress && <ProgressCombo progress={progress}/>}
     </FlexForm>
   );
 };
