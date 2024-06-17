@@ -7,7 +7,12 @@ type ToNormalizedOpts = {
 };
 
 export const toNormalized = ({arr, targetSum}: ToNormalizedOpts) => {
-  const multiplier = targetSum / sum(arr);
+  const arrSum = sum(arr);
+  if (Math.abs(arrSum) < 1E-6) {
+    return arr;
+  }
+
+  const multiplier = targetSum / arrSum;
 
   return arr.map((num) => num * multiplier);
 };
