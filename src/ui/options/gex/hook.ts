@@ -40,8 +40,8 @@ export const useOptionGexPxManager = (opts: UseOptionPxManagerCommonOpts) => {
       dispatch(optionDispatchers[OptionDispatcherName.GEX_SET_EXPECTED_EXPIRY](expiryList));
 
       const strikeRange = (rangePercent ?? optionsGexDefaultStrikeRangePercent) / 100;
-      const strikeLowerBound = priceBase * (1 - strikeRange / 100);
-      const strikeUpperBound = priceBase * (1 + strikeRange / 100);
+      const strikeLowerBound = priceBase * (1 - strikeRange);
+      const strikeUpperBound = priceBase * (1 + strikeRange);
 
       return expiryList.map((expiry) => ({
         origin: 'GammaExposure',
