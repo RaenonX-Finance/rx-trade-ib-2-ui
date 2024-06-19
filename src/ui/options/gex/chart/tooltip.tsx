@@ -11,6 +11,7 @@ import {Grid} from '@/components/layout/grid';
 import {Dollar} from '@/components/preset/dollar';
 import {ProgressBarMulti} from '@/components/progress/bar/multi/main';
 import {ProgressBarMultiData} from '@/components/progress/bar/multi/type';
+import {ProgressBarSingle} from '@/components/progress/bar/single';
 import {useOptionGexExpectedExpirySelector, useOptionGexUnderlyingPxSelector} from '@/state/option/selector';
 import {getMarketColorClassOfBg} from '@/styles/color/bg';
 import {getMarketColorClassOfText} from '@/styles/color/text';
@@ -78,6 +79,7 @@ export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, n
           const daysToExpiry = differenceInDays(expiryDate, new Date());
 
           const oiOfExpiry = oiByExpiry[expiry];
+          const distributionOfExpiry = netGammaNormalized[expiry];
 
           return (
             <Flex key={expiry} className="w-52 gap-0.5">
@@ -85,16 +87,18 @@ export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, n
                 <span>{expiryFormatted}</span>
                 <span>(T-{daysToExpiry})</span>
               </Flex>
-              <Flex direction="row" className="items-end justify-between">
-                <span className="text-xs leading-none">{formatFloat(netGammaNormalized[expiry])}%</span>
+              <Flex direction="row" className="items-end justify-between gap-3">
+                <span className="text-xs leading-none">{formatFloat(distributionOfExpiry)}%</span>
                 <Dollar amount={total} withColor className="text-lg"/>
               </Flex>
+              <ProgressBarSingle percent={distributionOfExpiry} classBarHeight="h-1"/>
               <ProgressBarMulti
                 data={[{value: call, data: call}, {value: put, data: -put}]}
                 // +0 for fixing -0 issue
                 renderSummary={({data}) => <Dollar amount={data + 0} withColor/>}
                 classOfColors={['bg-market-up', 'bg-market-down']}
                 className="gap-1 text-xs"
+                classOfBarHeight="h-1.5"
               />
               <Flex direction="row" className="items-end gap-1 text-xs leading-none">
                 <small className="text-market-up">C</small>
