@@ -13,9 +13,9 @@ type Props<TData> = {
   data: ProgressBarMultiData<TData>[],
   summaryWrap?: boolean,
   classOfBarHeight?: `h-${number}`,
-  classOfColors?: `bg-${string}`[],
+  classOfColors?: string[],
   className?: string,
-  renderSummary: (opts: ProgressBarMultiRenderSummaryOpts<TData>) => React.ReactNode,
+  renderSummary?: (opts: ProgressBarMultiRenderSummaryOpts<TData>) => React.ReactNode,
 };
 
 export const ProgressBarMulti = <TData, >({
@@ -33,13 +33,16 @@ export const ProgressBarMulti = <TData, >({
 
   return (
     <Flex className={className}>
-      <Flex direction="row" noFullWidth wrap={summaryWrap} className="items-center justify-between gap-1.5">
-        {data.map(({data}, idx) => (
-          <React.Fragment key={idx}>
-            {renderSummary({data, percent: normalized[idx]})}
-          </React.Fragment>
-        ))}
-      </Flex>
+      {
+        renderSummary &&
+        <Flex direction="row" noFullWidth wrap={summaryWrap} className="items-center justify-between gap-1.5">
+          {data.map(({data}, idx) => (
+            <React.Fragment key={idx}>
+              {renderSummary({data, percent: normalized[idx]})}
+            </React.Fragment>
+          ))}
+        </Flex>
+      }
       <div className={clsx(
         'transform-smooth relative w-full rounded-full bg-gray-400/50 dark:bg-gray-700/50',
         classOfBarHeight,
