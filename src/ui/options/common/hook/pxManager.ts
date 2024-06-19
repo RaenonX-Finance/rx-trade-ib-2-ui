@@ -13,7 +13,7 @@ import {OptionDefinitionRequest, OptionPxResponse} from '@/types/api/option';
 import {OptionPxRequest} from '@/types/api/px';
 import {optionPxSignalREventName} from '@/ui/options/common/hook/const';
 import {UseOptionPxManagerCommonOpts} from '@/ui/options/common/hook/type';
-import {getMidPx} from '@/utils/calc/tick';
+import {getReferencePx} from '@/utils/calc/tick';
 import {getErrorMessage} from '@/utils/error';
 import {Nullable} from '@/utils/type';
 
@@ -59,7 +59,7 @@ export const useOptionPxManager = <TPayload>({
 
   const subscribeOptionPx = React.useCallback(async (payload: TPayload) => {
     dispatch(optionDispatchers[OptionDispatcherName.RESET_CONTRACTS](origin));
-    const priceBase = getMidPx(px);
+    const priceBase = getReferencePx(px);
     const requests = getRequests(payload, priceBase);
 
     if (!px || !priceBase || !definition || !requests?.length) {
