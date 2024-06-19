@@ -10,15 +10,19 @@ import {Flex} from '@/components/layout/flex/common';
 import {Grid} from '@/components/layout/grid';
 import {Dollar} from '@/components/preset/dollar';
 import {ProgressBarMulti} from '@/components/progress/bar/multi/main';
-import {useOptionGexUnderlyingPxSelector} from '@/state/option/selector';
+import {ProgressBarMultiData} from '@/components/progress/bar/multi/type';
+import {useOptionGexExpectedExpirySelector, useOptionGexUnderlyingPxSelector} from '@/state/option/selector';
+import {getMarketColorClassOfBg} from '@/styles/color/bg';
 import {getMarketColorClassOfText} from '@/styles/color/text';
 import {OptionsGexData} from '@/ui/options/gex/chart/calc/type';
+import {toNormalized} from '@/utils/array/normalize';
 import {getReferencePx} from '@/utils/calc/tick';
 import {formatFloat, formatInt} from '@/utils/format/number/regular';
 
 
 export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, number>) => {
   const spotPx = useOptionGexUnderlyingPxSelector();
+  const expectedExpiry = useOptionGexExpectedExpirySelector();
 
   if (!active || !payload || !payload.length) {
     return null;
@@ -32,6 +36,17 @@ export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, n
   } = payload[0].payload as OptionsGexData;
 
   const spotStrikeDiffPercent = (strike / getReferencePx(spotPx) - 1) * 100;
+  const netGammaDistribution: ProgressBarMultiData<number>[] = expectedExpiry.map((expiry) => ({
+    value: Math.abs(netGammaByExpiry[expiry]?.total ?? 0),
+    data: netGammaByExpiry[expiry]?.total ?? 0,
+  }));
+  const netGammaNormalized = Object.fromEntries(
+    toNormalized({
+      arr: netGammaDistribution.map(({value}) => value),
+      targetSum: 100,
+    })
+      .map((percent, idx) => [expectedExpiry[idx], percent]),
+  );
 
   return (
     <Flex center className="min-w-48 gap-1 rounded-lg bg-slate-900/70 p-2">
@@ -42,6 +57,14 @@ export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, n
         </span>
       </Flex>
       <Dollar amount={netGammaSum.total} withColor className="self-end text-2xl"/>
+      <ProgressBarMulti
+        data={netGammaDistribution}
+        classOfColors={netGammaDistribution.map((expiry, idx) => getMarketColorClassOfBg(
+          expiry.data,
+          idx,
+        ))}
+        classOfBarHeight="h-1.5"
+      />
       <hr className="my-1 w-full border-t-gray-500"/>
       <Grid className="grid-cols-2 gap-3.5">
         {Object.entries(netGammaByExpiry).map(([expiry, netGamma]) => {
@@ -57,12 +80,15 @@ export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, n
           const oiOfExpiry = oiByExpiry[expiry];
 
           return (
-            <Flex key={expiry} className="w-48 gap-0.5">
+            <Flex key={expiry} className="w-52 gap-0.5">
               <Flex direction="row" center className="gap-0.5 whitespace-nowrap text-xs">
                 <span>{expiryFormatted}</span>
                 <span>(T-{daysToExpiry})</span>
               </Flex>
-              <Dollar amount={total} withColor className="self-end text-lg"/>
+              <Flex direction="row" className="items-end justify-between">
+                <span className="text-xs leading-none">{formatFloat(netGammaNormalized[expiry])}%</span>
+                <Dollar amount={total} withColor className="text-lg"/>
+              </Flex>
               <ProgressBarMulti
                 data={[{value: call, data: call}, {value: put, data: -put}]}
                 // +0 for fixing -0 issue
