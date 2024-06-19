@@ -3,7 +3,7 @@ import {Nullable} from '@/utils/type';
 
 
 export const getReferencePx = (px: Nullable<PxOfContract>): number => {
-  return px?.Last ?? getMidPx(px) ?? px?.Mark ?? 0;
+  return px?.Last ?? getMidPx(px) ?? px?.Mark ?? px?.Close ?? 0;
 };
 
 export const getMidPx = (px: Nullable<PxOfContract>): number | null => {
