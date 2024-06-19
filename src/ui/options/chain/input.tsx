@@ -2,6 +2,8 @@
 import React from 'react';
 
 import {clsx} from 'clsx';
+import {differenceInDays} from 'date-fns/differenceInDays';
+import {parse} from 'date-fns/parse';
 
 import {Dropdown} from '@/components/dropdown/main';
 import {InputBox} from '@/components/inputs/box';
@@ -129,7 +131,7 @@ export const OptionChainInput = () => {
               definition ?
                 [
                   definition.expiry.map((expiry) => ({
-                    text: expiry,
+                    text: `${expiry} (T-${differenceInDays(parse(expiry, 'yyyyMMdd', new Date()), new Date())})`,
                     disabled: false,
                     onSelected: () => setPxRequest((original) => {
                       const updated = {
