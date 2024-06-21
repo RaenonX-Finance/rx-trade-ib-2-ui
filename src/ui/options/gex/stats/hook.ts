@@ -14,7 +14,7 @@ export const useOptionsGexStats = () => {
 
   const [stats, setStats] = React.useState<OptionsGexStatsResponse | null>(null);
 
-  const calculateGexStats = React.useCallback(async (): Promise<OptionsGexStatsResponse | null> => {
+  const calculateGexStats = React.useCallback(async () => {
     if (!definition || !gexLoadedContracts.length) {
       return null;
     }
@@ -59,20 +59,20 @@ export const useOptionsGexStats = () => {
       optionsPrice,
     };
 
-    return await sendPost<OptionsGexStatsRequest, OptionsGexStatsResponse>({
+    const response = await sendPost<OptionsGexStatsRequest, OptionsGexStatsResponse>({
       url: `${process.env.NEXT_PUBLIC_MATH_API}/options/gex`,
       payload: request,
     });
+
+    setStats(response);
   }, [definition, gexLoadedContracts, globalPx]);
 
   React.useEffect(() => {
-    const updateGexStats = () => calculateGexStats().then(setStats);
-
     // Initial run on load
     // Using `setTimeout()` to debounce because `calculateGexStats()` could update a lot in a short time
-    const timeoutId = setTimeout(updateGexStats, 1000);
+    const timeoutId = setTimeout(calculateGexStats, 1000);
 
-    const intervalId = setInterval(updateGexStats, 1000);
+    const intervalId = setInterval(calculateGexStats, 1000);
 
     return () => {
       clearTimeout(timeoutId);
@@ -80,5 +80,5 @@ export const useOptionsGexStats = () => {
     };
   }, [calculateGexStats]);
 
-  return stats;
+  return {stats, calculateGexStats};
 };

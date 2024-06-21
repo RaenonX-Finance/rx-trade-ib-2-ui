@@ -34,7 +34,10 @@ export const OptionsGexChart = () => {
   const gexLoadedContracts = useOptionGexContractsSelector();
   const expectedExpiry = useOptionGexExpectedExpirySelector();
 
-  const gexStats = useOptionsGexStats();
+  const {
+    stats: gexStats,
+    calculateGexStats,
+  } = useOptionsGexStats();
 
   const gexLoadedExpiry = React.useMemo(
     () => new Set([...gexLoadedContracts.map(({expiry}) => expiry)]),
@@ -68,7 +71,7 @@ export const OptionsGexChart = () => {
           />
         ))}
       </Flex>
-      <OptionsGexStats gexStats={gexStats}/>
+      <OptionsGexStats gexStats={gexStats} onRefreshClicked={calculateGexStats}/>
       <Flex className="h-[70vh]">
         {
           !!byStrike.length &&
