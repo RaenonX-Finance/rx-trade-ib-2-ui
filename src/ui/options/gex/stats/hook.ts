@@ -7,7 +7,11 @@ import {sendPost} from '@/utils/api';
 import {getReferencePx} from '@/utils/calc/tick';
 
 
-export const useOptionsGexStats = () => {
+type UseOptionsGexStatsOpts = {
+  inactiveExpiry: Record<string, boolean>,
+};
+
+export const useOptionsGexStats = ({inactiveExpiry}: UseOptionsGexStatsOpts) => {
   const definition = useOptionGexDefinitionSelector();
   const gexLoadedContracts = useOptionGexContractsSelector();
   const globalPx = useGlobalPxSelector();
@@ -21,6 +25,11 @@ export const useOptionsGexStats = () => {
 
     const optionsPrice: OptionsGexPriceData[] = [];
     for (const {expiry, strike, call, put} of gexLoadedContracts) {
+      if (inactiveExpiry[expiry]) {
+        // Skip handling inactive expiry
+        continue;
+      }
+
       const callOptionPx = globalPx[call];
       const putOptionPx = globalPx[put];
 
@@ -65,7 +74,7 @@ export const useOptionsGexStats = () => {
     });
 
     setStats(response);
-  }, [definition, gexLoadedContracts, globalPx]);
+  }, [inactiveExpiry, definition, gexLoadedContracts, globalPx]);
 
   React.useEffect(() => {
     // Initial run on load

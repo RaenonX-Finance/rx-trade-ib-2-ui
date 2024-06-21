@@ -37,7 +37,7 @@ export const OptionsGexChart = () => {
   const {
     stats: gexStats,
     calculateGexStats,
-  } = useOptionsGexStats();
+  } = useOptionsGexStats({inactiveExpiry});
 
   const gexLoadedExpiry = React.useMemo(
     () => new Set([...gexLoadedContracts.map(({expiry}) => expiry)]),
