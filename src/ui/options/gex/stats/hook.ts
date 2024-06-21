@@ -72,7 +72,7 @@ export const useOptionsGexStats = () => {
     // Using `setTimeout()` to debounce because `calculateGexStats()` could update a lot in a short time
     const timeoutId = setTimeout(updateGexStats, 1000);
 
-    const intervalId = setInterval(updateGexStats, 3000);
+    const intervalId = setInterval(updateGexStats, 1000);
 
     return () => {
       clearTimeout(timeoutId);
