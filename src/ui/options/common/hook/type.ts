@@ -15,3 +15,8 @@ export type UseOptionPxManagerCommonOpts = {
     OptionDispatcherName.CLEAR_OPTION_GEX
   >,
 };
+
+export type SubscribeOptionPxRequestOpts<TPayload> = {
+  payload: TPayload,
+  realtimeRequestIdsToCancel?: Nullable<number[]>,
+};

@@ -7,7 +7,7 @@ import {FlexForm} from '@/components/layout/flex/form';
 import {ProgressCombo} from '@/components/progress/combo/main';
 import {useCurrentAccountSelector} from '@/state/account/selector';
 import {optionDispatchers} from '@/state/option/dispatchers';
-import {useOptionGexDefinitionSelector} from '@/state/option/selector';
+import {useOptionGexDefinitionSelector, useOptionGexRealtimeRequestIdsSelector} from '@/state/option/selector';
 import {OptionDispatcherName} from '@/state/option/types';
 import {OptionDefinitionRequest} from '@/types/api/option';
 import {CurrentUnderlyingPx} from '@/ui/options/common/underlyingPx';
@@ -18,6 +18,7 @@ import {OptionGexPxSubscribeRequestState} from '@/ui/options/gex/type';
 export const OptionsGexInput = () => {
   const currentAccount = useCurrentAccountSelector();
   const definition = useOptionGexDefinitionSelector();
+  const gexRealtimeRequestIds = useOptionGexRealtimeRequestIdsSelector();
 
   const [pxRequest, setPxRequest] = React.useState<OptionGexPxSubscribeRequestState>({
     origin: 'GammaExposure',
@@ -75,13 +76,16 @@ export const OptionsGexInput = () => {
         symbol: definitionRequest.symbol,
       };
 
-      void subscribeOptionPx(updated);
+      void subscribeOptionPx({
+        payload: updated,
+        realtimeRequestIdsToCancel: gexRealtimeRequestIds,
+      });
       return updated;
     });
   }, [definition?.underlyingContractId]);
 
   return (
-    <FlexForm className="items-center gap-1" onSubmit={requestOptionDefinitions}>
+    <FlexForm className="items-center gap-1" onSubmit={() => requestOptionDefinitions(gexRealtimeRequestIds)}>
       <Flex direction="row" noFullWidth className="mr-auto items-center gap-2">
         <InputBox
           type="text"

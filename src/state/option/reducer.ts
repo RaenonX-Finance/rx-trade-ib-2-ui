@@ -32,23 +32,34 @@ const slice = createSlice({
     builder.addCase(
       optionDispatchers[OptionDispatcherName.UPDATE_CONTRACTS],
       (state, {payload}): OptionState => {
-        const {origin, contractIdPairs} = payload;
+        const {
+          origin,
+          contractIdPairs,
+          realtimeRequestIds,
+        } = payload;
 
         if (origin === 'OptionChain') {
-          const updatedContracts = [...state.chain?.contracts ?? [], ...contractIdPairs];
-
           return overwriteIncludingArray<OptionState>(
             state,
-            {chain: {contracts: updatedContracts.toSorted(sortAsc(({strike}) => strike))}},
+            {
+              chain: {
+                realtimeRequestsIds: [...state.chain?.realtimeRequestsIds ?? [], ...realtimeRequestIds],
+                contracts: [...state.chain?.contracts ?? [], ...contractIdPairs]
+                  .toSorted(sortAsc(({strike}) => strike)),
+              },
+            },
           );
         }
 
         if (origin === 'GammaExposure') {
-          const updatedContracts = [...state.gex?.contracts ?? [], ...contractIdPairs];
-
           return overwriteIncludingArray<OptionState>(
             state,
-            {gex: {contracts: updatedContracts}},
+            {
+              gex: {
+                realtimeRequestsIds: [...state.gex?.realtimeRequestsIds ?? [], ...realtimeRequestIds],
+                contracts: [...state.gex?.contracts ?? [], ...contractIdPairs],
+              },
+            },
           );
         }
 
@@ -67,6 +78,22 @@ const slice = createSlice({
         }
 
         throw new Error(`Unhandled option px request origin for contract reset: ${payload satisfies never}`);
+      },
+    );
+    builder.addCase(
+      optionDispatchers[OptionDispatcherName.RESET_REALTIME_REQUESTS],
+      (state, {payload}): OptionState => {
+        if (payload === 'OptionChain') {
+          return overwriteIncludingArray<OptionState>(state, {chain: {realtimeRequestsIds: []}});
+        }
+
+        if (payload === 'GammaExposure') {
+          return overwriteIncludingArray<OptionState>(state, {gex: {realtimeRequestsIds: []}});
+        }
+
+        throw new Error(
+          `Unhandled option px request origin for realtime request ID reset: ${payload satisfies never}`,
+        );
       },
     );
     builder.addCase(

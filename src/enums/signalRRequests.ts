@@ -10,6 +10,7 @@ export enum SignalRRequests {
   REQUEST_OPTION_DEFINITIONS = 'RequestOptionDefinitions',
   REQUEST_PX_OPTIONS = 'RequestPxOfOptions',
   CANCEL_PX_TICK = 'CancelPxTick',
+  CANCEL_PX_REALTIME = 'CancelRealtime',
   CANCEL_PX_HISTORY = 'CancelHistory',
   DISCONNECT_ACCOUNT = 'DisconnectAccount',
 }

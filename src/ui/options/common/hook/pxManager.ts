@@ -9,10 +9,11 @@ import {optionDispatchers} from '@/state/option/dispatchers';
 import {OptionDispatcherName} from '@/state/option/types';
 import {usePxSelector} from '@/state/px/selector';
 import {useDispatch} from '@/state/store';
+import {CancelRealtimeRequest} from '@/types/api/cleanup';
 import {OptionDefinitionRequest, OptionPxResponse} from '@/types/api/option';
 import {OptionPxRequest} from '@/types/api/px';
 import {optionPxSignalREventName} from '@/ui/options/common/hook/const';
-import {UseOptionPxManagerCommonOpts} from '@/ui/options/common/hook/type';
+import {SubscribeOptionPxRequestOpts, UseOptionPxManagerCommonOpts} from '@/ui/options/common/hook/type';
 import {getReferencePx} from '@/utils/calc/tick';
 import {getErrorMessage} from '@/utils/error';
 import {Nullable} from '@/utils/type';
@@ -39,28 +40,41 @@ export const useOptionPxManager = <TPayload>({
     account: '',
     symbol: '',
     inUseContractId: null,
-    inUsePxRequestIds: [],
   });
 
   const [progress, setProgress] = React.useState<ProgressComboData | null>(null);
 
-  const requestOptionDefinitions = React.useCallback(() => {
+  const cancelRealtimeRequests = React.useCallback(async (realtimeRequestIdsToCancel: Nullable<number[]>) => {
+    if (!realtimeRequestIdsToCancel?.length) {
+      return;
+    }
+
+    await connection.invoke(
+      SignalRRequests.CANCEL_PX_REALTIME,
+      {requestIds: realtimeRequestIdsToCancel} satisfies CancelRealtimeRequest,
+    );
+    dispatch(optionDispatchers[OptionDispatcherName.RESET_REALTIME_REQUESTS](origin));
+  }, []);
+
+  const requestOptionDefinitions = React.useCallback(async (realtimeRequestIdsToCancel: number[]) => {
+    await cancelRealtimeRequests(realtimeRequestIdsToCancel);
     dispatch(clearAction());
     connection
       .send(SignalRRequests.REQUEST_OPTION_DEFINITIONS, definitionRequest)
       .catch((err) => dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
         message: `Error while sending option definition request: ${getErrorMessage({err})}`,
       })));
-    setDefinitionRequest((original) => ({
-      ...original,
-      inUsePxRequestIds: [],
-    }));
   }, [definitionRequest]);
 
-  const subscribeOptionPx = React.useCallback(async (payload: TPayload) => {
+  const subscribeOptionPx = React.useCallback(async ({
+    payload,
+    realtimeRequestIdsToCancel,
+  }: SubscribeOptionPxRequestOpts<TPayload>) => {
     dispatch(optionDispatchers[OptionDispatcherName.RESET_CONTRACTS](origin));
     const priceBase = getReferencePx(px);
     const requests = getRequests(payload, priceBase);
+
+    await cancelRealtimeRequests(realtimeRequestIdsToCancel);
 
     if (!px || !priceBase || !definition || !requests?.length) {
       return;
@@ -75,15 +89,8 @@ export const useOptionPxManager = <TPayload>({
 
       try {
         const response = await connection.invoke<OptionPxResponse>(optionPxSignalREventName[type], request);
-        const {realtimeRequestIds} = response;
 
         dispatch(optionDispatchers[OptionDispatcherName.UPDATE_CONTRACTS](response));
-        setDefinitionRequest((original): OptionDefinitionRequest => ({
-          ...original,
-          // `SignalRRequests.REQUEST_PX_OPTIONS` is invoked multiple times,
-          // therefore concatenating `inUsePxRequestIds` instead of overwriting
-          inUsePxRequestIds: [...original.inUsePxRequestIds, ...realtimeRequestIds],
-        }));
       } catch (err) {
         dispatch(errorDispatchers[ErrorDispatcherName.UPDATE]({
           message: `Error while requesting option px: ${getErrorMessage({err})}`,

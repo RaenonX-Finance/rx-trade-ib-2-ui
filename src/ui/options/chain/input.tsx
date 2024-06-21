@@ -12,7 +12,7 @@ import {FlexForm} from '@/components/layout/flex/form';
 import {ProgressCombo} from '@/components/progress/combo/main';
 import {useCurrentAccountSelector} from '@/state/account/selector';
 import {optionDispatchers} from '@/state/option/dispatchers';
-import {useOptionChainDefinitionSelector} from '@/state/option/selector';
+import {useOptionChainDefinitionSelector, useOptionChainRealtimeRequestIdsSelector} from '@/state/option/selector';
 import {OptionDispatcherName} from '@/state/option/types';
 import {OptionDefinitionRequest} from '@/types/api/option';
 import {useOptionChainPxManager} from '@/ui/options/chain/hook';
@@ -25,6 +25,7 @@ const labelClassName = clsx('text-sm text-gray-300');
 export const OptionChainInput = () => {
   const currentAccount = useCurrentAccountSelector();
   const definition = useOptionChainDefinitionSelector();
+  const optionChainRealtimeRequestIds = useOptionChainRealtimeRequestIdsSelector();
 
   const [pxRequest, setPxRequest] = React.useState<OptionChainPxSubscribeRequestState>({
     origin: 'OptionChain',
@@ -83,13 +84,16 @@ export const OptionChainInput = () => {
         symbol: definitionRequest.symbol,
       };
 
-      void subscribeOptionPx(updated);
+      void subscribeOptionPx({
+        payload: updated,
+        realtimeRequestIdsToCancel: optionChainRealtimeRequestIds,
+      });
       return updated;
     });
   }, [definition?.underlyingContractId]);
 
   return (
-    <FlexForm className="gap-1" onSubmit={requestOptionDefinitions}>
+    <FlexForm className="gap-1" onSubmit={() => requestOptionDefinitions(optionChainRealtimeRequestIds)}>
       <Flex className="items-center md:flex-row">
         <Flex direction="row" noFullWidth className="mr-auto items-center gap-2">
           <InputBox
@@ -139,7 +143,10 @@ export const OptionChainInput = () => {
                         expiry: [expiry],
                       };
 
-                      void subscribeOptionPx(updated);
+                      void subscribeOptionPx({
+                        payload: updated,
+                        realtimeRequestIdsToCancel: optionChainRealtimeRequestIds,
+                      });
                       return updated;
                     }),
                   })),

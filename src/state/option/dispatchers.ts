@@ -14,6 +14,9 @@ export const optionDispatchers = {
   [OptionDispatcherName.RESET_CONTRACTS]: createAction<OptionPxRequestOrigin>(
     OptionDispatcherName.RESET_CONTRACTS,
   ),
+  [OptionDispatcherName.RESET_REALTIME_REQUESTS]: createAction<OptionPxRequestOrigin>(
+    OptionDispatcherName.RESET_REALTIME_REQUESTS,
+  ),
   [OptionDispatcherName.GEX_SET_EXPECTED_EXPIRY]: createAction<string[]>(
     OptionDispatcherName.GEX_SET_EXPECTED_EXPIRY,
   ),

@@ -15,6 +15,10 @@ export const useOptionChainContractsSelector = (): OptionContractIdPair[] => (
   useSelector(({option}: ReduxState) => option.chain?.contracts ?? [])
 );
 
+export const useOptionChainRealtimeRequestIdsSelector = (): number[] => (
+  useSelector(({option}: ReduxState) => option.chain?.realtimeRequestsIds ?? [])
+);
+
 export const useOptionGexDefinitionSelector = (): Nullable<OptionDefinition> => (
   useSelector(({option}: ReduxState) => option.gex?.definition)
 );
@@ -33,6 +37,10 @@ export const useOptionGexUnderlyingPxSelector = (): Nullable<PxOfContract> => (
 
 export const useOptionGexContractsSelector = (): OptionContractIdPair[] => (
   useSelector(({option}: ReduxState) => option.gex?.contracts ?? [])
+);
+
+export const useOptionGexRealtimeRequestIdsSelector = (): number[] => (
+  useSelector(({option}: ReduxState) => option.gex?.realtimeRequestsIds ?? [])
 );
 
 export const useOptionGexExpectedExpirySelector = (): string[] => (

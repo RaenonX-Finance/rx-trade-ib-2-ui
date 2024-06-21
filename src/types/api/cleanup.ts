@@ -6,3 +6,7 @@ export type CancelPxRequest = {
 export type CancelApiRequest = {
   requestId: number,
 };
+
+export type CancelRealtimeRequest = {
+  requestIds: number[],
+};

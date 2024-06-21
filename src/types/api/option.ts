@@ -10,7 +10,6 @@ export type OptionDefinitionRequest = {
   account: string,
   symbol: string,
   inUseContractId: ContractId | null,
-  inUsePxRequestIds: number[],
 };
 
 export type OptionDefinitionMessage = {
