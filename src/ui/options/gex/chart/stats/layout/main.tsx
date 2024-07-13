@@ -17,6 +17,10 @@ type Props = {
 };
 
 export const OptionsGexStatsLayout = ({name, values, spotPx, renderInBetweenItem, className}: Props) => {
+  if (!values.length) {
+    values = [null];
+  }
+
   return (
     <Flex direction="row" center className={clsx('gap-2 whitespace-nowrap', className)}>
       <span className="text-xs leading-none">{name}</span>

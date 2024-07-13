@@ -36,7 +36,7 @@ export const OptionsGexStats = ({gexStats, underlyingPxOverride, onRefreshClicke
         />
         <OptionsGexStatsLayout
           name="Gamma Flip"
-          values={gexStats?.gammaFlip ?? [null]}
+          values={gexStats?.gammaFlip ?? []}
           spotPx={underlyingCurrentPx}
           renderInBetweenItem={(prev, next, idx) => (
             <OptionsGexSignIcon rangeStart={prev} rangeEnd={next} idx={idx} currentPx={underlyingCurrentPx}/>

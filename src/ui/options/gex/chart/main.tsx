@@ -110,7 +110,7 @@ export const OptionsGexChart = ({request}: Props) => {
               />
               <ReferenceLine y={0} className="[&>line]:stroke-slate-500"/>
               {closestStrike != null && <ReferenceLine x={closestStrike} className="[&>line]:stroke-sky-500"/>}
-              {gex?.gammaFlip?.map((gammaFlip) => (
+              {gex?.gammaFlip.map((gammaFlip) => (
                 <ReferenceLine
                   key={gammaFlip}
                   x={getClosestStrikeFromPx({strikes, px: gammaFlip})}
