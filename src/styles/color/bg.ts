@@ -1,5 +1,7 @@
 import {clsx} from 'clsx';
 
+import {mod} from '@/utils/number/mod';
+
 
 const getMarketColorClassOfBgOnUp = [
   clsx('bg-market-up/100'),
@@ -32,5 +34,7 @@ export const getMarketColorClassOfBg = (num: number, idx: number) => {
     return clsx('bg-slate-300');
   }
 
-  return clsx(num > 0 ? getMarketColorClassOfBgOnUp[idx] : getMarketColorClassOfBgOnDown[idx]);
+  return num > 0 ?
+    getMarketColorClassOfBgOnUp[mod(idx, getMarketColorClassOfBgOnUp.length)] :
+    getMarketColorClassOfBgOnDown[mod(idx, getMarketColorClassOfBgOnDown.length)];
 };

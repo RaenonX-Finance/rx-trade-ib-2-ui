@@ -1,5 +1,7 @@
 import {clsx} from 'clsx';
 
+import {mod} from '@/utils/number/mod';
+
 
 const getMarketColorClassOfFillOnUp = [
   clsx('fill-market-up/100'),
@@ -32,5 +34,7 @@ export const getMarketColorClassOfFill = (num: number, idx: number) => {
     return clsx('fill-slate-300');
   }
 
-  return clsx(num > 0 ? getMarketColorClassOfFillOnUp[idx] : getMarketColorClassOfFillOnDown[idx]);
+  return num > 0 ?
+    getMarketColorClassOfFillOnUp[mod(idx, getMarketColorClassOfFillOnUp.length)] :
+    getMarketColorClassOfFillOnDown[mod(idx, getMarketColorClassOfFillOnDown.length)];
 };
