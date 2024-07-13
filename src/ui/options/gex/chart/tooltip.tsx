@@ -12,18 +12,23 @@ import {Dollar} from '@/components/preset/dollar';
 import {ProgressBarMulti} from '@/components/progress/bar/multi/main';
 import {ProgressBarMultiData} from '@/components/progress/bar/multi/type';
 import {ProgressBarSingle} from '@/components/progress/bar/single';
-import {useOptionGexExpectedExpirySelector, useOptionGexUnderlyingPxSelector} from '@/state/option/selector';
+import {useOptionGexUnderlyingPxSelector} from '@/state/option/selector';
 import {getMarketColorClassOfBg} from '@/styles/color/bg';
 import {getMarketColorClassOfText} from '@/styles/color/text';
 import {OptionsGexData} from '@/ui/options/gex/chart/calc/type';
 import {toNormalized} from '@/utils/array/normalize';
 import {getReferencePx} from '@/utils/calc/tick';
 import {formatFloat, formatInt} from '@/utils/format/number/regular';
+import {Nullable} from '@/utils/type';
 
 
-export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, number>) => {
+type Props = TooltipProps<number, number> & {
+  spotPxOverride: Nullable<number>,
+  expectedExpiry: string[],
+};
+
+export const OptionsGexChartTooltip = ({active, payload, spotPxOverride, expectedExpiry}: Props) => {
   const spotPx = useOptionGexUnderlyingPxSelector();
-  const expectedExpiry = useOptionGexExpectedExpirySelector();
 
   if (!active || !payload || !payload.length) {
     return null;
@@ -36,7 +41,7 @@ export const OptionsGexChartTooltip = ({active, payload}: TooltipProps<number, n
     oiByExpiry,
   } = payload[0].payload as OptionsGexData;
 
-  const spotStrikeDiffPercent = (strike / getReferencePx(spotPx) - 1) * 100;
+  const spotStrikeDiffPercent = (strike / (spotPxOverride ?? getReferencePx(spotPx)) - 1) * 100;
   const netGammaDistribution: ProgressBarMultiData<number>[] = expectedExpiry.map((expiry) => ({
     value: Math.abs(netGammaByExpiry[expiry]?.total ?? 0),
     data: netGammaByExpiry[expiry]?.total ?? 0,

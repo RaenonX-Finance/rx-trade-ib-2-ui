@@ -96,7 +96,10 @@ export const OptionsGexChart = ({request}: Props) => {
                 stroke="white"
                 tickFormatter={(value) => formatToAbbreviation({num: value, decimals: 0})}
               />
-              <Tooltip content={<OptionsGexChartTooltip/>} cursor={{fill: 'transparent'}}/>
+              <Tooltip
+                content={<OptionsGexChartTooltip spotPxOverride={request?.spotPx} expectedExpiry={expectedExpiry}/>}
+                cursor={{fill: 'transparent'}}
+              />
               <ReferenceLine y={0} className="[&>line]:stroke-slate-500"/>
               {closestStrike != null && <ReferenceLine x={closestStrike} className="[&>line]:stroke-sky-500"/>}
               {
