@@ -19,14 +19,14 @@ export const useOptionsGexChartParams = ({
       ...gexLoadedContractsFromIbkr.map(({expiry}) => expiry),
       ...(quote?.contracts.map(({expiry}) => expiry) ?? []),
     ]),
-    [gexLoadedContractsFromIbkr],
+    [gexLoadedContractsFromIbkr, quote?.contracts],
   );
   const expectedExpiry = React.useMemo(
     () => [...new Set([
       ...gexExpectedExpiryFromIbkr,
       ...(quote?.contracts.map(({expiry}) => expiry) ?? []),
     ])].toSorted(),
-    [gexLoadedContractsFromIbkr],
+    [gexLoadedContractsFromIbkr, quote?.contracts],
   );
 
   return {
