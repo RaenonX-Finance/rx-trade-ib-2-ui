@@ -10,22 +10,19 @@ import {Nullable} from '@/utils/type';
 
 
 type Props = {
-  name: string,
   value: Nullable<number>,
   spotPx: number,
-  className?: string,
 };
 
-export const OptionsGexStatsLayout = ({name, value, spotPx, className}: Props) => {
+export const OptionsGexStatsLayoutValue = ({value, spotPx}: Props) => {
   const diffPercent = value ? (value / spotPx - 1) * 100 : null;
 
   return (
-    <Flex direction="row" className={clsx('items-end justify-center gap-1', className)}>
-      <span className="text-xs leading-none">{name}</span>
+    <Flex direction="row" noFullWidth className="items-end gap-0.5 leading-none">
       <span>{formatFloat(value)}</span>
       {
         diffPercent != null &&
-        <span className={getMarketColorClassOfText(diffPercent)}>
+        <span className={clsx('text-xs leading-none', getMarketColorClassOfText(diffPercent))}>
           {formatSignedNumber({num: diffPercent, sign: true})}%
         </span>
       }

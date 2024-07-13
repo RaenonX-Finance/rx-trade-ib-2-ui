@@ -18,5 +18,5 @@ export type OptionsGexStatsRequest = {
 
 export type OptionsGexStatsResponse = {
   gammaField: number | null,
-  gammaFlip: number | null,
+  gammaFlip: number[] | null,
 };

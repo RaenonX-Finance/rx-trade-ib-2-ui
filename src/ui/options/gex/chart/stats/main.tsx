@@ -4,7 +4,7 @@ import {ArrowPathIcon} from '@heroicons/react/24/outline';
 
 import {Flex} from '@/components/layout/flex/common';
 import {useOptionGexUnderlyingPxSelector} from '@/state/option/selector';
-import {OptionsGexStatsLayout} from '@/ui/options/gex/chart/stats/layout';
+import {OptionsGexStatsLayout} from '@/ui/options/gex/chart/stats/layout/main';
 import {OptionsGexStatsResponse} from '@/ui/options/gex/stats/type';
 import {getReferencePx} from '@/utils/calc/tick';
 import {Nullable} from '@/utils/type';
@@ -25,17 +25,17 @@ export const OptionsGexStats = ({gexStats, underlyingPxOverride, onRefreshClicke
   );
 
   return (
-    <Flex center direction="row">
-      <Flex center direction="row" className="gap-2 leading-none">
+    <Flex center direction="row" className="rounded-lg bg-slate-950 p-2">
+      <Flex center className="gap-2 leading-none">
         <OptionsGexStatsLayout
           name="Gamma Field"
-          value={gexStats?.gammaField}
+          values={[gexStats?.gammaField]}
           spotPx={underlyingCurrentPx}
           className="text-fuchsia-300"
         />
         <OptionsGexStatsLayout
           name="Gamma Flip"
-          value={gexStats?.gammaFlip}
+          values={gexStats?.gammaFlip ?? [null]}
           spotPx={underlyingCurrentPx}
           className="text-amber-300"
         />
