@@ -1,3 +1,6 @@
+import {Nullable} from '@/utils/type';
+
+
 export type OptionPxQuoteOfContract = Partial<{
   ticker: string,
   px: number,
@@ -25,6 +28,8 @@ export type OptionPxQuotes = {
 };
 
 export type OptionPxQuoteRequest = {
+  ticker?: string,
+  spotPx?: Nullable<number>, // Effective only when `NEXT_PUBLIC_OPTION_CHAIN_SOURCE` is API
   rangePercent: number,
   expiryDays: number,
 };

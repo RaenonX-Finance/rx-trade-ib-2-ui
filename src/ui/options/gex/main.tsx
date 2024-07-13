@@ -16,12 +16,19 @@ export const OptionsGex = () => {
   return (
     <WindowLayout className="gap-1.5" fullHeight={false}>
       <div>GEX</div>
-      <OptionsGexInput onUnderlyingContractUpdated={({expiryMaxDays, rangePercent}) => {
+      <OptionsGexInput onUnderlyingContractUpdated={({
+        symbol,
+        spotPxOverride,
+        expiryMaxDays,
+        rangePercent,
+      }) => {
         if (!rangePercent || !expiryMaxDays) {
           return;
         }
 
         setRequest({
+          ticker: symbol,
+          spotPx: spotPxOverride,
           expiryDays: expiryMaxDays,
           rangePercent,
         });

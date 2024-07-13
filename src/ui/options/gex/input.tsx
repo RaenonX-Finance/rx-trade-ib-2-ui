@@ -31,6 +31,7 @@ export const OptionsGexInput = ({onUnderlyingContractUpdated}: Props) => {
     tradingClass: '',
     expiryMaxDays: 90,
     rangePercent: 15,
+    spotPxOverride: null,
   });
 
   const {
@@ -91,7 +92,10 @@ export const OptionsGexInput = ({onUnderlyingContractUpdated}: Props) => {
 
   return (
     <FlexForm className="items-center gap-1" onSubmit={async () => {
-      onUnderlyingContractUpdated(pxRequest);
+      onUnderlyingContractUpdated({
+        ...pxRequest,
+        symbol: definitionRequest.symbol,
+      });
       await requestOptionDefinitions(gexRealtimeRequestIds);
     }}>
       <Flex direction="row" noFullWidth className="mr-auto items-center gap-2">
@@ -138,6 +142,21 @@ export const OptionsGexInput = ({onUnderlyingContractUpdated}: Props) => {
           id="max-expiry"
           min={1}
           className="w-12 text-sm"
+        />
+        <label className="text-sm text-gray-300" htmlFor="max-expiry">
+          Spot Px Override
+        </label>
+        <InputBox
+          type="number"
+          value={pxRequest.spotPxOverride ?? ''}
+          onChange={({target}) => setPxRequest((original) => ({
+            ...original,
+            spotPxOverride: target.value === '' ? null : Number(target.value),
+          }))}
+          required
+          id="spot-px"
+          min={1}
+          className="w-20 text-sm"
         />
       </Flex>
       {progress && <ProgressCombo progress={progress}/>}
