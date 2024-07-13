@@ -42,6 +42,7 @@ export const OptionsGexChart = ({request}: Props) => {
     loadedExpiry,
     expectedExpiry,
   } = useOptionsGexChartParams({quote});
+
   const {
     stats: gexStats,
     calculateGexStats,

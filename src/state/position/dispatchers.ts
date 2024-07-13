@@ -3,7 +3,7 @@ import {createAction, createAsyncThunk} from '@reduxjs/toolkit';
 import {SignalRRequests} from '@/enums/signalRRequests';
 import {PositionDispatcherName, PositionUpdateMessageForTransmit} from '@/state/position/types';
 import {ReduxState} from '@/state/types';
-import {onAsyncThunkError} from '@/state/utils';
+import {onAsyncThunkError} from '@/state/utils/handler';
 import {PnlRequest, PositionPnlUpdateMessage} from '@/types/api/pnl';
 import {PositionUpdateMessage} from '@/types/api/positions';
 import {PxTickRequest} from '@/types/api/px';

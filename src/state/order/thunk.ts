@@ -3,7 +3,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {SignalRRequests} from '@/enums/signalRRequests';
 import {OrderDispatcherName, OrderRecordMessageForTransmit} from '@/state/order/types';
 import {ReduxState} from '@/state/types';
-import {onAsyncThunkError} from '@/state/utils';
+import {onAsyncThunkError} from '@/state/utils/handler';
 import {OrderRecordMessage} from '@/types/api/order';
 import {PxTickRequest} from '@/types/api/px';
 import {getErrorMessage} from '@/utils/error';
