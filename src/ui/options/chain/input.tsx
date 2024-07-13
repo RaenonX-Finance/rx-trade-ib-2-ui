@@ -32,7 +32,7 @@ export const OptionChainInput = () => {
     type: 'Subscribe',
     account: '',
     expiry: [],
-    strikeRangePercent: 15,
+    strikeRangePercent: 20,
     symbol: '',
     tradingClass: '',
   });
