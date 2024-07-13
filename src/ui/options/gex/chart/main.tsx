@@ -55,35 +55,38 @@ export const OptionsGexChart = ({request}: Props) => {
 
   return (
     <Flex className="gap-2">
-      <Flex className="text-3xl" center>
+      <Flex className="p-1 text-3xl" center>
         <Dollar amount={total} withColor/>
       </Flex>
-      <Flex direction="row" center wrap className="gap-2">
-        {expectedExpiry.map((expiry) => (
-          <ToggleButton
-            key={expiry}
-            active={!inactiveExpiry[expiry]}
-            text={expiry}
-            onClick={() => setInactiveExpiry((original) => ({
-              ...original,
-              [expiry]: !original[expiry],
-            }))}
-            disabled={!loadedExpiry.has(expiry)}
-            getClassName={(active) => clsx(active ? 'text-green-400' : 'text-red-400')}
-            classOfText="text-xs"
-            className={clsx(
-              'disabled:bg-slate-800 disabled:text-slate-400',
-              'enabled:ring-1 enabled:ring-inset enabled:ring-slate-600 enabled:hover:bg-slate-700',
-            )}
-          />
-        ))}
-      </Flex>
+      {
+        !!expectedExpiry.length &&
+        <Flex direction="row" center wrap className="gap-2">
+          {expectedExpiry.map((expiry) => (
+            <ToggleButton
+              key={expiry}
+              active={!inactiveExpiry[expiry]}
+              text={expiry}
+              onClick={() => setInactiveExpiry((original) => ({
+                ...original,
+                [expiry]: !original[expiry],
+              }))}
+              disabled={!loadedExpiry.has(expiry)}
+              getClassName={(active) => clsx(active ? 'text-green-400' : 'text-red-400')}
+              classOfText="text-xs"
+              className={clsx(
+                'disabled:bg-slate-800 disabled:text-slate-400',
+                'enabled:ring-1 enabled:ring-inset enabled:ring-slate-600 enabled:hover:bg-slate-700',
+              )}
+            />
+          ))}
+        </Flex>
+      }
       <OptionsGexStats
         gexStats={gexStats}
         underlyingPxOverride={request?.spotPx}
         onRefreshClicked={calculateGexStats}
       />
-      <Flex className="h-[70vh]">
+      <Flex className="h-[65vh]">
         {
           !!byStrike.length &&
           <ResponsiveContainer width="100%" height="100%">

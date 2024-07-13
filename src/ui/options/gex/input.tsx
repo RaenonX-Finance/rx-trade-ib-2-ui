@@ -103,81 +103,85 @@ export const OptionsGexInput = ({onUnderlyingContractUpdated}: Props) => {
       });
       await requestOptionDefinitions(gexRealtimeRequestIds);
     }}>
-      <Flex direction="row" noFullWidth className="mr-auto items-center gap-2">
-        <InputBox
-          type="text"
-          value={definitionRequest.symbol}
-          onChange={({target}) => setDefinitionRequest((original): OptionDefinitionRequest => ({
-            ...original,
-            symbol: target.value.toUpperCase(),
-          }))}
-          required
-          className="w-20 text-sm"
-          classOfBorder="border-b-amber-500 invalid:border-b-red-500"
-        />
-        <CurrentUnderlyingPx definition={definition}/>
-      </Flex>
-      <Flex direction="row" noFullWidth className="items-center gap-1.5">
-        <label className="text-sm text-gray-300" htmlFor="strike-range">
-          Range (%)
-        </label>
-        <InputBox
-          type="number"
-          value={pxRequest.rangePercent ?? ''}
-          onChange={({target}) => setPxRequest((original) => ({
-            ...original,
-            rangePercent: target.value === '' ? null : Number(target.value),
-          }))}
-          required
-          id="strike-range"
-          min={1}
-          className="w-12 text-sm"
-        />
-        <label className="text-sm text-gray-300" htmlFor="max-expiry">
-          Max Expiry Days
-        </label>
-        <InputBox
-          type="number"
-          value={pxRequest.expiryMaxDays ?? ''}
-          onChange={({target}) => setPxRequest((original) => ({
-            ...original,
-            expiryMaxDays: target.value === '' ? null : Number(target.value),
-          }))}
-          required
-          id="max-expiry"
-          min={1}
-          className="w-12 text-sm"
-        />
-        <label className="text-sm text-gray-300" htmlFor="max-expiry">
-          Spot Px Override
-        </label>
-        <InputBox
-          type="number"
-          inputMode="decimal"
-          step={0.01}
-          value={pxRequest.spotPxOverride ?? ''}
-          onChange={({target}) => setPxRequest((original) => ({
-            ...original,
-            spotPxOverride: target.value === '' ? null : Number(target.value),
-          }))}
-          required
-          id="spot-px"
-          min={1}
-          className="w-20 text-sm"
-        />
-      </Flex>
-      <Flex direction="row" center wrap className="gap-1.5">
-        {optionChainDataSource.map((source) => (
-          <ToggleButton
-            key={source}
-            active={pxRequest.source === source}
-            text={source.toUpperCase()}
-            onClick={() => setPxRequest((original) => ({...original, source}))}
-            getClassName={(active) => clsx(active ? 'text-green-400' : 'text-red-400')}
-            classOfText="text-xs"
-            className="ring-1 ring-inset ring-slate-600 hover:bg-slate-700"
+      <Flex className="gap-2 lg:flex-row lg:justify-between">
+        <Flex direction="row" noFullWidth className="mr-auto items-center gap-2">
+          <InputBox
+            type="text"
+            value={definitionRequest.symbol}
+            onChange={({target}) => setDefinitionRequest((original): OptionDefinitionRequest => ({
+              ...original,
+              symbol: target.value.toUpperCase(),
+            }))}
+            required
+            className="w-20 text-sm"
+            classOfBorder="border-b-amber-500 invalid:border-b-red-500"
           />
-        ))}
+          <CurrentUnderlyingPx definition={definition}/>
+        </Flex>
+        <Flex noFullWidth className="items-end gap-1.5">
+          <Flex direction="row" noFullWidth className="items-center gap-1.5">
+            <label className="text-sm text-gray-300" htmlFor="strike-range">
+              Range (%)
+            </label>
+            <InputBox
+              type="number"
+              value={pxRequest.rangePercent ?? ''}
+              onChange={({target}) => setPxRequest((original) => ({
+                ...original,
+                rangePercent: target.value === '' ? null : Number(target.value),
+              }))}
+              required
+              id="strike-range"
+              min={1}
+              className="w-12 text-sm"
+            />
+            <label className="text-sm text-gray-300" htmlFor="max-expiry">
+              Max Expiry Days
+            </label>
+            <InputBox
+              type="number"
+              value={pxRequest.expiryMaxDays ?? ''}
+              onChange={({target}) => setPxRequest((original) => ({
+                ...original,
+                expiryMaxDays: target.value === '' ? null : Number(target.value),
+              }))}
+              required
+              id="max-expiry"
+              min={1}
+              className="w-12 text-sm"
+            />
+            <label className="text-sm text-gray-300" htmlFor="max-expiry">
+              Spot Px Override
+            </label>
+            <InputBox
+              type="number"
+              inputMode="decimal"
+              step={0.01}
+              value={pxRequest.spotPxOverride ?? ''}
+              onChange={({target}) => setPxRequest((original) => ({
+                ...original,
+                spotPxOverride: target.value === '' ? null : Number(target.value),
+              }))}
+              required
+              id="spot-px"
+              min={1}
+              className="w-20 text-sm"
+            />
+          </Flex>
+          <Flex direction="row" noFullWidth wrap className="gap-1.5">
+            {optionChainDataSource.map((source) => (
+              <ToggleButton
+                key={source}
+                active={pxRequest.source === source}
+                text={source.toUpperCase()}
+                onClick={() => setPxRequest((original) => ({...original, source}))}
+                getClassName={(active) => clsx(active ? 'text-green-400' : 'text-red-400')}
+                classOfText="text-xs"
+                className="ring-1 ring-inset ring-slate-600 hover:bg-slate-700"
+              />
+            ))}
+          </Flex>
+        </Flex>
       </Flex>
       {progress && <ProgressCombo progress={progress}/>}
     </FlexForm>
