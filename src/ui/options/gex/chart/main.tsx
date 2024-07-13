@@ -6,12 +6,12 @@ import {Bar, BarChart, Cell, ReferenceLine, ResponsiveContainer, Tooltip, XAxis,
 import {ToggleButton} from '@/components/inputs/toggleButton';
 import {Flex} from '@/components/layout/flex/common';
 import {Dollar} from '@/components/preset/dollar';
-import {useOptionGexContractsSelector, useOptionGexExpectedExpirySelector} from '@/state/option/selector';
 import {getMarketColorClassOfFill} from '@/styles/color/fill';
 import {getClosestStrikeFromPx} from '@/ui/options/common/utils';
 import {useOptionsGexCalcResult} from '@/ui/options/gex/chart/calc/hook';
 import {OptionPxQuoteRequest} from '@/ui/options/gex/chart/calc/px/type';
 import {OptionsGexData} from '@/ui/options/gex/chart/calc/type';
+import {useOptionsGexChartParams} from '@/ui/options/gex/chart/hook';
 import {OptionsGexStats} from '@/ui/options/gex/chart/stats/main';
 import {OptionsGexChartTooltip} from '@/ui/options/gex/chart/tooltip';
 import {useOptionsGexStats} from '@/ui/options/gex/stats/hook';
@@ -26,6 +26,7 @@ type Props = {
 export const OptionsGexChart = ({request}: Props) => {
   const {
     result,
+    quote,
     inactiveExpiry,
     setInactiveExpiry,
     gex,
@@ -37,18 +38,14 @@ export const OptionsGexChart = ({request}: Props) => {
     total,
   } = result;
 
-  const gexLoadedContracts = useOptionGexContractsSelector();
-  const expectedExpiry = useOptionGexExpectedExpirySelector();
-
+  const {
+    loadedExpiry,
+    expectedExpiry,
+  } = useOptionsGexChartParams({quote});
   const {
     stats: gexStats,
     calculateGexStats,
   } = useOptionsGexStats({inactiveExpiry, override: gex});
-
-  const gexLoadedExpiry = React.useMemo(
-    () => new Set([...gexLoadedContracts.map(({expiry}) => expiry)]),
-    [gexLoadedContracts],
-  );
 
   const strikes = React.useMemo(() => byStrike.map(({strike}) => strike), [byStrike]);
 
@@ -67,7 +64,7 @@ export const OptionsGexChart = ({request}: Props) => {
               ...original,
               [expiry]: !original[expiry],
             }))}
-            disabled={!gexLoadedExpiry.has(expiry)}
+            disabled={!loadedExpiry.has(expiry)}
             getClassName={(active) => clsx(active ? 'text-green-400' : 'text-red-400')}
             classOfText="text-xs"
             className={clsx(

@@ -138,6 +138,7 @@ export const useOptionsGexCalcResult = (opts: Omit<OptionsGexCalcCommonOpts, 'ac
 
   return {
     result,
+    quote: pxQuoteActive,
     inactiveExpiry,
     setInactiveExpiry,
     gex: pxQuotesFromApi?.gex,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {OptionPxQuoteRequest} from '@/ui/options/gex/chart/calc/px/type';
+import {OptionPxQuoteRequest, OptionPxQuotes} from '@/ui/options/gex/chart/calc/px/type';
 import {OptionsGexStatsResponse} from '@/ui/options/gex/stats/type';
 import {Nullable} from '@/utils/type';
 
@@ -31,6 +31,7 @@ export type OptionsGexCalcResult = {
 
 export type OptionsGexCalcControl = {
   result: OptionsGexCalcResult,
+  quote: OptionPxQuotes | null,
   gex: Nullable<OptionsGexStatsResponse>,
   inactiveExpiry: Record<string, boolean>,
   setInactiveExpiry: React.Dispatch<React.SetStateAction<Record<string, boolean>>>,
