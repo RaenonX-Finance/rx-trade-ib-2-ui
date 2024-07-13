@@ -45,7 +45,11 @@ export const OptionsGexChart = ({request}: Props) => {
   const {
     stats: gexStats,
     calculateGexStats,
-  } = useOptionsGexStats({inactiveExpiry, override: gex});
+  } = useOptionsGexStats({
+    inactiveExpiry,
+    autoRefresh: request?.source === 'ibkr',
+    override: gex,
+  });
 
   const strikes = React.useMemo(() => byStrike.map(({strike}) => strike), [byStrike]);
 

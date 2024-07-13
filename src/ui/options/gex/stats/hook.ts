@@ -10,10 +10,11 @@ import {Nullable} from '@/utils/type';
 
 type UseOptionsGexStatsOpts = {
   inactiveExpiry: Record<string, boolean>,
+  autoRefresh: boolean,
   override?: Nullable<OptionsGexStatsResponse>,
 };
 
-export const useOptionsGexStats = ({inactiveExpiry, override}: UseOptionsGexStatsOpts) => {
+export const useOptionsGexStats = ({inactiveExpiry, autoRefresh, override}: UseOptionsGexStatsOpts) => {
   const definition = useOptionGexDefinitionSelector();
   const gexLoadedContracts = useOptionGexContractsSelector();
   const globalPx = useGlobalPxSelector();
@@ -85,6 +86,10 @@ export const useOptionsGexStats = ({inactiveExpiry, override}: UseOptionsGexStat
       return;
     }
 
+    if (!autoRefresh) {
+      return;
+    }
+
     // Initial run on load
     // Using `setTimeout()` to debounce because `calculateGexStats()` could update a lot in a short time
     const timeoutId = setTimeout(calculateGexStats, 1000);
@@ -95,7 +100,7 @@ export const useOptionsGexStats = ({inactiveExpiry, override}: UseOptionsGexStat
       clearTimeout(timeoutId);
       clearInterval(intervalId);
     };
-  }, [calculateGexStats, override]);
+  }, [autoRefresh, override, calculateGexStats]);
 
   return {stats, calculateGexStats};
 };
