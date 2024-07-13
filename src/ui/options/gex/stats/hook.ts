@@ -5,18 +5,20 @@ import {useGlobalPxSelector} from '@/state/px/selector';
 import {OptionsGexPriceData, OptionsGexStatsRequest, OptionsGexStatsResponse} from '@/ui/options/gex/stats/type';
 import {sendPost} from '@/utils/api';
 import {getReferencePx} from '@/utils/calc/tick';
+import {Nullable} from '@/utils/type';
 
 
 type UseOptionsGexStatsOpts = {
   inactiveExpiry: Record<string, boolean>,
+  override?: Nullable<OptionsGexStatsResponse>,
 };
 
-export const useOptionsGexStats = ({inactiveExpiry}: UseOptionsGexStatsOpts) => {
+export const useOptionsGexStats = ({inactiveExpiry, override}: UseOptionsGexStatsOpts) => {
   const definition = useOptionGexDefinitionSelector();
   const gexLoadedContracts = useOptionGexContractsSelector();
   const globalPx = useGlobalPxSelector();
 
-  const [stats, setStats] = React.useState<OptionsGexStatsResponse | null>(null);
+  const [stats, setStats] = React.useState<OptionsGexStatsResponse | null>(override ?? null);
 
   const calculateGexStats = React.useCallback(async () => {
     if (!definition || !gexLoadedContracts.length) {
@@ -77,6 +79,11 @@ export const useOptionsGexStats = ({inactiveExpiry}: UseOptionsGexStatsOpts) => 
   }, [inactiveExpiry, definition, gexLoadedContracts, globalPx]);
 
   React.useEffect(() => {
+    if (override) {
+      // If `override` is provided, don't set up the timer for periodic re-calc
+      return;
+    }
+
     // Initial run on load
     // Using `setTimeout()` to debounce because `calculateGexStats()` could update a lot in a short time
     const timeoutId = setTimeout(calculateGexStats, 1000);
@@ -87,7 +94,7 @@ export const useOptionsGexStats = ({inactiveExpiry}: UseOptionsGexStatsOpts) => 
       clearTimeout(timeoutId);
       clearInterval(intervalId);
     };
-  }, [calculateGexStats]);
+  }, [calculateGexStats, override]);
 
   return {stats, calculateGexStats};
 };

@@ -1,9 +1,5 @@
 import minBy from 'lodash/minBy';
 
-import {PxOfContract} from '@/types/data/px';
-import {getReferencePx} from '@/utils/calc/tick';
-import {Nullable} from '@/utils/type';
-
 
 type GetClosestStrikeFromPxOpts = {
   strikes: number[],
@@ -19,12 +15,12 @@ export const getClosestStrikeFromPx = ({
 
 type GetClosestStrikeFromContractOpts = {
   strikes: number[],
-  spotPx: Nullable<PxOfContract>,
+  spotPx: number,
 };
 
 export const getClosestStrikeFromContract = ({
   strikes,
   spotPx,
 }: GetClosestStrikeFromContractOpts) => {
-  return getClosestStrikeFromPx({strikes, px: getReferencePx(spotPx)});
+  return getClosestStrikeFromPx({strikes, px: spotPx});
 };

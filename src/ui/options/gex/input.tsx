@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 
 import {InputBox} from '@/components/inputs/box';
@@ -15,7 +14,11 @@ import {useOptionGexPxManager} from '@/ui/options/gex/hook';
 import {OptionGexPxSubscribeRequestState} from '@/ui/options/gex/type';
 
 
-export const OptionsGexInput = () => {
+type Props = {
+  onUnderlyingContractUpdated: (request: OptionGexPxSubscribeRequestState) => void,
+};
+
+export const OptionsGexInput = ({onUnderlyingContractUpdated}: Props) => {
   const currentAccount = useCurrentAccountSelector();
   const definition = useOptionGexDefinitionSelector();
   const gexRealtimeRequestIds = useOptionGexRealtimeRequestIdsSelector();
@@ -76,16 +79,21 @@ export const OptionsGexInput = () => {
         symbol: definitionRequest.symbol,
       };
 
-      void subscribeOptionPx({
-        payload: updated,
-        realtimeRequestIdsToCancel: gexRealtimeRequestIds,
-      });
+      if (process.env.NEXT_PUBLIC_OPTION_CHAIN_SOURCE === 'ibkr') {
+        void subscribeOptionPx({
+          payload: updated,
+          realtimeRequestIdsToCancel: gexRealtimeRequestIds,
+        });
+      }
       return updated;
     });
   }, [definition?.underlyingContractId]);
 
   return (
-    <FlexForm className="items-center gap-1" onSubmit={() => requestOptionDefinitions(gexRealtimeRequestIds)}>
+    <FlexForm className="items-center gap-1" onSubmit={async () => {
+      onUnderlyingContractUpdated(pxRequest);
+      await requestOptionDefinitions(gexRealtimeRequestIds);
+    }}>
       <Flex direction="row" noFullWidth className="mr-auto items-center gap-2">
         <InputBox
           type="text"

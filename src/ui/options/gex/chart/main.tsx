@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 
 import {clsx} from 'clsx';
@@ -11,19 +10,26 @@ import {useOptionGexContractsSelector, useOptionGexExpectedExpirySelector} from 
 import {getMarketColorClassOfFill} from '@/styles/color/fill';
 import {getClosestStrikeFromPx} from '@/ui/options/common/utils';
 import {useOptionsGexCalcResult} from '@/ui/options/gex/chart/calc/hook';
+import {OptionPxQuoteRequest} from '@/ui/options/gex/chart/calc/px/type';
 import {OptionsGexData} from '@/ui/options/gex/chart/calc/type';
 import {OptionsGexStats} from '@/ui/options/gex/chart/stats/main';
 import {OptionsGexChartTooltip} from '@/ui/options/gex/chart/tooltip';
 import {useOptionsGexStats} from '@/ui/options/gex/stats/hook';
 import {formatToAbbreviation} from '@/utils/format/number/abbreviation';
+import {Nullable} from '@/utils/type';
 
 
-export const OptionsGexChart = () => {
+type Props = {
+  request: Nullable<OptionPxQuoteRequest>,
+};
+
+export const OptionsGexChart = ({request}: Props) => {
   const {
     result,
     inactiveExpiry,
     setInactiveExpiry,
-  } = useOptionsGexCalcResult();
+    gex,
+  } = useOptionsGexCalcResult({request});
   const {
     byStrike,
     closestStrike,
@@ -37,7 +43,7 @@ export const OptionsGexChart = () => {
   const {
     stats: gexStats,
     calculateGexStats,
-  } = useOptionsGexStats({inactiveExpiry});
+  } = useOptionsGexStats({inactiveExpiry, override: gex});
 
   const gexLoadedExpiry = React.useMemo(
     () => new Set([...gexLoadedContracts.map(({expiry}) => expiry)]),

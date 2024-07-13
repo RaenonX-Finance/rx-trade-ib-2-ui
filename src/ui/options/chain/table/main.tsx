@@ -21,7 +21,10 @@ export const OptionChainTable = () => {
   const spotPx = usePxSelector(definition?.underlyingContractId);
 
   const closestStrike = React.useMemo(() => (
-    getClosestStrikeFromContract({strikes: contracts.map(({strike}) => strike), spotPx})
+    getClosestStrikeFromContract({
+      strikes: contracts.map(({strike}) => strike),
+      spotPx: getReferencePx(spotPx),
+    })
   ), [spotPx, contracts]);
 
   return (

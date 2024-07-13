@@ -3,24 +3,40 @@ import React from 'react';
 import sum from 'lodash/sum';
 import uniq from 'lodash/uniq';
 
-import {useOptionGexContractsSelector, useOptionGexDefinitionSelector} from '@/state/option/selector';
-import {useGlobalPxSelector} from '@/state/px/selector';
 import {getClosestStrikeFromContract} from '@/ui/options/common/utils';
-import {OptionsGexCalcResult, OptionsGexData, OptionsGexDataOfPair} from '@/ui/options/gex/chart/calc/type';
+import {useOptionPxQuotesFromApi} from '@/ui/options/gex/chart/calc/px/api/main';
+import {useOptionPxQuotesFromIbkr} from '@/ui/options/gex/chart/calc/px/ibkr';
+import {
+  OptionsGexCalcCommonOpts,
+  OptionsGexCalcControl,
+  OptionsGexCalcResult,
+  OptionsGexData,
+  OptionsGexDataOfPair,
+} from '@/ui/options/gex/chart/calc/type';
 import {getOptionsGammaExposureOfSide} from '@/ui/options/gex/chart/calc/utils';
 import {sortAsc} from '@/utils/sort/byKey/asc';
 import {isNotNullish} from '@/utils/type';
 
 
-export const useOptionsGexCalcResult = () => {
-  const contracts = useOptionGexContractsSelector();
-  const definition = useOptionGexDefinitionSelector();
-  const pxGlobal = useGlobalPxSelector();
+export const useOptionsGexCalcResult = (opts: Omit<OptionsGexCalcCommonOpts, 'active'>): OptionsGexCalcControl => {
+  const [
+    inactiveExpiry,
+    setInactiveExpiry,
+  ] = React.useState<Record<string, boolean>>({});
 
-  const [inactiveExpiry, setInactiveExpiry] = React.useState<Record<string, boolean>>({});
+  // Main price source
+  const pxQuotesFromApi = useOptionPxQuotesFromApi({
+    active: process.env.NEXT_PUBLIC_OPTION_CHAIN_SOURCE === 'api',
+    ...opts,
+  });
+  const pxQuotesFromIbkr = useOptionPxQuotesFromIbkr({
+    active: process.env.NEXT_PUBLIC_OPTION_CHAIN_SOURCE === 'ibkr',
+    ...opts,
+  });
+  const pxQuoteActive = pxQuotesFromApi?.quote ?? pxQuotesFromIbkr;
 
   const result = React.useMemo((): OptionsGexCalcResult => {
-    if (!definition) {
+    if (!pxQuoteActive) {
       return {
         byStrike: [],
         closestStrike: null,
@@ -29,7 +45,7 @@ export const useOptionsGexCalcResult = () => {
       } satisfies OptionsGexCalcResult;
     }
 
-    const spotPx = pxGlobal[definition.underlyingContractId];
+    const {spotPx, contracts, optionPx} = pxQuoteActive;
 
     const strikes = uniq(
       contracts
@@ -55,11 +71,11 @@ export const useOptionsGexCalcResult = () => {
             }
 
             const netGammaCall = getOptionsGammaExposureOfSide({
-              optionsPx: pxGlobal[call],
+              optionsPx: call ? optionPx[call] : null,
               spotPx,
             });
             const netGammaPut = getOptionsGammaExposureOfSide({
-              optionsPx: pxGlobal[put],
+              optionsPx: put ? optionPx[put] : null,
               spotPx,
             });
 
@@ -80,8 +96,8 @@ export const useOptionsGexCalcResult = () => {
               return null;
             }
 
-            const callOi = pxGlobal[call]?.OptionCallOpenInterest ?? 0;
-            const putOi = pxGlobal[put]?.OptionPutOpenInterest ?? 0;
+            const callOi = (call ? optionPx[call].openInterest : null) ?? 0;
+            const putOi = (put ? optionPx[put].openInterest : null) ?? 0;
 
             return {
               expiry,
@@ -118,11 +134,12 @@ export const useOptionsGexCalcResult = () => {
       possibleExpiry: uniq(contracts.map(({expiry}) => expiry).toSorted(sortAsc())),
       total: sum(byStrike.map(({netGammaSum}) => netGammaSum.total)),
     };
-  }, [contracts, definition, pxGlobal, inactiveExpiry]);
+  }, [inactiveExpiry, pxQuoteActive]);
 
   return {
     result,
     inactiveExpiry,
     setInactiveExpiry,
+    gex: pxQuotesFromApi?.gex,
   };
 };

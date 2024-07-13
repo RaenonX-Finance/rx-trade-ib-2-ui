@@ -1,11 +1,10 @@
-import {PxOfContract} from '@/types/data/px';
-import {getReferencePx} from '@/utils/calc/tick';
+import {OptionPxQuoteOfContract} from '@/ui/options/gex/chart/calc/px/type';
 import {Nullable} from '@/utils/type';
 
 
 type GetOptionsGammaExposureOfSideOpts = {
-  optionsPx: Nullable<PxOfContract>,
-  spotPx: Nullable<PxOfContract>,
+  optionsPx: Nullable<OptionPxQuoteOfContract>,
+  spotPx: number,
 };
 
 export const getOptionsGammaExposureOfSide = ({optionsPx, spotPx}: GetOptionsGammaExposureOfSideOpts): number => {
@@ -17,11 +16,11 @@ export const getOptionsGammaExposureOfSide = ({optionsPx, spotPx}: GetOptionsGam
   // https://perfiliev.co.uk/market-commentary/how-to-calculate-gamma-exposure-and-zero-gamma-level/
   return (
     // Option OI
-    ((optionsPx?.OptionCallOpenInterest ?? 0) + (optionsPx?.OptionPutOpenInterest ?? 0)) *
+    (optionsPx?.openInterest ?? 0) *
     // Option gamma
-    (optionsPx?.Gamma ?? 0) *
+    (optionsPx?.gamma ?? 0) *
     // Spot price
-    (getReferencePx(spotPx) ** 2 * 0.01) *
+    (spotPx ** 2 * 0.01) *
     // Option multiplier
     100
   );
