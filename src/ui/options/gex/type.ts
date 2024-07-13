@@ -1,4 +1,5 @@
 import {OptionPxRequest} from '@/types/api/px';
+import {OptionChainDataSource} from '@/types/data/option';
 
 
 export type OptionGexPxSubscribeRequestState = Omit<OptionPxRequest, 'strikes' | 'expiry'> & {
@@ -8,4 +9,5 @@ export type OptionGexPxSubscribeRequestState = Omit<OptionPxRequest, 'strikes' |
   expiryMaxDays: number | null,
   // `null` means to use the default value
   rangePercent: number | null,
+  source: OptionChainDataSource,
 };

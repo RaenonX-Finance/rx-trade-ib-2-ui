@@ -19,6 +19,8 @@ import {isNotNullish} from '@/utils/type';
 
 
 export const useOptionsGexCalcResult = (opts: Omit<OptionsGexCalcCommonOpts, 'active'>): OptionsGexCalcControl => {
+  const {request} = opts;
+
   const [
     inactiveExpiry,
     setInactiveExpiry,
@@ -26,11 +28,11 @@ export const useOptionsGexCalcResult = (opts: Omit<OptionsGexCalcCommonOpts, 'ac
 
   // Main price source
   const pxQuotesFromApi = useOptionPxQuotesFromApi({
-    active: process.env.NEXT_PUBLIC_OPTION_CHAIN_SOURCE === 'api',
+    active: request?.source === 'api',
     ...opts,
   });
   const pxQuotesFromIbkr = useOptionPxQuotesFromIbkr({
-    active: process.env.NEXT_PUBLIC_OPTION_CHAIN_SOURCE === 'ibkr',
+    active: request?.source === 'ibkr',
     ...opts,
   });
   const pxQuoteActive = pxQuotesFromApi?.quote ?? pxQuotesFromIbkr;

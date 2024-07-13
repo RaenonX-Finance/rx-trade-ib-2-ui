@@ -1,3 +1,4 @@
+import {OptionChainDataSource} from '@/types/data/option';
 import {Nullable} from '@/utils/type';
 
 
@@ -28,8 +29,9 @@ export type OptionPxQuotes = {
 };
 
 export type OptionPxQuoteRequest = {
-  ticker?: string,
-  spotPx?: Nullable<number>, // Effective only when `NEXT_PUBLIC_OPTION_CHAIN_SOURCE` is API
+  source: OptionChainDataSource,
   rangePercent: number,
   expiryDays: number,
+  ticker?: string,
+  spotPx?: Nullable<number>, // Effective only when `source` is `api`
 };

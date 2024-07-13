@@ -5,4 +5,9 @@ export type OptionDefinition = OptionDefinitionMessage;
 
 export type OptionsVolatilityType = 'hv' | 'iv';
 
-export type OptionChainDataSource = 'api' | 'ibkr';
+export const optionChainDataSource = [
+  'api',
+  'ibkr',
+] as const;
+
+export type OptionChainDataSource = typeof optionChainDataSource[number];

@@ -1,6 +1,9 @@
 import React from 'react';
 
+import {clsx} from 'clsx';
+
 import {InputBox} from '@/components/inputs/box';
+import {ToggleButton} from '@/components/inputs/toggleButton';
 import {Flex} from '@/components/layout/flex/common';
 import {FlexForm} from '@/components/layout/flex/form';
 import {ProgressCombo} from '@/components/progress/combo/main';
@@ -9,6 +12,7 @@ import {optionDispatchers} from '@/state/option/dispatchers';
 import {useOptionGexDefinitionSelector, useOptionGexRealtimeRequestIdsSelector} from '@/state/option/selector';
 import {OptionDispatcherName} from '@/state/option/types';
 import {OptionDefinitionRequest} from '@/types/api/option';
+import {optionChainDataSource} from '@/types/data/option';
 import {CurrentUnderlyingPx} from '@/ui/options/common/underlyingPx';
 import {useOptionGexPxManager} from '@/ui/options/gex/hook';
 import {OptionGexPxSubscribeRequestState} from '@/ui/options/gex/type';
@@ -32,6 +36,7 @@ export const OptionsGexInput = ({onUnderlyingContractUpdated}: Props) => {
     expiryMaxDays: 90,
     rangePercent: 15,
     spotPxOverride: null,
+    source: 'api',
   });
 
   const {
@@ -80,7 +85,7 @@ export const OptionsGexInput = ({onUnderlyingContractUpdated}: Props) => {
         symbol: definitionRequest.symbol,
       };
 
-      if (process.env.NEXT_PUBLIC_OPTION_CHAIN_SOURCE === 'ibkr') {
+      if (original.source === 'ibkr') {
         void subscribeOptionPx({
           payload: updated,
           realtimeRequestIdsToCancel: gexRealtimeRequestIds,
@@ -91,7 +96,7 @@ export const OptionsGexInput = ({onUnderlyingContractUpdated}: Props) => {
   }, [definition?.underlyingContractId]);
 
   return (
-    <FlexForm className="items-center gap-1" onSubmit={async () => {
+    <FlexForm className="items-center gap-1.5 rounded-lg bg-slate-500/20 p-2" onSubmit={async () => {
       onUnderlyingContractUpdated({
         ...pxRequest,
         symbol: definitionRequest.symbol,
@@ -158,6 +163,19 @@ export const OptionsGexInput = ({onUnderlyingContractUpdated}: Props) => {
           min={1}
           className="w-20 text-sm"
         />
+      </Flex>
+      <Flex direction="row" center wrap className="gap-1.5">
+        {optionChainDataSource.map((source) => (
+          <ToggleButton
+            key={source}
+            active={pxRequest.source === source}
+            text={source.toUpperCase()}
+            onClick={() => setPxRequest((original) => ({...original, source}))}
+            getClassName={(active) => clsx(active ? 'text-green-400' : 'text-red-400')}
+            classOfText="text-xs"
+            className="ring-1 ring-inset ring-slate-600 hover:bg-slate-700"
+          />
+        ))}
       </Flex>
       {progress && <ProgressCombo progress={progress}/>}
     </FlexForm>

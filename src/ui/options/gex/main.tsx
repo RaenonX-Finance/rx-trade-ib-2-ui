@@ -17,6 +17,7 @@ export const OptionsGex = () => {
     <WindowLayout className="gap-1.5" fullHeight={false}>
       <div>GEX</div>
       <OptionsGexInput onUnderlyingContractUpdated={({
+        source,
         symbol,
         spotPxOverride,
         expiryMaxDays,
@@ -27,10 +28,11 @@ export const OptionsGex = () => {
         }
 
         setRequest({
+          source,
+          rangePercent,
+          expiryDays: expiryMaxDays,
           ticker: symbol,
           spotPx: spotPxOverride,
-          expiryDays: expiryMaxDays,
-          rangePercent,
         });
       }}/>
       <OptionsGexChart request={request}/>
