@@ -5,6 +5,7 @@ import {ArrowPathIcon} from '@heroicons/react/24/outline';
 import {Flex} from '@/components/layout/flex/common';
 import {useOptionGexUnderlyingPxSelector} from '@/state/option/selector';
 import {OptionsGexStatsLayout} from '@/ui/options/gex/chart/stats/layout/main';
+import {OptionsGexSignIcon} from '@/ui/options/gex/chart/stats/sign/main';
 import {OptionsGexStatsResponse} from '@/ui/options/gex/stats/type';
 import {getReferencePx} from '@/utils/calc/tick';
 import {Nullable} from '@/utils/type';
@@ -37,6 +38,9 @@ export const OptionsGexStats = ({gexStats, underlyingPxOverride, onRefreshClicke
           name="Gamma Flip"
           values={gexStats?.gammaFlip ?? [null]}
           spotPx={underlyingCurrentPx}
+          renderInBetweenItem={(prev, next, idx) => (
+            <OptionsGexSignIcon rangeStart={prev} rangeEnd={next} idx={idx} currentPx={underlyingCurrentPx}/>
+          )}
           className="text-amber-300"
         />
       </Flex>
