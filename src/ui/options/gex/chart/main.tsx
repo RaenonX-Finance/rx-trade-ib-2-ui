@@ -74,7 +74,11 @@ export const OptionsGexChart = ({request}: Props) => {
           />
         ))}
       </Flex>
-      <OptionsGexStats gexStats={gexStats} onRefreshClicked={calculateGexStats}/>
+      <OptionsGexStats
+        gexStats={gexStats}
+        underlyingPxOverride={request?.spotPx}
+        onRefreshClicked={calculateGexStats}
+      />
       <Flex className="h-[70vh]">
         {
           !!byStrike.length &&

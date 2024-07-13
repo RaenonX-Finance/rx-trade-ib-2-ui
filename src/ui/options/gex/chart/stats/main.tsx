@@ -7,17 +7,22 @@ import {useOptionGexUnderlyingPxSelector} from '@/state/option/selector';
 import {OptionsGexStatsLayout} from '@/ui/options/gex/chart/stats/layout';
 import {OptionsGexStatsResponse} from '@/ui/options/gex/stats/type';
 import {getReferencePx} from '@/utils/calc/tick';
+import {Nullable} from '@/utils/type';
 
 
 type Props = {
   gexStats: OptionsGexStatsResponse | null,
+  underlyingPxOverride: Nullable<number>,
   onRefreshClicked: () => void,
 };
 
-export const OptionsGexStats = ({gexStats, onRefreshClicked}: Props) => {
+export const OptionsGexStats = ({gexStats, underlyingPxOverride, onRefreshClicked}: Props) => {
   const underlyingPx = useOptionGexUnderlyingPxSelector();
 
-  const underlyingCurrentPx = getReferencePx(underlyingPx);
+  const underlyingCurrentPx = React.useMemo(
+    () => underlyingPxOverride ?? getReferencePx(underlyingPx),
+    [underlyingPxOverride, underlyingPx],
+  );
 
   return (
     <Flex center direction="row">

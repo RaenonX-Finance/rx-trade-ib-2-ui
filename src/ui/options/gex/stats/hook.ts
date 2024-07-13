@@ -81,6 +81,7 @@ export const useOptionsGexStats = ({inactiveExpiry, override}: UseOptionsGexStat
   React.useEffect(() => {
     if (override) {
       // If `override` is provided, don't set up the timer for periodic re-calc
+      setStats(override);
       return;
     }
 
