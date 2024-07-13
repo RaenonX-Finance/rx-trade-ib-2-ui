@@ -153,6 +153,8 @@ export const OptionsGexInput = ({onUnderlyingContractUpdated}: Props) => {
         </label>
         <InputBox
           type="number"
+          inputMode="decimal"
+          step={0.01}
           value={pxRequest.spotPxOverride ?? ''}
           onChange={({target}) => setPxRequest((original) => ({
             ...original,
