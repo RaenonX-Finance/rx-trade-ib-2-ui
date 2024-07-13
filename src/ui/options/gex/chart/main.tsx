@@ -109,7 +109,6 @@ export const OptionsGexChart = ({request}: Props) => {
                 cursor={{fill: 'transparent'}}
               />
               <ReferenceLine y={0} className="[&>line]:stroke-slate-500"/>
-              {closestStrike != null && <ReferenceLine x={closestStrike} className="[&>line]:stroke-sky-500"/>}
               {gex?.gammaFlip.map((gammaFlip) => (
                 <ReferenceLine
                   key={gammaFlip}
@@ -124,6 +123,7 @@ export const OptionsGexChart = ({request}: Props) => {
                   className="[&>line]:stroke-fuchsia-500"
                 />
               }
+              {closestStrike != null && <ReferenceLine x={closestStrike} className="[&>line]:stroke-sky-500"/>}
               {possibleExpiry.map((expiry, idx) => (
                 <Bar
                   key={expiry}
