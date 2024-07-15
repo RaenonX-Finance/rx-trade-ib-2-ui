@@ -17,4 +17,5 @@ export type OptionPxFromApiResponse = {
 export type OptionPxFromApiState = {
   loading: boolean,
   response: OptionPxFromApiResponse | null,
+  lastFetchEpochMs: number | null,
 };

@@ -3,6 +3,7 @@ import React from 'react';
 import {useContractSelector} from '@/state/contract/selector';
 import {useOptionGexDefinitionSelector} from '@/state/option/selector';
 import {usePxSelector} from '@/state/px/selector';
+import {optionPxQuotesFromApiFetchIntervalMs} from '@/ui/options/gex/chart/calc/px/api/const';
 import {
   OptionPxFromApiRequest,
   OptionPxFromApiResponse,
@@ -24,6 +25,7 @@ export const useOptionPxQuotesFromApi = ({
   const [result, setResult] = React.useState<OptionPxFromApiState>({
     loading: false,
     response: null,
+    lastFetchEpochMs: null,
   });
 
   React.useEffect(() => {
@@ -32,8 +34,13 @@ export const useOptionPxQuotesFromApi = ({
       return;
     }
 
+    if (result.lastFetchEpochMs && Date.now() - result.lastFetchEpochMs < optionPxQuotesFromApiFetchIntervalMs) {
+      // Do nothing if just fetched
+      return;
+    }
+
     if (!active || !request) {
-      setResult({loading: false, response: null});
+      setResult({loading: false, response: null, lastFetchEpochMs: null});
       return;
     }
     const {rangePercent, expiryDays} = request;
@@ -45,11 +52,15 @@ export const useOptionPxQuotesFromApi = ({
 
     const ticker = request.ticker ?? contract?.localSymbol;
     if (!ticker) {
-      setResult({loading: false, response: null});
+      setResult({loading: false, response: null, lastFetchEpochMs: null});
       return;
     }
 
-    setResult(({response}) => ({loading: true, response}));
+    setResult(({response, lastFetchEpochMs}) => ({
+      loading: true,
+      response,
+      lastFetchEpochMs,
+    }));
     sendPost<OptionPxFromApiRequest, OptionPxFromApiResponse>({
       url: `${process.env.NEXT_PUBLIC_MATH_API}/options/chain`,
       payload: {
@@ -58,7 +69,11 @@ export const useOptionPxQuotesFromApi = ({
         rangePercent,
         expiryDays,
       },
-    }).then((response) => setResult({loading: false, response}));
+    }).then((response) => setResult({
+      loading: false,
+      response,
+      lastFetchEpochMs: Date.now(),
+    }));
   }, [request, definition, spotPx]);
 
   return result.response;
