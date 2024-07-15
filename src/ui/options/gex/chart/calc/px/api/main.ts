@@ -37,6 +37,11 @@ export const useOptionPxQuotesFromApi = ({
       return;
     }
     const {rangePercent, expiryDays} = request;
+    const spotRefPx = request.spotPx ?? getReferencePx(spotPx);
+    if (!spotRefPx) {
+      // Do nothing if `spotRefPx` is 0 (`request` doesn't have override, and not yet received any from `spotPx`)
+      return;
+    }
 
     const ticker = request.ticker ?? contract?.localSymbol;
     if (!ticker) {
@@ -49,12 +54,12 @@ export const useOptionPxQuotesFromApi = ({
       url: `${process.env.NEXT_PUBLIC_MATH_API}/options/chain`,
       payload: {
         ticker,
-        spotPx: request.spotPx ?? getReferencePx(spotPx),
+        spotPx: spotRefPx,
         rangePercent,
         expiryDays,
       },
     }).then((response) => setResult({loading: false, response}));
-  }, [request, spotPx]);
+  }, [request, definition, spotPx]);
 
   return result.response;
 };

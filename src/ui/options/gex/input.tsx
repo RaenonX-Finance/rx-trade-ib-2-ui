@@ -162,7 +162,6 @@ export const OptionsGexInput = ({onUnderlyingContractUpdated}: Props) => {
                 ...original,
                 spotPxOverride: target.value === '' ? null : Number(target.value),
               }))}
-              required
               id="spot-px"
               min={1}
               className="w-20 text-sm"
