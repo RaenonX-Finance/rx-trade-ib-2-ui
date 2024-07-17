@@ -9,9 +9,9 @@ import {OptionsVolatilityHistory} from '@/ui/options/volatility/main';
 export const Options = () => {
   return (
     <PageLayout>
-      <OptionChain/>
-      <OptionsVolatilityHistory/>
       <OptionsGex/>
+      <OptionsVolatilityHistory/>
+      <OptionChain/>
     </PageLayout>
   );
 };
