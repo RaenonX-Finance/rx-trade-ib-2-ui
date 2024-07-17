@@ -23,7 +23,7 @@ export const useOptionPxQuotesFromApi = ({
   active,
   request,
   inactiveExpiry,
-}: UseOptionPxQuotesFromApiOpts): OptionPxFromApiResponse | null => {
+}: UseOptionPxQuotesFromApiOpts): OptionPxFromApiState => {
   const definition = useOptionGexDefinitionSelector();
   const spotPx = usePxSelector(definition?.underlyingContractId);
   const contract = useContractSelector(definition?.underlyingContractId);
@@ -85,5 +85,5 @@ export const useOptionPxQuotesFromApi = ({
     }));
   }, [request, definition, spotPx, inactiveExpiry]);
 
-  return result.response;
+  return result;
 };

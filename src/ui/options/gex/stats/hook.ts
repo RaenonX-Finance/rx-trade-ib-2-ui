@@ -2,7 +2,12 @@ import React from 'react';
 
 import {useOptionGexContractsSelector, useOptionGexDefinitionSelector} from '@/state/option/selector';
 import {useGlobalPxSelector} from '@/state/px/selector';
-import {OptionsGexPriceData, OptionsGexStatsRequest, OptionsGexStatsResponse} from '@/ui/options/gex/stats/type';
+import {
+  OptionsGexPriceData,
+  OptionsGexStatsRequest,
+  OptionsGexStatsResponse,
+  OptionsGexStatsState,
+} from '@/ui/options/gex/stats/type';
 import {sendPost} from '@/utils/api';
 import {getReferencePx} from '@/utils/calc/tick';
 import {Nullable} from '@/utils/type';
@@ -19,12 +24,17 @@ export const useOptionsGexStats = ({inactiveExpiry, autoRefresh, override}: UseO
   const gexLoadedContracts = useOptionGexContractsSelector();
   const globalPx = useGlobalPxSelector();
 
-  const [stats, setStats] = React.useState<OptionsGexStatsResponse | null>(override ?? null);
+  const [state, setState] = React.useState<OptionsGexStatsState>({
+    response: override ?? null,
+    loading: false,
+  });
 
   const calculateGexStats = React.useCallback(async () => {
     if (!definition || !gexLoadedContracts.length) {
       return null;
     }
+
+    setState(({response}) => ({response, loading: true}));
 
     const optionsPrice: OptionsGexPriceData[] = [];
     for (const {expiry, strike, call, put} of gexLoadedContracts) {
@@ -78,13 +88,13 @@ export const useOptionsGexStats = ({inactiveExpiry, autoRefresh, override}: UseO
       payload: request,
     });
 
-    setStats(response);
+    setState({response, loading: false});
   }, [inactiveExpiry, definition, gexLoadedContracts, globalPx]);
 
   React.useEffect(() => {
     if (override) {
       // If `override` is provided, don't set up the timer for periodic re-calc
-      setStats(override);
+      setState({response: override, loading: false});
       return;
     }
 
@@ -104,5 +114,9 @@ export const useOptionsGexStats = ({inactiveExpiry, autoRefresh, override}: UseO
     };
   }, [autoRefresh, override, calculateGexStats]);
 
-  return {stats, calculateGexStats};
+  return {
+    stats: state.response,
+    calculateGexStats,
+    isLoading: state.loading,
+  };
 };

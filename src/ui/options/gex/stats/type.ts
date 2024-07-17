@@ -17,6 +17,11 @@ export type OptionsGexStatsRequest = {
   expiryExclusions: string[],
 };
 
+export type OptionsGexStatsState = {
+  response: OptionsGexStatsResponse | null,
+  loading: boolean,
+};
+
 export type OptionsGexStatsResponse = {
   gammaField: number | null,
   gammaFlip: number[],

@@ -36,7 +36,7 @@ export const useOptionsGexCalcResult = (opts: Omit<OptionsGexCalcCommonOpts, 'ac
     active: request?.source === 'ibkr',
     ...opts,
   });
-  const pxQuoteActive = pxQuotesFromApi?.quote ?? pxQuotesFromIbkr;
+  const pxQuoteActive = pxQuotesFromApi.response?.quote ?? pxQuotesFromIbkr;
 
   const result = React.useMemo((): OptionsGexCalcResult => {
     if (!pxQuoteActive) {
@@ -144,6 +144,7 @@ export const useOptionsGexCalcResult = (opts: Omit<OptionsGexCalcCommonOpts, 'ac
     quote: pxQuoteActive,
     inactiveExpiry,
     setInactiveExpiry,
-    gex: pxQuotesFromApi?.gex,
+    gex: pxQuotesFromApi.response?.gex,
+    isApiLoading: pxQuotesFromApi.loading,
   };
 };

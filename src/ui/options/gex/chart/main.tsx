@@ -3,6 +3,7 @@ import React from 'react';
 import {clsx} from 'clsx';
 import {Bar, BarChart, Cell, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 
+import {Loading} from '@/components/icons/loading/icon';
 import {ToggleButton} from '@/components/inputs/toggleButton';
 import {Flex} from '@/components/layout/flex/common';
 import {Dollar} from '@/components/preset/dollar';
@@ -30,6 +31,7 @@ export const OptionsGexChart = ({request}: Props) => {
     inactiveExpiry,
     setInactiveExpiry,
     gex,
+    isApiLoading,
   } = useOptionsGexCalcResult({request});
   const {
     byStrike,
@@ -46,6 +48,7 @@ export const OptionsGexChart = ({request}: Props) => {
   const {
     stats: gexStats,
     calculateGexStats,
+    isLoading,
   } = useOptionsGexStats({
     inactiveExpiry,
     autoRefresh: request?.source === 'ibkr',
@@ -56,8 +59,9 @@ export const OptionsGexChart = ({request}: Props) => {
 
   return (
     <Flex className="gap-2">
-      <Flex className="p-1 text-3xl" center>
+      <Flex direction="row" className="gap-1 p-1 text-3xl" center>
         <Dollar amount={total} withColor/>
+        {(isApiLoading || isLoading) && <Loading className="size-4 self-end"/>}
       </Flex>
       {
         !!expectedExpiry.length &&

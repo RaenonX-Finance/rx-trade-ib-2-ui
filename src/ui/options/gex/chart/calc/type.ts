@@ -32,9 +32,10 @@ export type OptionsGexCalcResult = {
 export type OptionsGexCalcControl = {
   result: OptionsGexCalcResult,
   quote: OptionPxQuotes | null,
-  gex: Nullable<OptionsGexStatsResponse>,
   inactiveExpiry: Record<string, boolean>,
   setInactiveExpiry: React.Dispatch<React.SetStateAction<Record<string, boolean>>>,
+  gex: Nullable<OptionsGexStatsResponse>,
+  isApiLoading: boolean,
 };
 
 export type OptionsGexCalcCommonOpts = {
