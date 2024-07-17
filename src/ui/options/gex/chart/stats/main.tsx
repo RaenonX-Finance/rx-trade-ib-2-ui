@@ -27,7 +27,7 @@ export const OptionsGexStats = ({gexStats, underlyingPxOverride, onRefreshClicke
 
   return (
     <Flex center direction="row" className="rounded-lg bg-slate-950 p-2">
-      <Flex center className="gap-2 leading-none">
+      <Flex center className="gap-1 leading-none">
         <OptionsGexStatsLayout
           name="Gamma Field"
           values={[gexStats?.gammaField]}

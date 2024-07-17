@@ -6,6 +6,8 @@ export type PxTick =
   'Close' |
   'OptionCallOpenInterest' |
   'OptionPutOpenInterest' |
+  // Stocks only
+  'AverageVolume' |
   // Options only
   'Delta' |
   'Theta' |
