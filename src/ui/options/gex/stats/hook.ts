@@ -76,8 +76,11 @@ export const useOptionsGexStats = ({inactiveExpiry, autoRefresh, override}: UseO
       });
     }
 
+    const underlying = globalPx[definition.underlyingContractId];
+
     const request: OptionsGexStatsRequest = {
-      spotPrice: getReferencePx(globalPx[definition.underlyingContractId]),
+      spotPrice: getReferencePx(underlying),
+      avgVolume: underlying?.AverageVolume ?? null,
       optionsPrice,
       // Already filtered out from `optionsPrice`
       expiryExclusions: [],

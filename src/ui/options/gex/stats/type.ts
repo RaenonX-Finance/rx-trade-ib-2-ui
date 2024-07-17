@@ -13,6 +13,7 @@ export type OptionsGexPriceData = {
 
 export type OptionsGexStatsRequest = {
   spotPrice: number,
+  avgVolume: number | null,
   optionsPrice: OptionsGexPriceData[],
   expiryExclusions: string[],
 };
@@ -25,4 +26,5 @@ export type OptionsGexStatsState = {
 export type OptionsGexStatsResponse = {
   gammaField: number | null,
   gammaFlip: number[],
+  effectiveness: number | null,
 };

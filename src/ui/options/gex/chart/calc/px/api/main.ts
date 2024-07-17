@@ -72,6 +72,7 @@ export const useOptionPxQuotesFromApi = ({
       payload: {
         ticker,
         spotPx: spotRefPx,
+        avgVolume: spotPx?.AverageVolume ?? 0,
         rangePercent,
         expiryDays,
         gexExpiryExclusions: Object.entries(inactiveExpiry)

@@ -5,6 +5,7 @@ import {OptionsGexStatsResponse} from '@/ui/options/gex/stats/type';
 export type OptionPxFromApiRequest = {
   ticker: string,
   spotPx: number,
+  avgVolume: number | null,
   rangePercent: number,
   expiryDays: number,
   gexExpiryExclusions: string[],

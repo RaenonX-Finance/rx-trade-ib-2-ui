@@ -17,6 +17,7 @@ import {OptionsGexStats} from '@/ui/options/gex/chart/stats/main';
 import {OptionsGexChartTooltip} from '@/ui/options/gex/chart/tooltip';
 import {useOptionsGexStats} from '@/ui/options/gex/stats/hook';
 import {formatToAbbreviation} from '@/utils/format/number/abbreviation';
+import {formatFloat} from '@/utils/format/number/regular';
 import {Nullable} from '@/utils/type';
 
 
@@ -59,9 +60,12 @@ export const OptionsGexChart = ({request}: Props) => {
 
   return (
     <Flex className="gap-2">
-      <Flex direction="row" className="gap-1 p-1 text-3xl" center>
-        <Dollar amount={total} withColor/>
-        {(isApiLoading || isLoading) && <Loading className="size-4 self-end"/>}
+      <Flex direction="row" className="items-end justify-center gap-1 p-1">
+        <Dollar amount={total} withColor className="text-3xl"/>
+        <small className="text-slate-400">
+          ({gexStats?.effectiveness ? formatFloat(gexStats.effectiveness * 100) : '-'}%)
+        </small>
+        {(isApiLoading || isLoading) && <Loading className="size-4"/>}
       </Flex>
       {
         !!expectedExpiry.length &&
