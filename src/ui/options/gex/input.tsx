@@ -33,7 +33,7 @@ export const OptionsGexInput = ({onUnderlyingContractUpdated}: Props) => {
     account: '',
     symbol: '',
     tradingClass: '',
-    expiryMaxDays: 90,
+    expiryMaxDays: 120,
     rangePercent: 25,
     spotPxOverride: null,
     source: 'api',
