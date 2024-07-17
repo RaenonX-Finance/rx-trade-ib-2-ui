@@ -20,7 +20,7 @@ export const Dollar = ({amount, withColor, className}: Props) => {
       withColor && getMarketColorClassOfText(amount),
       className,
     )}>
-      <small>$</small>
+      <span>$</span>
       <span>{formatInt(amount)}</span>
     </Flex>
   );
