@@ -60,9 +60,9 @@ export const OptionsGexChart = ({request}: Props) => {
 
   return (
     <Flex className="gap-2">
-      <Flex direction="row" className="items-end justify-center gap-1 p-1">
+      <Flex direction="row" center className="gap-1 p-1">
         <Dollar amount={total} withColor className="text-3xl"/>
-        <small className="text-slate-400">
+        <small className="self-end text-slate-400">
           ({gexStats?.effectiveness ? formatFloat(gexStats.effectiveness * 100) : '-'}%)
         </small>
         {(isApiLoading || isLoading) && <Loading className="size-4"/>}
