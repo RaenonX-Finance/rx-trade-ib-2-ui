@@ -7,6 +7,7 @@ export type OptionPxFromApiRequest = {
   spotPx: number,
   rangePercent: number,
   expiryDays: number,
+  gexExpiryExclusions: string[],
 };
 
 export type OptionPxFromApiResponse = {

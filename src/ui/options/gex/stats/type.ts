@@ -14,6 +14,7 @@ export type OptionsGexPriceData = {
 export type OptionsGexStatsRequest = {
   spotPrice: number,
   optionsPrice: OptionsGexPriceData[],
+  expiryExclusions: string[],
 };
 
 export type OptionsGexStatsResponse = {

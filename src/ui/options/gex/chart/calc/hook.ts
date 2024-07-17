@@ -29,6 +29,7 @@ export const useOptionsGexCalcResult = (opts: Omit<OptionsGexCalcCommonOpts, 'ac
   // Main price source
   const pxQuotesFromApi = useOptionPxQuotesFromApi({
     active: request?.source === 'api',
+    inactiveExpiry,
     ...opts,
   });
   const pxQuotesFromIbkr = useOptionPxQuotesFromIbkr({

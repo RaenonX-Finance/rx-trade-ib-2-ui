@@ -12,12 +12,18 @@ import {
 import {OptionsGexCalcCommonOpts} from '@/ui/options/gex/chart/calc/type';
 import {sendPost} from '@/utils/api';
 import {getReferencePx} from '@/utils/calc/tick';
+import {isNotNullish} from '@/utils/type';
 
+
+type UseOptionPxQuotesFromApiOpts = OptionsGexCalcCommonOpts & {
+  inactiveExpiry: Record<string, boolean>,
+};
 
 export const useOptionPxQuotesFromApi = ({
   active,
   request,
-}: OptionsGexCalcCommonOpts): OptionPxFromApiResponse | null => {
+  inactiveExpiry,
+}: UseOptionPxQuotesFromApiOpts): OptionPxFromApiResponse | null => {
   const definition = useOptionGexDefinitionSelector();
   const spotPx = usePxSelector(definition?.underlyingContractId);
   const contract = useContractSelector(definition?.underlyingContractId);
@@ -68,13 +74,16 @@ export const useOptionPxQuotesFromApi = ({
         spotPx: spotRefPx,
         rangePercent,
         expiryDays,
+        gexExpiryExclusions: Object.entries(inactiveExpiry)
+          .map(([expiry, active]) => active ? expiry : null)
+          .filter(isNotNullish),
       },
     }).then((response) => setResult({
       loading: false,
       response,
       lastFetchEpochMs: Date.now(),
     }));
-  }, [request, definition, spotPx]);
+  }, [request, definition, spotPx, inactiveExpiry]);
 
   return result.response;
 };

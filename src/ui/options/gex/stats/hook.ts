@@ -69,6 +69,8 @@ export const useOptionsGexStats = ({inactiveExpiry, autoRefresh, override}: UseO
     const request: OptionsGexStatsRequest = {
       spotPrice: getReferencePx(globalPx[definition.underlyingContractId]),
       optionsPrice,
+      // Already filtered out from `optionsPrice`
+      expiryExclusions: [],
     };
 
     const response = await sendPost<OptionsGexStatsRequest, OptionsGexStatsResponse>({
