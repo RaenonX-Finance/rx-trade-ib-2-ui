@@ -11,12 +11,14 @@ import {useSignalR} from '@/contexts/signalR/hook';
 export const SignalRConnectionPopup = () => {
   const {state} = useSignalR();
 
-  if (state === HubConnectionState.Connected) {
-    return null;
-  }
+  const [show, setShow] = React.useState(false);
+
+  React.useEffect(() => {
+    setShow(state !== HubConnectionState.Connected);
+  }, [state]);
 
   return (
-    <Popup>
+    <Popup show={show} setShow={setShow}>
       <SignalRConnectionPopupContent/>
     </Popup>
   );

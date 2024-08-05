@@ -20,7 +20,7 @@ export const SignalRConnectionPopupContent = () => {
   if (state === HubConnectionState.Disconnected) {
     return (
       <div className="rounded-md bg-gradient-to-br from-red-950 to-red-800 p-2 text-red-50">
-        Server disconnected
+        Server Disconnected
       </div>
     );
   }
